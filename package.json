@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run watchcss && nodemon server.js",
-    "buildcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css",
-    "watchcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css --watch"
+    "dev": "npm run buildcss && nodemon server.js && tsc -w",
+    "buildcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css"
   },
   "repository": {
     "type": "git",
