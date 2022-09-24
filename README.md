@@ -1,10 +1,10 @@
-# Project Branches 🌳
-A simple mobile and web app that allows users to create lists for their projects. Users can ass tasks, delete them and also mark them as complete.
+# Tarot Journal
+A tarot reading and journaling app.
 
 -- screenshot here  -- 
 
 ## Link to project: 
-https://project-branches-production.up.railway.app/
+
 
 ## How It's Made:
 
@@ -17,8 +17,7 @@ https://project-branches-production.up.railway.app/
 - Mongoose 
 - EJS
 
-This was a 5 days long group project built during our time at the #100devs agency. Project goals included
-using technologies learned up until this point and familiarizing ourselves with the group work dynamics.
+
 
 ## Optimizations
 *(optional)*
