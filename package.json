@@ -1,23 +1,25 @@
 {
-  "name": "nth-best-project-ever",
+  "name": "tarot-journal",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "npm run watchcss && nodemon server.js",
+    "buildcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css",
+    "watchcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itsdaijoebu/nth-best-project-ever.git"
+    "url": "git+https://github.com/itsdaijoebu/tarot-journal.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/itsdaijoebu/nth-best-project-ever/issues"
+    "url": "https://github.com/itsdaijoebu/tarot-journal/issues"
   },
-  "homepage": "https://github.com/itsdaijoebu/nth-best-project-ever#readme",
+  "homepage": "https://github.com/itsdaijoebu/tarot-journal#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
@@ -38,6 +40,11 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "autoprefixer": "^10.4.12",
+    "nodemon": "^2.0.19",
+    "postcss": "^8.4.16",
+    "postcss-cli": "^10.0.0",
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.8.3"
   }
 }
