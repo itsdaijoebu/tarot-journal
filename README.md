@@ -47,7 +47,3 @@ bcrypt, connect-mongo, dotenv, ejs, express, express-flash, express-session, mon
 
 
 ## Things to add
-
-Originally, we planned to include the possibility of sharing projects between the team members, however due 
-to project time constrains, we will have to implement it in the next iteration.
- ---
