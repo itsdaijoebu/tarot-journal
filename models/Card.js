@@ -11,3 +11,5 @@ const CardSchema = new mongoose.Schema({
     reversed: { type: String, required: true },
     reversedDescription: { type: String, required: true }
 })
+
+module.exports = mongoose.model("Card", CardSchema);

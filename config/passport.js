@@ -10,7 +10,7 @@ module.exports = function (passport) {
         return done(null, false, { msg: `Username ${username} not found.` })
       }
       if (!user.password) {
-        return done(null, false, { msg: 'Your account was registered using a sign-in provider. To enable password login, sign in using a provider, and then set a password under your user profile.' })
+        return done(null, false, { msg: 'Your account was registered using a sign-in provider. To enable password sign in, sign in using a provider, and then set a password under your user profile.' })
       }
       user.comparePassword(password, (err, isMatch) => {
         if (err) { return done(err) }

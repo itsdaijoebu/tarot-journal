@@ -7,9 +7,7 @@ const UserSchema = new mongoose.Schema({
   usernameLower: String,
   email: { type: String, unique: true, trim: true, required: true },
   password: { type: String, required: true },
-  firstName: { type: String, trim: true },
-  lastName: { type: String, trim: true },
-  projects: [{ type: ObjectId, ref: "Project" }], // should be an array of objectids that can populate based on the Project model. Hopefully it works
+  readings: [{ type: ObjectId, ref: "Reading" }] // should be an array of objectids that can populate based on the Project model. Hopefully it works
 });
 
 // Password hash middleware.

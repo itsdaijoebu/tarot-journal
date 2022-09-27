@@ -45,6 +45,6 @@ app.use(flash())
 app.use('/', mainRoutes)
 
  
-app.listen(process.env.PORT || 8000, ()=>{
+app.listen(process.env.PORT || 3000, ()=>{
     console.log('Server is running, you better catch it!')
 })    

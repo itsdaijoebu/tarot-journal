@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run buildcss && nodemon server.js && tsc -w",
-    "buildcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css"
+    "dev": "npm run buildcss && nodemon server.js",
+    "buildcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css",
+    "watchcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css --watch"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.12",
     "nodemon": "^2.0.19",
     "postcss": "^8.4.16",
