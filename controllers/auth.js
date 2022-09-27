@@ -3,12 +3,11 @@ const validator = require('validator')
 const User = require('../models/User')
 
  exports.getSignin = (req, res) => {
+  console.log('user: ', req.user)
     if (req.user) {
-      return res.redirect('/')
+      return res.redirect('/dashboard')
     }
-    res.render('signin', {
-      title: 'Sign In'
-    })
+    res.render('signin')
   }
   
   exports.postSignin = (req, res, next) => {
@@ -23,12 +22,13 @@ const User = require('../models/User')
     // req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false })
   
     passport.authenticate('local', (err, user, info) => {
+      console.log('auth user: ', user)
       if (err) { return next(err) }
       if (!user) {
         req.flash('errors', info)
         return res.redirect('/')
       }
-      req.signin(user, (err) => {
+      req.login(user, (err) => {
         if (err) { return next(err) }
         req.flash('success', { msg: 'Success! You are logged in.' })
         res.redirect(req.session.returnTo || '/dashboard')
@@ -46,7 +46,7 @@ const User = require('../models/User')
   
   exports.getSignup = (req, res) => {
     if (req.user) {
-      return res.redirect('/')
+      return res.redirect('/dashboard')
     }
     res.render('signup', {
       title: 'Create Account'

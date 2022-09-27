@@ -1,6 +1,9 @@
+const User = require("../models/User")
+const Card = require("../models/Card")
+
 module.exports = {
   getIndex: (req, res) => {
-    res.render("index.ejs");
+    res.render('index.ejs');
   },
   // getSignup: (req, res) => {
   //   res.render("signup.ejs");
