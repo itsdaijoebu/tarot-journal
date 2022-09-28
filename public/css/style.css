@@ -773,6 +773,16 @@ html {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+.card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: var(--padding-card, 2rem);
+  gap: 0.5rem;
+}
+.card-body :where(p) {
+  flex-grow: 1;
+}
 .card figure {
   display: flex;
   align-items: center;
@@ -1268,6 +1278,16 @@ body[dir="rtl"] .checkbox:checked,
   border-bottom-left-radius: var(--rounded-btn, 0.5rem);
   border-bottom-right-radius: var(--rounded-btn, 0.5rem);
 }
+.card-compact .card-body {
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.card-normal .card-body {
+  padding: var(--padding-card, 2rem);
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1292,11 +1312,12 @@ body[dir="rtl"] .checkbox:checked,
 .left-0 {
   left: 0px;
 }
-.m-5 {
-  margin: 1.25rem;
-}
 .m-10 {
   margin: 2.5rem;
+}
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
 }
 .my-5 {
   margin-top: 1.25rem;
@@ -1309,14 +1330,6 @@ body[dir="rtl"] .checkbox:checked,
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
-}
-.mx-5 {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
-}
-.mx-10 {
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
 }
 .mt-6 {
   margin-top: 1.5rem;
@@ -1476,6 +1489,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .text-center {
   text-align: center;
+}
+.align-middle {
+  vertical-align: middle;
 }
 .text-3xl {
   font-size: 1.875rem;

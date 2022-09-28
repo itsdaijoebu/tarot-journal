@@ -12,6 +12,7 @@ const methodOverride = require("method-override");
 //routes
 const mainRoutes = require('./routes/main')
 const dashboardRoutes = require('./routes/dashboard')
+const adminRoutes = require('./routes/admin')
 
 
 require('dotenv').config({path: './config/.env'})
@@ -45,6 +46,7 @@ app.use(flash())
   
 app.use('/', mainRoutes)
 app.use('/dashboard', dashboardRoutes)
+app.use('/admin', adminRoutes)
 
  
 app.listen(process.env.PORT || 3000, ()=>{
