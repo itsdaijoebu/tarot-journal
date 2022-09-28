@@ -6,6 +6,7 @@ const { ensureAuth } = require('../middleware/auth')
 
 // router.get('/', dashboardController.getReadings)
 router.get('/', ensureAuth, dashboardController.getReadings)
+router.get('/add-card', dashboardController.addCard)
 // router.get('/readings', dashboardController.getReadings)
 // router.post('/readings', dashboardController.postReading)
 

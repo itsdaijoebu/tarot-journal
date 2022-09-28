@@ -37,7 +37,7 @@ const User = require('../models/User')
   }
   
   exports.signout = (req, res) => {
-    req.signout((err) => {
+    req.logout((err) => {
       if (err) console.log('Error : Failed to destroy the session during signout.', err)
       req.user = null
       res.redirect('/')
@@ -70,6 +70,7 @@ const User = require('../models/User')
       usernameLower: req.body.username.toLowerCase(),
       email: req.body.email,
       password: req.body.password,
+      access: 'free',
       readings: []
     })
   
@@ -84,7 +85,7 @@ const User = require('../models/User')
       }
       user.save((err) => {
         if (err) { return next(err) }
-        req.signin(user, (err) => {
+        req.login(user, (err) => {
           if (err) {
             return next(err)
           }
