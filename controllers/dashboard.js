@@ -18,7 +18,8 @@ module.exports = {
   },
   addCard: async (req, res) => {
     try {
-      res.render("add-card.ejs", {user: req.user});
+      const cards = await Card.find()
+      res.render("add-card.ejs", {user: req.user, cards: cards});
     } catch (err) {
       console.log(err);
     }
