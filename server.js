@@ -49,6 +49,6 @@ app.use('/dashboard', dashboardRoutes)
 app.use('/admin', adminRoutes)
 
  
-app.listen(process.env.PORT || 3000, ()=>{
+app.listen(process.env.PORT || 8000, ()=>{
     console.log('Server is running, you better catch it!')
 })    

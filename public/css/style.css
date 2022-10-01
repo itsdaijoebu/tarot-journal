@@ -773,16 +773,6 @@ html {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-.card-body {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  padding: var(--padding-card, 2rem);
-  gap: 0.5rem;
-}
-.card-body :where(p) {
-  flex-grow: 1;
-}
 .card figure {
   display: flex;
   align-items: center;
@@ -910,6 +900,43 @@ html {
 .link {
   cursor: pointer;
   text-decoration-line: underline;
+}
+.select {
+  display: inline-flex;
+  flex-shrink: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 2.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  line-height: 2;
+  min-height: 3rem;
+  border-width: 1px;
+  border-color: hsl(var(--bc) / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+  font-weight: 600;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--rounded-btn, 0.5rem);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16px) calc(1px + 50%);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+.select[multiple] {
+  height: auto;
 }
 .textarea {
   flex-shrink: 1;
@@ -1210,6 +1237,34 @@ body[dir="rtl"] .checkbox:checked,
     transform: translateY(0);
   }
 }
+.select:focus {
+  outline: 2px solid hsla(var(--bc) / 0.2);
+  outline-offset: 2px;
+}
+.select-disabled, 
+  .select[disabled] {
+  cursor: not-allowed;
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
+  --tw-text-opacity: 0.2;
+}
+.select-disabled::-moz-placeholder, .select[disabled]::-moz-placeholder {
+  color: hsl(var(--bc) / var(--tw-placeholder-opacity));
+  --tw-placeholder-opacity: 0.2;
+}
+.select-disabled::placeholder, 
+  .select[disabled]::placeholder {
+  color: hsl(var(--bc) / var(--tw-placeholder-opacity));
+  --tw-placeholder-opacity: 0.2;
+}
+.select-multiple, 
+  .select[multiple], 
+  .select[size].select:not([size="1"]) {
+  background-image: none;
+  padding-right: 1rem;
+}
 .textarea:focus {
   outline: 2px solid hsla(var(--bc) / 0.2);
   outline-offset: 2px;
@@ -1278,16 +1333,6 @@ body[dir="rtl"] .checkbox:checked,
   border-bottom-left-radius: var(--rounded-btn, 0.5rem);
   border-bottom-right-radius: var(--rounded-btn, 0.5rem);
 }
-.card-compact .card-body {
-  padding: 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-.card-normal .card-body {
-  padding: var(--padding-card, 2rem);
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1312,12 +1357,8 @@ body[dir="rtl"] .checkbox:checked,
 .left-0 {
   left: 0px;
 }
-.m-10 {
-  margin: 2.5rem;
-}
-.mx-10 {
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
+.m-2 {
+  margin: 0.5rem;
 }
 .my-5 {
   margin-top: 1.25rem;
@@ -1327,9 +1368,28 @@ body[dir="rtl"] .checkbox:checked,
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
 }
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+.mt-4 {
+  margin-top: 1rem;
 }
 .mt-6 {
   margin-top: 1.5rem;
@@ -1366,6 +1426,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .w-1\/3 {
   width: 33.333333%;
+}
+.w-20 {
+  width: 5rem;
 }
 .w-full {
   width: 100%;
@@ -1464,6 +1527,14 @@ body[dir="rtl"] .checkbox:checked,
   --tw-bg-opacity: 1;
   background-color: hsl(235 58% 56% / var(--tw-bg-opacity));
 }
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
 .py-12 {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -1489,9 +1560,6 @@ body[dir="rtl"] .checkbox:checked,
 }
 .text-center {
   text-align: center;
-}
-.align-middle {
-  vertical-align: middle;
 }
 .text-3xl {
   font-size: 1.875rem;

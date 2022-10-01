@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 
 const CardSchema = new mongoose.Schema({
-    image: {type: String, required: true },
-    cloudinaryId: { type: String, required: true },
+    // image: {type: String, required: true },
+    // cloudinaryId: { type: String, required: true },
     isMajorArcana: { type: Boolean, required: true },
     number: { type: Number, required: true },
     suit: { type: String, required: true },
-    upright: { type: String, required: true },
-    uprightDescription: { type: String, required: true },
-    reversed: { type: String, required: true },
-    reversedDescription: { type: String, required: true }
+    upKeywords: { type: String, required: true },
+    upDescription: { type: String, required: true },
+    revKeywords: { type: String, required: true },
+    revDescription: { type: String, required: true }
 })
 
 module.exports = mongoose.model("Card", CardSchema);
