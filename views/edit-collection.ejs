@@ -52,7 +52,7 @@
 
     <section class="my-8 mx-10">
         <h2>Add Card Images</h2>
-        <form action="/add-card-image" enctype="multipart/form-data" method="POST">
+        <form action="./add-card-image" enctype="multipart/form-data" method="POST">
             <fieldset>
                 <legend>Image</legend>
                 <div>
@@ -60,18 +60,18 @@
                     <input type="file" name="imageFile" id="imageFile">
                 </div>
                 <div>
-                    <label for="collection">Collection</label>
-                    <input type="text" name="collection" id="collection">
+                    <label for="cardCollection">Collection</label>
+                    <input type="text" name="cardCollection" id="cardCollection">
                 </div>
                 <div>
                     <label for="imageIsMajorArcana">Major Arcana?</label>
                     <input type="checkbox" name="imageIsMajorArcana" id="imageIsMajorArcana" checked>
                 </div>
                 <div>
-                    <label for="imageCard">Card</label>
-                    <select name="imageCard" id="imageCard">
+                    <label for="card">Card</label>
+                    <select name="card" id="cardForImage">
                         <%for(let card of cards) {%>
-                        <option value="<%=card.number%>-<%=card.suit%>"> <%=card.number%> <%=card.suit%> </option>
+                        <option value="<%=card._id%>-<%=card.number%>-<%=card.suit%>"> <%=card.number%> <%=card.suit%> </option>
                         <%}%>
                 </select>
             </div>
@@ -83,26 +83,27 @@
 <section class="my-8 mx-10">
     <h2>Browse Cards</h2>
     <%for(let i=0; i < cards.length; i++) {%>
-                        <section class="card">
+                        <section class="mb-6">
+                            <img src="<%=cardImages[i].image%>" class="browse-thumbnail">
                             <h3>
-                                <span>
+                                <span class="font-bold">
                                     <%= cards[i].number %>
                                 </span>
-                                <span>
+                                <span class="font-bold">
                                     <%= cards[i].suit %>
                                 </span>
                             </h3>
                             <!-- <img src=<# cards[i].image %> alt=""> -->
                             <!-- <a href=<# cards[i].image %>>Image</a> -->
-                            <h4>Upright:</h4>
-                            <p class="keywords">
+                            <h4 class="font-bold italic">Upright:</h4>
+                            <p class="keywords italic">
                                 <%= cards[i].upKeywords %>
                             </p>
                             <p class="description">
                                 <%= cards[i].upDescription %>
                             </p>
-                            <h4>Reversed:</h4>
-                            <p class="keywords">
+                            <h4 class="font-bold italic mt-2">Reversed:</h4>
+                            <p class="keywords italic">
                                 <%= cards[i].revKeywords %>
                             </p>
                             <p class="description">

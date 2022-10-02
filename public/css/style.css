@@ -1391,6 +1391,12 @@ body[dir="rtl"] .checkbox:checked,
 .mt-4 {
   margin-top: 1rem;
 }
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -1575,6 +1581,9 @@ body[dir="rtl"] .checkbox:checked,
 .font-medium {
   font-weight: 500;
 }
+.italic {
+  font-style: italic;
+}
 .tracking-tight {
   letter-spacing: -0.025em;
 }
@@ -1620,11 +1629,27 @@ body[dir="rtl"] .checkbox:checked,
     --tarot-height: 4.75px;
     --tarot-width: 2.75px;
     --tarot-scale: 100;
+    --browse-scale: 50;
+}
+
+body {
+    background-color: hsla(51, 100%, 98%, 1);
 }
 
 .tarot-container {
     width: calc(var(--tarot-scale) * var(--tarot-width));
     height: calc(var(--tarot-scale) * var(--tarot-height));
+}
+
+.description {
+    white-space: pre-line;
+}
+
+.browse-thumbnail {
+    width: calc(var(--browse-scale) * var(--tarot-width));
+    height: calc(var(--browse-scale) * var(--tarot-height));
+    float: left;
+    margin: 1rem 2rem 0 0;
 }
 
 .hover\:bg-indigo-700:hover {

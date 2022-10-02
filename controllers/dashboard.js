@@ -4,7 +4,6 @@ const Card = require("../models/Card");
 
 module.exports = {
   getReadings: async (req, res) => {
-    console.log(req.user);
     try {
       const readings = await Reading.find({
         user: new RegExp(`^${req.user.username}$`, "i"),
@@ -16,14 +15,14 @@ module.exports = {
       console.log(err);
     }
   },
-  addCard: async (req, res) => {
-    try {
-      const cards = await Card.find()
-      res.render("add-card.ejs", {user: req.user, cards: cards});
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  // addCard: async (req, res) => {
+  //   try {
+  //     const cards = await Card.find()
+  //     res.render("add-card.ejs", {user: req.user, cards: cards});
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },
   // saveReading: (req, res) => {
   //   res.render('saveReading.ejs')
   // }

@@ -1,12 +1,14 @@
 const User = require("../models/User");
 const Card = require("../models/Card");
-const CardImage = require("../models/CardImage")
+const CardImage = require("../models/CardImage");
+const cloudinary = require("../middleware/cloudinary");
 
 module.exports = {
   editCollection: async (req, res) => {
     try {
       const cards = await Card.find();
-      res.render("edit-collection.ejs", { user: req.user, cards: cards });
+      const cardImages = await CardImage.find();
+      res.render("edit-collection.ejs", { user: req.user, cards: cards, cardImages: cardImages });
     } catch (err) {
       console.log(err);
     }
@@ -14,7 +16,6 @@ module.exports = {
   addCard: async (req, res) => {
     try {
       let arcana = req.body.isMajorArcana ? true : false
-      console.log(arcana)
       let card = await Card.create({
         isMajorArcana: arcana,
         number: req.body.number,
@@ -31,8 +32,22 @@ module.exports = {
     }
   },
   addCardImage: async (req, res) => {
-    res.send('image')
+    try{
+      const result = await cloudinary.uploader.upload(req.file.path)
+      let cardData = req.body.card.split('-')
+      let cardId = cardData.shift()
+      let cardName = cardData.join(' ')
+      let cardImage = await CardImage.create({
+        cardCollection: req.body.cardCollection,
+        cardId: cardId,
+        cardName: cardName,
+        image: result.secure_url,
+        cloudinaryId: result.public_id
+      })
+      console.log('Image added!')
+      res.redirect('./edit-collection')
+    } catch (err) {
+      console.error(err)
+    }
   }
-
-
 };

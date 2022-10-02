@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run buildcss && nodemon server.js",
+    "dev": "nodemon server.js",
     "rsdev": "npx kill-port 8000 && nodemon server.js",
     "buildcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css",
     "watchcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css --watch"
