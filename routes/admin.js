@@ -7,5 +7,7 @@ const upload = require('../middleware/multer')
 
 router.get('/edit-collection', adminController.editCollection)
 router.post('/add-card', adminController.addCard)
-router.post('/add-card-image', upload.single('imageFile'), adminController.addCardImage)
+router.post('/add-cardface', upload.single('cardfaceFile'), adminController.addCardface)
+router.post('/add-cardback', upload.single('cardbackFile'), adminController.addCardback)
+router.post('/add-card-collection', adminController.addCardCollection)
 module.exports = router

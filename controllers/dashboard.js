@@ -9,8 +9,7 @@ module.exports = {
         user: new RegExp(`^${req.user.username}$`, "i"),
       });
       res.render("dashboard.ejs", { readings: readings, user: req.user });
-      console.log("readings:", readings);
-      console.log("user", req.user);
+      console.log("dashboard controller - readings:", readings);
     } catch (err) {
       console.log(err);
     }

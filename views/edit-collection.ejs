@@ -1,41 +1,41 @@
 <%- include('partials/header', {title: 'Modify Tarot Card Collection' }) -%>
 
-    <section class="mx-10">
-        <h2>Add Cards</h2>
-        <form action="./add-card" method="POST">
-            <fieldset class="my-4 border-primary border-2">
-                <legend class="mx-2">Card Details</legend>
-                <div class="m-2">
-                    <label for="isMajorArcana">Major Arcana?</label>
-                    <input type="checkbox" name="isMajorArcana" value="true" checked>
-                </div>
-
-                <div class="m-2">
-                    <label for="number">Number:</label>
-                    <input type="text" placeholder="Number" name="number" autocomplete="off" required><br>
-                </div>
-
-                <div class="m-2">
-                    <label for="suit">Name or Suite:</label>
-                    <input type="text" placeholder="Name or Suit" name="suit" autocomplete="off" required><br>
-                </div>
-            </fieldset>
-
-            <fieldset class="my-4 border-primary border-2">
-                <legend class="mx-2">Upright</legend>
+<section class="mx-10">
+    <h2>Add Cards</h2>
+    <form action="./add-card" method="POST">
+        <fieldset class="my-4 border-primary border-2">
+            <legend class="mx-2">Card Details</legend>
             <div class="m-2">
-                    <label for="upKeywords">Keywords</label>
-                    <input type="text" name="upKeywords" placeholder="Keywords">
+                <label for="isMajorArcana">Major Arcana?</label>
+                <input type="checkbox" name="isMajorArcana" value="true" checked>
+            </div>
+
+            <div class="m-2">
+                <label for="number">Number:</label>
+                <input type="text" placeholder="Number" name="number" autocomplete="off" required><br>
+            </div>
+
+            <div class="m-2">
+                <label for="suit">Name or Suite:</label>
+                <input type="text" placeholder="Name or Suit" name="suit" autocomplete="off" required><br>
+            </div>
+        </fieldset>
+
+        <fieldset class="my-4 border-primary border-2">
+            <legend class="mx-2">Upright</legend>
+            <div class="m-2">
+                <label for="upKeywords">Keywords</label>
+                <input type="text" name="upKeywords" placeholder="Keywords">
             </div>
             <div class="m-2">
-                    <label for="upDescription">Card Description</label>
-                    <textarea rows="3" cols="60" placeholder="Description" name="upDescription" autocomplete="off"
-                        required></textarea><br>
+                <label for="upDescription">Card Description</label>
+                <textarea rows="3" cols="60" placeholder="Description" name="upDescription" autocomplete="off"
+                    required></textarea><br>
             </div>
-            </fieldset>
+        </fieldset>
 
-            <fieldset class="my-4 border-primary border-2">
-                <legend class="mx-2">Reversed</legend>
+        <fieldset class="my-4 border-primary border-2">
+            <legend class="mx-2">Reversed</legend>
             <div class="m-2">
                 <label for="revKeywords">Keywords</label>
                 <input type="text" name="revKeywords" placeholder="Keywords">
@@ -45,80 +45,116 @@
                 <textarea rows="3" cols="60" placeholder="Description" name="revDescription" autocomplete="off"
                     required></textarea><br>
             </div>
-            </fieldset>
-            <button type="submit" class="btn-primary px-2 py-1 mt-4">Submit</button>
-        </form>
-    </section>
-
-    <section class="my-8 mx-10">
-        <h2>Add Card Images</h2>
-        <form action="./add-card-image" enctype="multipart/form-data" method="POST">
-            <fieldset>
-                <legend>Image</legend>
-                <div>
-                    <label for="imageFile">Image File</label>
-                    <input type="file" name="imageFile" id="imageFile">
-                </div>
-                <div>
-                    <label for="cardCollection">Collection</label>
-                    <input type="text" name="cardCollection" id="cardCollection">
-                </div>
-                <div>
-                    <label for="imageIsMajorArcana">Major Arcana?</label>
-                    <input type="checkbox" name="imageIsMajorArcana" id="imageIsMajorArcana" checked>
-                </div>
-                <div>
-                    <label for="card">Card</label>
-                    <select name="card" id="cardForImage">
-                        <%for(let card of cards) {%>
-                        <option value="<%=card._id%>-<%=card.number%>-<%=card.suit%>"> <%=card.number%> <%=card.suit%> </option>
-                        <%}%>
-                </select>
-            </div>
         </fieldset>
-        <button type="submit" class="btn-primary px-2 py-1 mt-4">Submit</button>
+        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
     </form>
 </section>
 
 <section class="my-8 mx-10">
+    <h2>Add Card Faces</h2>
+    <form action="./add-card-collection" method="POST">
+        <fieldset class="my-4 border-primary border-2">
+            <legend class="mx-2">New Collection</legend>
+            <div class="m-2">
+                <label for="newCardCollection">Collection Name</label>
+                <input type="text" name="newCardCollection" id="newCardCollection">
+            </div>
+        </fieldset>
+        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+
+    </form>
+    <form action="./add-cardface" enctype="multipart/form-data" method="POST">
+        <fieldset class="my-4 border-primary border-2">
+            <legend class="mx-2">Image</legend>
+            <div class="m-2">
+                <label for="cardCollection">Collection</label>
+                <select name="cardCollection" id="cardCollection">
+                    <%for(let collection of cardCollections) {%>
+                    <option value=<%=collection.name%>>
+                        <%=collection.name%>
+                    </option>
+                    <%}%>
+                    </select>
+                </div>
+                <div class="m-2">
+                    <label for="cardface">Image File</label>
+                    <input type="file" name="cardface" id="cardfaceFile">
+                </div>
+                <div class="m-2">
+                    <label for="cardfaceIsMajorArcana">Major Arcana?</label>
+                    <input type="checkbox" name="cardfaceIsMajorArcana" id="cardfaceIsMajorArcana" checked>
+                </div>
+                <div class="m-2">
+                    <label for="card">Card</label>
+                    <select name="card" id="cardForcardface">
+                        <%for(let card of cards) {%>
+                    <option value="<%=card._id%>-<%=card.number%>-<%=card.suit%>">
+                        <%=card.number%> <%=card.suit%>
+                    </option>
+                    <%}%>
+                </select>
+            </div>
+        </fieldset>
+        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+    </form>
+</section>
+
+<section class="my-8 mx-10">
+    <h2>Add Card Back</h2>
+    <form action="./add-cardback" enctype="multipart/form-data" method="POST">
+        <fieldset class="my-4 border-primary border-2">
+            <legend class = "mx-2">Image</legend>
+            <div class="m-2">
+                <label for="cardbackFile">Image File</label>
+                <input type="file" name="cardbackFile" id="cardbackFile">
+            </div>
+            <div class="m-2">
+                <label for="cardbackName">Name</label>
+                <input type="text" name="cardbackName" id="cardbackName">
+            </div>
+        </fieldset>
+        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+    </form>
+</section>
+
+
+<section class="my-8 mx-10">
     <h2>Browse Cards</h2>
     <%for(let i=0; i < cards.length; i++) {%>
-                        <section class="mb-6">
-                            <img src="<%=cardImages[i].image%>" class="browse-thumbnail">
-                            <h3>
-                                <span class="font-bold">
-                                    <%= cards[i].number %>
-                                </span>
-                                <span class="font-bold">
-                                    <%= cards[i].suit %>
-                                </span>
-                            </h3>
-                            <!-- <img src=<# cards[i].image %> alt=""> -->
-                            <!-- <a href=<# cards[i].image %>>Image</a> -->
-                            <h4 class="font-bold italic">Upright:</h4>
-                            <p class="keywords italic">
-                                <%= cards[i].upKeywords %>
-                            </p>
-                            <p class="description">
-                                <%= cards[i].upDescription %>
-                            </p>
-                            <h4 class="font-bold italic mt-2">Reversed:</h4>
-                            <p class="keywords italic">
-                                <%= cards[i].revKeywords %>
-                            </p>
-                            <p class="description">
-                                <%= cards[i].revDescription %>
-                            </p>
-                            <span type="submit" class="delete-button btn-primary w-20"
-                                id=<%=cards[i]._id%>>Delete</button>
-                        </section>
-                        <% } %>
-    </section>
+                    <section class="mb-6">
+                        <img src="<%=cardfaces[i].image%>" class="browse-thumbnail">
+                        <h3>
+                            <span class="font-bold">
+                                <%= cards[i].number %>
+                            </span>
+                            <span class="font-bold">
+                                <%= cards[i].suit %>
+                            </span>
+                        </h3>
+                        <!-- <img src=<# cards[i].image %> alt=""> -->
+                        <!-- <a href=<# cards[i].image %>>Image</a> -->
+                        <h4 class="font-bold italic">Upright:</h4>
+                        <p class="keywords italic">
+                            <%= cards[i].upKeywords %>
+                        </p>
+                        <p class="description">
+                            <%= cards[i].upDescription %>
+                        </p>
+                        <h4 class="font-bold italic mt-2">Reversed:</h4>
+                        <p class="keywords italic">
+                            <%= cards[i].revKeywords %>
+                        </p>
+                        <p class="description">
+                            <%= cards[i].revDescription %>
+                        </p>
+                        <span type="submit" class="delete-button btn-primary w-20" id=<%=cards[i]._id%>>Delete</button>
+                    </section>
+                    <% } %>
+</section>
 
-    <%- include('partials/footer') -%>
-    <script src="/js/main.js"></script>
-    <script src="/js/card-editing.js"></script>
+<%- include('partials/footer') -%>
+<script src="/js/card-editing.js"></script>
 
-    </body>
+</body>
 
-    </html>
+</html>

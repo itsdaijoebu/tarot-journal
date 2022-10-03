@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-    --tarot-height: 4.75px;
-    --tarot-width: 2.75px;
-    --tarot-scale: 100;
+    --tarot-height: calc(4.75rem / 16);
+    --tarot-width: calc(2.75rem / 16);
+    --tarot-scale: 75;
     --browse-scale: 50;
 }
 
@@ -16,6 +16,7 @@ body {
 .tarot-container {
     width: calc(var(--tarot-scale) * var(--tarot-width));
     height: calc(var(--tarot-scale) * var(--tarot-height));
+    flex-shrink: 0;
 }
 
 .description {
