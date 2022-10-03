@@ -1,4 +1,4 @@
-const deckImage = document.querySelector("#deck-facedown");
+const deckImage = document.querySelector("#deck-image");
 const readingPast = document.querySelector("#reading-past");
 const readingPresent = document.querySelector("#reading-present");
 const readingFuture = document.querySelector("#reading-future");
@@ -25,7 +25,7 @@ async function start() {
   shuffle(deck);
   populateSelect(cardbackSelect, cardbacks, "name");    // populate select options for cardbacks
   populateSelect(cardfaceSelect, cardCollections, "name");  // populate select options for card faces
-  setCardbacks();
+  setCardbacks(cardbacks[0]._id);
 }
 
 // card prep functions
@@ -44,8 +44,9 @@ function populateSelect(select, options, property) {
     select.appendChild(element);
   });
 }
-function setCardbacks(cardback) {
-    
+function setCardbacks(cardbackId) {
+    let cardback = cardbacks.find(cardback => cardback._id === cardbackId).image
+    deckImage.src = cardback;
 }
 
 // card retrieval functions
@@ -76,4 +77,9 @@ async function getCardCollections() {
   const cardCollectionJson = await res.json();
   cardCollections = cardCollectionJson.cards;
   console.log("card collections: ", cardCollections);
+}
+
+// tarot reading functions
+function drawCard (position) {
+    
 }

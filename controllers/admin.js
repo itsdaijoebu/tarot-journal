@@ -43,7 +43,8 @@ module.exports = {
       let suit = cardData.shift()
       let arcana = req.body.isMajorArcana ? true : false;
       let cardface = await Cardface.create({
-        cardCollection: req.body.cardCollection,
+        cardCollection: req.body.cardCollection.text,
+        cardCollectionId: req.body.cardCollection,
         cardId: cardId,
         isMajorArcana: arcana,
         number: number,

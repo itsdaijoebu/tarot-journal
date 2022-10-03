@@ -70,7 +70,7 @@
                 <label for="cardCollection">Collection</label>
                 <select name="cardCollection" id="cardCollection">
                     <%for(let collection of cardCollections) {%>
-                    <option value=<%=collection.name%>>
+                    <option value=<%=collection._id%>>
                         <%=collection.name%>
                     </option>
                     <%}%>
