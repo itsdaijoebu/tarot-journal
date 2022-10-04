@@ -5,6 +5,11 @@ const spreadPositionPast = document.getElementById("spread-position-past");
 const spreadPositionPresent = document.getElementById("spread-position-present");
 const spreadPositionFuture = document.getElementById("spread-position-future");
 
+// get bounding rects to calculate where 
+let spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
+let spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
+let spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
+
 const cardbackSelect = document.getElementById("cardback-select");
 const cardfaceSelect = document.getElementById("cardface-select");
 
@@ -21,9 +26,11 @@ const revDescription = document.getElementById('rev-description')
 // event listeners
 deckImage.addEventListener('mousedown', drawCard)
 
-spreadPositionPast.addEventListener('mouseover', slotMeaning)
-spreadPositionPresent.addEventListener('mouseover', slotMeaning)
-spreadPositionFuture.addEventListener('mouseover', slotMeaning)
+spreadPositionPast.addEventListener('click', slotMeaning)
+spreadPositionPresent.addEventListener('click', slotMeaning)
+spreadPositionFuture.addEventListener('click', slotMeaning)
+
+window.addEventListener('resize', recalcBoundingBoxes)
 
 // card variables
 let cards;
@@ -230,7 +237,7 @@ function drawCard(e) {
 }
 
 function slotMeaning(e) {
-  console.log(e.target)
+  slotDescriptionText.innerText = e.target.dataset.spreadPosition
 }
 
 
@@ -252,4 +259,10 @@ Number.prototype.romanize = function () {
   while (i--)
       roman = (key[+digits.pop() + (i * 10)] || "") + roman;
   return Array(+digits.join("") + 1).join("M") + roman;
+}
+
+function recalcBoundingBoxes() {
+  spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
+  spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
+  spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
 }
