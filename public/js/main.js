@@ -5,15 +5,6 @@ const spreadPositionPast = document.getElementById("spread-position-past");
 const spreadPositionPresent = document.getElementById("spread-position-present");
 const spreadPositionFuture = document.getElementById("spread-position-future");
 
-// get bounding rects to calculate collisions with cards so that which slot the card is in can be calculated
-let spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
-let spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
-let spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
-let spreadPositions = new Map()
-spreadPositions.set(spreadPositionPast, spreadPositionPastBox)
-spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
-spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
-
 const cardbackSelect = document.getElementById("cardback-select");
 const cardfaceSelect = document.getElementById("cardface-select");
 const spreadSelect = document.getElementById('spread-select')
@@ -29,6 +20,23 @@ const saysReversed = document.getElementById('saysReversed')
 const revKeywords = document.getElementById('rev-keywords')
 const revDescription = document.getElementById('rev-description')
 
+const interpretationWindow = document.getElementById('interpretation-window')
+const pastInterpretationCard = document.getElementById('pastInterpretationCard')
+const presentInterpretationCard = document.getElementById('presentInterpretationCard')
+const futureInterpretationCard = document.getElementById('futureInterpretationCard')
+const pastInterpretationCardId = document.getElementById('pastInterpretationCardId')
+const presentInterpretationCardId = document.getElementById('presentInterpretationCardId')
+const futureInterpretationCardId = document.getElementById('futureInterpretationCardId')
+
+// get bounding rects to calculate collisions with cards so that which slot the card is in can be calculated
+// let spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
+// let spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
+// let spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
+let spreadPositionsArray = [spreadPositionPast, spreadPositionPresent, spreadPositionFuture]
+// spreadPositions.set(spreadPositionPast, spreadPositionPastBox)
+// spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
+// spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
+
 // event listeners
 deckImage.addEventListener('mousedown', drawCard)
 
@@ -36,7 +44,7 @@ spreadPositionPast.addEventListener('click', slotMeaningOnClick)
 spreadPositionPresent.addEventListener('click', slotMeaningOnClick)
 spreadPositionFuture.addEventListener('click', slotMeaningOnClick)
 
-window.addEventListener('resize', recalcBoundingBoxes)
+// window.addEventListener('resize', recalcBoundingBoxes)
 
 // card variables
 let cards;
@@ -69,6 +77,7 @@ async function start() {
   populateSelect(cardfaceSelect, cardCollections, "name"); // populate select options for card faces
   populateSelect(spreadSelect, spreads, "name") // populate select options for spreads
   setCardbacks(cardbacks[0]._id);
+  dragElement(interpretationWindow);
 }
 
 /******************************************
@@ -143,13 +152,14 @@ async function getSpreads() {
  * Card Interaction Functions
  *******************************************/
 function dragElement(elmnt) {
+  console.log('elmnt', elmnt)
   var pos1 = 0,
     pos2 = 0,
     pos3 = 0,
     pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
+  if (document.getElementById(elmnt.id + "-header")) {
     /* if present, the header is where you move the DIV from:*/
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
   } else {
     /* otherwise, move the DIV from anywhere inside the DIV:*/
     elmnt.onmousedown = dragMouseDown;
@@ -166,7 +176,9 @@ function dragElement(elmnt) {
     pos4 = e.clientY;
 
     // move element to sit on top of everything else
-    elmnt.parentNode.appendChild(elmnt)
+    if (!elmnt.classList.contains('interpretation-window')) {
+      elmnt.parentNode.appendChild(elmnt)
+    }
 
     document.onmouseup = closeDragElement;
     // call a function whenever the cursor moves:
@@ -189,7 +201,9 @@ function dragElement(elmnt) {
   function closeDragElement() {
     // if card collides with a spread position by over a certain percentage (initially 60%) when dropped,
     // then that card is counted as in that position
-    spreadPositions.forEach((box, position) => checkCollision(elmnt, box, position))  // REFACTOR later to just use a for loop since if card is found to be in a spread position, no need to check the rest
+    if (elmnt.classList.contains("tarot-container")) {
+      spreadPositionsArray.forEach(box => checkCollision(elmnt, box))  // REFACTOR later to just use a for loop since if card is found to be in a spread position, no need to check the rest
+    }
 
     // stop moving when mouse button is released:
     document.onmouseup = null;
@@ -230,6 +244,8 @@ function drawCard() {
   // get the next card in the deck
   const selectedCard = deck.shift();
   console.log('selected card: ', selectedCard)
+  card.dataset.cardName = `${selectedCard.number} ${selectedCard.suit}`;
+  card.id = selectedCard._id;
 
 
   const cardface = document.createElement('div')
@@ -309,7 +325,8 @@ const calculateCollisionLength = (point1, point2, length1, length2) => {
   const diff2 = Math.abs(pointb1 - pointb2);
   return (length1 + length2 - diff1 - diff2) / 2;
 }
-function checkCollision(card, spreadPositionBox, spreadPosition) {
+function checkCollision(card, spreadPosition) {
+  let spreadPositionBox = spreadPosition.getBoundingClientRect();
   const cardBox = card.getBoundingClientRect();
   console.log('rects: ', cardBox, spreadPositionBox)
   if (cardBox.x < spreadPositionBox.x + spreadPositionBox.width &&
@@ -323,12 +340,25 @@ function checkCollision(card, spreadPositionBox, spreadPosition) {
     collision.xLength = calculateCollisionLength(cardBox.x, spreadPositionBox.x, cardBox.width, spreadPositionBox.width);
     collision.yLength = calculateCollisionLength(cardBox.y, spreadPositionBox.y, cardBox.height, spreadPositionBox.height);
     console.log('collisions: ', collision.xLength, collision.yLength, collision.xLength * collision.yLength)
-    console.log('card size: :', cardBox.width * cardBox.height, cardBox.width * cardBox.height*0.55 )
+    console.log('card size: :', cardBox.width * cardBox.height, cardBox.width * cardBox.height * 0.55)
 
     if (collision.xLength * collision.yLength > (cardBox.width * cardBox.height * 0.55)) {
       console.log('position: ', spreadPosition.dataset.spreadPosition)
-      card.dataset.spreadPosition = spreadPosition.dataset.spreadPosition;
-      slotMeaningOnCard(card.dataset.spreadPosition)
+      spreadPositionName = spreadPosition.dataset.spreadPosition;
+      card.dataset.spreadPosition = spreadPositionName;
+      slotMeaningOnCard(spreadPositionName)
+      console.log("card",card)
+      console.log('cardId', card.id)
+      if(spreadPositionName.toLowerCase() === 'past') {
+        pastInterpretationCard.innerText = card.dataset.cardName;
+        pastInterpretationCardId.value = card.id;
+      } else if(spreadPositionName.toLowerCase() === 'present') {
+        presentInterpretationCard.innerText = card.dataset.cardName;
+        presentInterpretationCardId.value = card.id;
+      } else if (spreadPositionName.toLowerCase() === 'future') {
+        futureInterpretationCard.innerText = card.dataset.cardName;
+        futureInterpretationCardId.value = card.id;
+      } 
     }
   }
   else return null;

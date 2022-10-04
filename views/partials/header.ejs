@@ -12,6 +12,8 @@
 <body>
   <header class="flex justify-end  bg-primary py-2 px-10 text-offwhite space-x-10">
     <%if(user) {%>
+      <a href="/">Home</a>
+    <a href="/dashboard/readings">Saved Readings</a>
     <a href="/signout"> Sign Out</a>
     <%} else {%>
     <a href="/signin"> Sign In</a>

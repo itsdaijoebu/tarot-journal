@@ -1,20 +1,39 @@
 <%- include('partials/header', {title: 'Tarot Journal Home', user: user }) -%>
 
-<h1 class="text-5x1 font-bold text-center my-5"><%=user.username-%>'s Readings</h1>
+<form action="dashboard/save-reading" id="interpretation-window" method="POST"
+    class="z-50 draggable interpretation-window w-1/3 h-1/2 border-2 border-primary bg-offwhite flex flex-col">
+    <h3 id="interpretation-window-header" class="bg-primary text-offwhite text-center">Interpretation</h3>
+    <label for="question">Question</label>
+    <textarea name="question" id="querent-question" cols="30" rows="1" placeholder="Question"></textarea>
 
-<section class="flex justify-center">
-    <span class="text-5x1 font-bold my-1 btn btn-primary">
-        <a href=<% user ? "/user/save-reading" : "/login"%>>
-            Save Reading
-        </a>
-    </span>
-</section>
+    <div class="flex gap-2">
+        <label for="interpretationPast">Past:</label> <span id="pastInterpretationCard"></span>
+    </div>
+    <input type="hidden" name="pastInterpretationCardId" id='pastInterpretationCardId'>
+    <textarea name="interpretationPast" id="interpretationPast" cols="30" rows="1"></textarea>
+
+    <div class="flex gap-2">
+        <label for="interpretationPresent">Present:</label> <span id="presentInterpretationCard"></span>
+    </div>
+    <input type="hidden" name="presentInterpretationCardId" id='presentInterpretationCardId'>
+    <textarea name="interpretationPresent" id="interpretationPresent" cols="30" rows="1"></textarea>
+
+    <div class="flex gap-2">
+        <label for="interpretationFuture">Future:</label> <span id="futureInterpretationCard"></span>
+    </div>
+    <input type="hidden" name="futureInterpretationCardId" id='futureInterpretationCardId'>
+    <textarea name="interpretationFuture" id="interpretationFuture" cols="30" rows="1"></textarea>
+    <button type="submit" class="text-5x1 font-bold btn btn-primary m-5">Submit</button>
+</form>
+
+<h1 class="text-5x1 font-bold text-center my-5">Tarot Reading for <%=user.username-%></h1>
+
 <div class="flex justify-center">
     <select name="spread-select" id="spread-select" class="mt-4"></select>
 </div>
 
-
 <main class="hero my-10">
+
     <section class="flex justify-around mx-8 gap-6">
         <section class="flex flex-col" id="deck-container">
             <article class="card tarot-container items-center justify-center">

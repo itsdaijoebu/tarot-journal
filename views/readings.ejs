@@ -1,0 +1,55 @@
+<%- include('partials/header', {title: 'Readings', user: user }) -%>
+
+<main class="flex justify-center flex-col">
+    <section class="my-8 mx-10 flex flex-col">
+
+        <h1 class="font-bold"><%=user.username%>'s Readings</h1>
+
+        <%for(let reading of readings) {%>
+        <section class="mb-6 ">
+            <h2 class="font-bold italic"><%=reading.question%></h2>
+
+            <h2 class="italic"><%=moment(reading.created).format('MMM DD, YYYY hh:mm')%></h2>
+            <%let pastCard = reading.reading['past']%>
+            <%let presentCard = reading.reading['present']%>
+            <%let futureCard = reading.reading['future']%>
+            <%let pastUrl = cardfaces.find(e => e.cardId == pastCard).image%>
+            <%let presentUrl = cardfaces.find(e => e.cardId == presentCard).image%>
+            <%let futureUrl = cardfaces.find(e => e.cardId == futureCard).image%>
+            <section class="flex flex-col">
+                <div class="browse-thumbnail flex gap-5">
+                    <img src=<%=pastUrl%> alt="past">
+                    <div>
+                        <h3 class="font-bold">Past</h3>
+                        <p><%=reading.interpretation.past%></p>
+                    </div>
+                </div>
+                <div class="browse-thumbnail flex gap-5">
+                    <img src=<%=presentUrl%> alt="present">
+                    <div>
+                        <h3 class="font-bold">Present</h3>
+                        <p><%=reading.interpretation.present%></p>
+                    </div>
+
+                </div>
+                <div class="browse-thumbnail flex gap-5">
+                    <img src=<%=futureUrl%> alt="future">
+                    <div>
+                        <h3 class="font-bold">Future</h3>
+                        <p><%=reading.interpretation.future%></p>
+
+                    </div>
+
+                </div>
+            </section>
+        </section>
+        <%}%>
+    </section>
+</main>
+
+<%- include('partials/footer') -%>
+
+        <script src="/js/readings.js"></script>
+        </body>
+
+        </html>

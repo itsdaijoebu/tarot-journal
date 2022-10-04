@@ -41,8 +41,10 @@
 ************CARD MOVEMENT**********************
 ***********************************************/
 .draggable {
-  z-index: 1;
   position: absolute;
+}
+.draggable.tarot-container {
+  z-index: 1;
 }
 /* for when the deck runs out */
 .empty-deck {
