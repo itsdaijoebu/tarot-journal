@@ -2,15 +2,23 @@
 
 <h1 class="text-5x1 font-bold text-center my-5"><%=user.username-%>'s Readings</h1>
 
+<section class="flex justify-center">
+    <span class="text-5x1 font-bold my-1 btn btn-primary">
+        <a href=<% user ? "/user/save-reading" : "/login"%>>
+            Save Reading
+        </a>
+    </span>
+</section>
+
 <main class="hero my-10">
     <section class="flex justify-around mx-8 gap-6">
-        <section class="flex flex-col">
-            <article class="card border-primary border-2 tarot-container items-center justify-center"
-                id="deck-facedown">
-                <img src="" alt="Deck" id="deck-image">
+        <section class="flex flex-col" id="deck-container">
+            <article class="card tarot-container items-center justify-center">
+                <img src="" alt="Deck" id="deck-image" class="object-cover">
             </article>
             <select name="cardback-select" id="cardback-select" class="mt-4"></select>
         </section>
+
         <section class="flex flex-col">
             <section class="flex gap-2">
                 <article class="card w-1/3 border-primary border-2 tarot-container items-center justify-center"
@@ -33,24 +41,20 @@
     </section>
 </main>
 
-<section class="flex justify-center">
-    <span class="text-5x1 font-bold my-5 btn btn-primary" id="do-reading">Draw Cards</a></span>
+<section class="flex justify-around" id="reading-description">
+    <section id="slot-description">Slot description</section>
+    <section id="card-description">Card description</section>
 </section>
 
-<section class="flex justify-center">
-    <span class="text-5x1 font-bold my-4 btn btn-primary">
-        <a href=<% user ? "/user/save-reading" : "/login"%>>
-        Save Reading
-        </a>
-        </span>
-</section>
+
+
 
 <%if(user.access=='admin') {%> <section class="flex justify-center">
-            <fieldset class="border-primary border-2 w-3/4 flex justify-center">
-                <legend class="mx-2">Admin Tools</legend>
-                <span class="text-5x1 font-bold my-4 btn btn-primary"><a href="/admin/edit-collection">Add
-                        Card</a></span>
-            </fieldset>
+    <fieldset class="border-primary border-2 w-3/4 flex justify-center">
+        <legend class="mx-2">Admin Tools</legend>
+        <span class="text-5x1 font-bold my-4 btn btn-primary"><a href="/admin/edit-collection">Add
+                Card</a></span>
+    </fieldset>
 </section>
 <%}%>
 

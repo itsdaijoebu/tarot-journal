@@ -2,30 +2,109 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-    --tarot-height: calc(4.75rem / 16);
-    --tarot-width: calc(2.75rem / 16);
-    --tarot-scale: 75;
-    --browse-scale: 50;
+  --tarot-height: calc(4.75rem / 16);
+  --tarot-width: calc(2.75rem / 16);
+  --tarot-scale: 75;
+  --browse-scale: 50;
 }
 
-body {
+@layer base {
+  body {
     background-color: hsla(51, 100%, 98%, 1);
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/**********************************************
+************CARD INFO***********************
+***********************************************/
+.description {
+  white-space: pre-line;
 }
 
 .tarot-container {
-    width: calc(var(--tarot-scale) * var(--tarot-width));
-    height: calc(var(--tarot-scale) * var(--tarot-height));
-    flex-shrink: 0;
+  width: calc(var(--tarot-scale) * var(--tarot-width));
+  height: calc(var(--tarot-scale) * var(--tarot-height));
+  flex-shrink: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  /* background-color: green; */
 }
 
-.description {
-    white-space: pre-line;
+/**********************************************
+************CARD MOVEMENT**********************
+***********************************************/
+.draggable {
+  z-index: 1;
+  position: absolute;
+}
+/* for when the deck runs out */
+.empty-deck {
+    @apply grayscale;
 }
 
+/**********************************************
+************CARD FLIP ANIMATION*****************
+***********************************************/
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.doublesided {
+  background-color: transparent;
+  /* width: 300px; */
+  /* height: 200px; */
+  border: 1px solid #f1f1f1;
+  /* perspective: 1000px; */
+}
+/* This container is needed to position the front and back side */
+.doublesided-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+/* Do an horizontal flip when you move the mouse over the flip box container */
+/* .doublesided:hover .doublesided-inner {
+  transform: rotateY(180deg);
+} */
+.doublesided-flipped {
+  transform: rotateY(180deg);
+}
+/* Position the front and back side */
+.doublesided-front, .doublesided-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+/* Style the front side (fallback if image is missing) */
+.doublesided-back {
+  background-color: #bbb;
+  color: black;
+}
+/* Style the back side */
+.doublesided-front {
+  background-color: dodgerblue;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+/**********************************************
+************ADMIN STYLES***********************
+***********************************************/
 .browse-thumbnail {
-    width: calc(var(--browse-scale) * var(--tarot-width));
-    height: calc(var(--browse-scale) * var(--tarot-height));
-    float: left;
-    margin: 1rem 2rem 0 0;
+  width: calc(var(--browse-scale) * var(--tarot-width));
+  height: calc(var(--browse-scale) * var(--tarot-height));
+  float: left;
+  margin: 1rem 2rem 0 0;
+}
+.testElement {
+  background-color: green;
 }
