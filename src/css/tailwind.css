@@ -48,7 +48,9 @@
 .empty-deck {
     @apply grayscale;
 }
-
+.prevent-pointer {
+  pointer-events: none;
+}
 /**********************************************
 ************CARD FLIP ANIMATION*****************
 ***********************************************/

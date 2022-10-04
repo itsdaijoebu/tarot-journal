@@ -1,15 +1,29 @@
 // query selectors
-const deckImage = document.querySelector("#deck-image");
-const deckContainer = document.querySelector('#deck-container')
-const readingPast = document.querySelector("#reading-past");
-const readingPresent = document.querySelector("#reading-present");
-const readingFuture = document.querySelector("#reading-future");
+const deckImage = document.getElementById("deck-image");
+const deckContainer = document.getElementById('deck-container')
+const spreadPositionPast = document.getElementById("spread-position-past");
+const spreadPositionPresent = document.getElementById("spread-position-present");
+const spreadPositionFuture = document.getElementById("spread-position-future");
 
-const cardbackSelect = document.querySelector("#cardback-select");
-const cardfaceSelect = document.querySelector("#cardface-select");
+const cardbackSelect = document.getElementById("cardback-select");
+const cardfaceSelect = document.getElementById("cardface-select");
+
+const slotDescriptionText = document.getElementById('slot-description-text');
+
+const cardNumber = document.getElementById('card-number')
+const cardSuit = document.getElementById('card-suit')
+const upKeywords = document.getElementById('up-keywords')
+const upDescription = document.getElementById('up-description')
+const saysReversed = document.getElementById('saysReversed')
+const revKeywords = document.getElementById('rev-keywords')
+const revDescription = document.getElementById('rev-description')
 
 // event listeners
 deckImage.addEventListener('mousedown', drawCard)
+
+spreadPositionPast.addEventListener('mouseover', slotMeaning)
+spreadPositionPresent.addEventListener('mouseover', slotMeaning)
+spreadPositionFuture.addEventListener('mouseover', slotMeaning)
 
 // card variables
 let cards;
@@ -26,7 +40,9 @@ start();
 
 
 
-//initialization functions
+/******************************************
+ * Initialization Function(s)
+ *******************************************/
 async function start() {
   await getCards();
   await getCardCollections();
@@ -38,7 +54,9 @@ async function start() {
   setCardbacks(cardbacks[0]._id);
 }
 
-// card prep functions
+/******************************************
+ * Card Prep Functions
+ *******************************************/
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -61,7 +79,9 @@ function setCardbacks(cardbackId) {
   deckImage.src = selectedCardback;
 }
 
-// card retrieval functions
+/******************************************
+ * Card Retrieval Functions
+ *******************************************/
 async function getCards() {
   const res = await fetch("/api/getCards");
   const cardJson = await res.json();
@@ -95,7 +115,9 @@ async function getCardCollections() {
   console.log('selected card collection: ', selectedCardCollection)
 }
 
-// card interaction functions
+/******************************************
+ * Card Interaction Functions
+ *******************************************/
 function dragElement(elmnt) {
   var pos1 = 0,
     pos2 = 0,
@@ -108,7 +130,6 @@ function dragElement(elmnt) {
     /* otherwise, move the DIV from anywhere inside the DIV:*/
     elmnt.onmousedown = dragMouseDown;
   }
-
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
@@ -135,16 +156,23 @@ function dragElement(elmnt) {
     // set the element's new position:
     elmnt.style.top = elmnt.offsetTop - pos2 + "px";
     elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+    // elmnt.classList.add('prevent-pointer')
   }
-
   function closeDragElement() {
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
+    // elmnt.classList.remove('prevent-pointer')
   }
 }
 
-// tarot reading functions
+function checkCollision() {
+
+}
+
+/******************************************
+ * Tarot Reading Functions
+ *******************************************/
 function drawCard(e) {
   console.log('draw card')
   if(deck.length < 2) {
@@ -183,10 +211,45 @@ function drawCard(e) {
   cardface.appendChild(cardfaceImg)
   cardInner.appendChild(cardface)
 
-  cardInner.onmouseup = flipCard
+  card.onmouseup = getCardInfo
 
   function flipCard() {
+  }
+  function getCardInfo() {
     cardInner.classList.add('doublesided-flipped')
+
+    console.log('click')
+    cardNumber.innerText = selectedCard.number.romanize();
+    cardSuit.innerText = selectedCard.suit;
+    upKeywords.innerText = selectedCard.upKeywords
+    upDescription.innerText = selectedCard.upDescription
+    saysReversed.classList.remove('hidden')
+    revKeywords.innerText = selectedCard.revKeywords
+    revDescription.innerText = selectedCard.revDescription
   }
 }
 
+function slotMeaning(e) {
+  console.log(e.target)
+}
+
+
+/***************************************
+ * UTILITY FUNCTIONS
+ ***************************************/
+Number.prototype.romanize = function () {
+  // console.log(this)
+  if (isNaN(this))
+      return NaN;
+  if (this == 0)
+      return 0
+  var digits = String(+this).split(""),
+      key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
+          "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC",
+          "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+      roman = "",
+      i = 3;
+  while (i--)
+      roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+  return Array(+digits.join("") + 1).join("M") + roman;
+}
