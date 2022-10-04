@@ -7,7 +7,7 @@ const User = require('../models/User')
     if (req.user) {
       return res.redirect('/dashboard')
     }
-    res.render('signin')
+    res.render('signin', {user: req.user})
   }
   
   exports.postSignin = (req, res, next) => {
@@ -48,9 +48,7 @@ const User = require('../models/User')
     if (req.user) {
       return res.redirect('/dashboard')
     }
-    res.render('signup', {
-      title: 'Create Account'
-    })
+    res.render('signup', { user: req.user})
   }
   
   exports.postSignup = (req, res, next) => {
@@ -61,7 +59,7 @@ const User = require('../models/User')
   
     if (validationErrors.length) {
       req.flash('errors', validationErrors)
-      return res.redirect('../signup')
+      return res.redirect('../signup', {user: req.user})
     }
     req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false })
   

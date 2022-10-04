@@ -3,14 +3,15 @@ const Card = require("../models/Card");
 const Cardface = require("../models/Cardface");
 const Cardback = require("../models/Cardback");
 const CardCollection = require("../models/CardCollection");
+const Spread = require("../models/Spread")
 const cloudinary = require("../middleware/cloudinary");
 
 module.exports = {
   editCollection: async (req, res) => {
     try {
       const cards = await Card.find();
-      const cardfaces = await Cardface.find().sort({isMajorArcana: 1, number: 1});
-      const cardCollections = await CardCollection.find().sort({name: 1});
+      const cardfaces = await Cardface.find().sort({ isMajorArcana: 1, number: 1 });
+      const cardCollections = await CardCollection.find().sort({ name: 1 });
       res.render("edit-collection.ejs", { user: req.user, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections });
     } catch (err) {
       console.log(err);
@@ -35,7 +36,7 @@ module.exports = {
     }
   },
   addCardface: async (req, res) => {
-    try{
+    try {
       const result = await cloudinary.uploader.upload(req.file.path)
       let cardData = req.body.card.split('-')
       let cardId = cardData.shift()
@@ -68,7 +69,7 @@ module.exports = {
       })
       console.log('Cardback added')
       res.redirect('./edit-collection')
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   },
@@ -81,6 +82,30 @@ module.exports = {
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err)
+    }
+  },
+  addSpread: async (req, res) => {
+    try {
+      let positions = [];
+      let numberCards = req.body.numberCards
+      for(let i = 1; i <= numberCards; i++) {
+        const position =  {
+          order: req.body['positionOrder' + i],
+          name: req.body['positionName' + i],
+          meaning: req.body['positionMeaning' + i]
+        }
+        positions.push(position)
+      }
+      console.log(req.body)
+      let spread = await Spread.create({
+        name: req.body.spreadName,
+        numberCards: numberCards,
+        positions: positions
+      })
+      console.log('Added Spread!')
+      res.redirect('./edit-collection')
+    } catch (err) {
+      console.error(err);
     }
   }
 };

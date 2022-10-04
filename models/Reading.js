@@ -8,7 +8,7 @@ const ReadingSchema = new mongoose.Schema({
   userId: { type: ObjectId, ref: "User", required: true },
   spread: { type: String, required: true },
   reading: { type: Map, of: String, required: true },
-  question: { type:     String },
+  question: { type: String },
   interpretation: { type: Map, of: String },
   created: { type: Date, default: Date.now },
 });

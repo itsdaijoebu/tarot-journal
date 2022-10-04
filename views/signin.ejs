@@ -1,4 +1,4 @@
-<%- include('partials/header', {title: 'Sign In'}) -%>
+<%- include('partials/header', {title: 'Sign In', user: user}) -%>
 
 <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="w-full max-w-md space-y-8">
@@ -55,6 +55,13 @@
       </div>
     </form>
 
+
+    <span
+      class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      id="guest-details">
+      Guest Sign In
+    </span>
+
     <button onclick="location.href='/signup'"
       class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
       Sign Up
@@ -63,3 +70,7 @@
 </div>
 
 <%- include('partials/footer') -%>
+
+<script src="/js/signin.js"></script>   
+</body>
+</html>

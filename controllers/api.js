@@ -4,6 +4,7 @@ const Cardface = require("../models/Cardface");
 const Cardback = require("../models/Cardback");
 const CardCollection = require("../models/CardCollection")
 const cloudinary = require("../middleware/cloudinary");
+const Spread = require("../models/Spread");
 
 module.exports = {
     getCards: async (req, res) => {
@@ -34,6 +35,14 @@ module.exports = {
     getCardCollections: async (req, res) => {
         try {
             const results = await CardCollection.find().sort({name: 1})
+            res.json({cards: results.map(result => result.toObject())})
+        } catch (err) {
+            console.error(err)
+        }
+    },
+    getSpreads: async (req, res) => {
+        try {
+            const results = await Spread.find().sort({order: 1})
             res.json({cards: results.map(result => result.toObject())})
         } catch (err) {
             console.error(err)

@@ -117,6 +117,45 @@
     </form>
 </section>
 
+<section class="my-8 mx-10">
+    <h2>Add Spread</h2>
+    <form action="./add-spread" method="POST">
+        <fieldset class="my-4 border-primary border-2">
+            <legend class = "mx-2">Spread</legend>
+            <div class="m-2">
+                <label for="spreadName">Name</label>
+                <input type="text" name="spreadName" id="spreadName">
+                <label for="numberCards">Number of Cards</label>
+                <input type="number" name="numberCards" id="numberCards">
+            </div>
+            <div class="m-2">
+                <label for="positionOrder1">Order</label>
+                <input type="number" name="positionOrder1" id="positionOrder1">
+                <label for="positionName1">Name</label>
+                <input type="text" name="positionName1" id="positionName1">
+                <label for="positionMeaning1">Meaning</label>
+                <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning1" id="positionMeaning1"></textarea>
+            </div>
+            <div class="m-2">
+                <label for="positionOrder2">Order</label>
+                <input type="number" name="positionOrder2" id="positionOrder2">
+                <label for="positionName2">Name</label>
+                <input type="text" name="positionName2" id="positionName2">
+                <label for="positionMeaning2">Meaning</label>
+                <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning2" id="positionMeaning2"></textarea>
+            </div>
+            <div class="m-2">
+                <label for="positionOrder3">Order</label>
+                <input type="number" name="positionOrder3" id="positionOrder3">
+                <label for="positionName3">Name</label>
+                <input type="text" name="positionName3" id="positionName3">
+                <label for="positionMeaning3">Meaning</label>
+                <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning3" id="positionMeaning3"></textarea>
+            </div>
+        </fieldset>
+        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+    </form>
+</section>
 
 <section class="my-8 mx-10">
     <h2>Browse Cards</h2>

@@ -5,15 +5,21 @@ const spreadPositionPast = document.getElementById("spread-position-past");
 const spreadPositionPresent = document.getElementById("spread-position-present");
 const spreadPositionFuture = document.getElementById("spread-position-future");
 
-// get bounding rects to calculate where 
+// get bounding rects to calculate collisions with cards so that which slot the card is in can be calculated
 let spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
 let spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
 let spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
+let spreadPositions = new Map()
+spreadPositions.set(spreadPositionPast, spreadPositionPastBox)
+spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
+spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
 
 const cardbackSelect = document.getElementById("cardback-select");
 const cardfaceSelect = document.getElementById("cardface-select");
+const spreadSelect = document.getElementById('spread-select')
 
 const slotDescriptionText = document.getElementById('slot-description-text');
+const slotTitle = document.getElementById('slot-title')
 
 const cardNumber = document.getElementById('card-number')
 const cardSuit = document.getElementById('card-suit')
@@ -26,9 +32,9 @@ const revDescription = document.getElementById('rev-description')
 // event listeners
 deckImage.addEventListener('mousedown', drawCard)
 
-spreadPositionPast.addEventListener('click', slotMeaning)
-spreadPositionPresent.addEventListener('click', slotMeaning)
-spreadPositionFuture.addEventListener('click', slotMeaning)
+spreadPositionPast.addEventListener('click', slotMeaningOnClick)
+spreadPositionPresent.addEventListener('click', slotMeaningOnClick)
+spreadPositionFuture.addEventListener('click', slotMeaningOnClick)
 
 window.addEventListener('resize', recalcBoundingBoxes)
 
@@ -40,6 +46,8 @@ let cardfaces;
 let cardCollections;
 let selectedCardCollection;
 let selectedCardFaces;
+let spreads;
+let selectedSpread;
 let deck = [];
 
 //initialization
@@ -51,6 +59,7 @@ start();
  * Initialization Function(s)
  *******************************************/
 async function start() {
+  await getSpreads();
   await getCards();
   await getCardCollections();
   await getCardbacks();
@@ -58,6 +67,7 @@ async function start() {
   shuffle(deck);
   populateSelect(cardbackSelect, cardbacks, "name"); // populate select options for cardbacks
   populateSelect(cardfaceSelect, cardCollections, "name"); // populate select options for card faces
+  populateSelect(spreadSelect, spreads, "name") // populate select options for spreads
   setCardbacks(cardbacks[0]._id);
 }
 
@@ -101,25 +111,32 @@ async function getCards() {
 }
 async function getCardbacks() {
   const res = await fetch("/api/getCardbacks");
-  const cardbackJson = await res.json();
-  cardbacks = cardbackJson.cards;
+  const data = await res.json();
+  cardbacks = data.cards;
   console.log("cardbacks: ", cardbacks);
 }
 async function getCardfaces() {
   const res = await fetch("/api/getCardfaces");
-  const cardfaceJson = await res.json();
-  cardfaces = cardfaceJson.cards;
+  const data = await res.json();
+  cardfaces = data.cards;
   console.log("cardfaces: ", cardfaces);
   selectedCardFaces = cardfaces.filter(cardface => cardface.cardCollection === selectedCardCollection)
   console.log('selected card faces: ', selectedCardFaces)
 }
 async function getCardCollections() {
   const res = await fetch("/api/getCardCollections");
-  const cardCollectionJson = await res.json();
-  cardCollections = cardCollectionJson.cards;
+  const data = await res.json();
+  cardCollections = data.cards;
   console.log("card collections: ", cardCollections);
   selectedCardCollection = cardCollections[0].name
   console.log('selected card collection: ', selectedCardCollection)
+}
+async function getSpreads() {
+  const res = await fetch("/api/getSpreads");
+  const data = await res.json();
+  spreads = data.cards;
+  console.log('spreads: ', spreads);
+  selectedSpread = spreads[0];
 }
 
 /******************************************
@@ -140,13 +157,16 @@ function dragElement(elmnt) {
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
+
+    //reset card's spread position
+    elmnt.dataset.spreadPosition = ''
+
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
-    
+
     // move element to sit on top of everything else
     elmnt.parentNode.appendChild(elmnt)
-
 
     document.onmouseup = closeDragElement;
     // call a function whenever the cursor moves:
@@ -164,8 +184,13 @@ function dragElement(elmnt) {
     elmnt.style.top = elmnt.offsetTop - pos2 + "px";
     elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
     // elmnt.classList.add('prevent-pointer')
+
   }
   function closeDragElement() {
+    // if card collides with a spread position by over a certain percentage (initially 60%) when dropped,
+    // then that card is counted as in that position
+    spreadPositions.forEach((box, position) => checkCollision(elmnt, box, position))  // REFACTOR later to just use a for loop since if card is found to be in a spread position, no need to check the rest
+
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
@@ -173,16 +198,13 @@ function dragElement(elmnt) {
   }
 }
 
-function checkCollision() {
-
-}
 
 /******************************************
  * Tarot Reading Functions
  *******************************************/
-function drawCard(e) {
+function drawCard() {
   console.log('draw card')
-  if(deck.length < 2) {
+  if (deck.length < 2) {
     deckImage.classList.add('empty-deck')
     deckImage.removeEventListener('mousedown', drawCard)
   }
@@ -196,7 +218,7 @@ function drawCard(e) {
   const cardInner = document.createElement('div')
   cardInner.classList.add('doublesided-inner')
   card.appendChild(cardInner)
-  
+
   const cardback = document.createElement('div')
   cardback.classList.add('doublesided-back')
   const cardbackImg = document.createElement('img')
@@ -220,8 +242,6 @@ function drawCard(e) {
 
   card.onmouseup = getCardInfo
 
-  function flipCard() {
-  }
   function getCardInfo() {
     cardInner.classList.add('doublesided-flipped')
 
@@ -236,9 +256,19 @@ function drawCard(e) {
   }
 }
 
-function slotMeaning(e) {
-  slotDescriptionText.innerText = e.target.dataset.spreadPosition
+//REFACTOR to use spread position instead of name, and try to consolidate these two methods into a single one
+function slotMeaningOnClick(e) {
+  console.log('spread: ', selectedSpread)
+  let positionName = e.target.dataset.spreadPosition
+  slotTitle.innerText = positionName;
+  slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning
 }
+function slotMeaningOnCard(positionName) {
+  console.log('position name', positionName)
+  slotTitle.innerText = positionName
+  slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning
+}
+
 
 
 /***************************************
@@ -247,22 +277,59 @@ function slotMeaning(e) {
 Number.prototype.romanize = function () {
   // console.log(this)
   if (isNaN(this))
-      return NaN;
+    return NaN;
   if (this == 0)
-      return 0
+    return 0
   var digits = String(+this).split(""),
-      key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
-          "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC",
-          "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
-      roman = "",
-      i = 3;
+    key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
+      "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC",
+      "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+    roman = "",
+    i = 3;
   while (i--)
-      roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+    roman = (key[+digits.pop() + (i * 10)] || "") + roman;
   return Array(+digits.join("") + 1).join("M") + roman;
 }
 
+// collision detection
 function recalcBoundingBoxes() {
   spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
   spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
   spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
+
+  spreadPositions.set(spreadPositionPast, spreadPositionPastBox)
+  spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
+  spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
+  console.log('spread positions: ', spreadPositions)
+}
+const calculateCollisionLength = (point1, point2, length1, length2) => {
+  const pointb1 = point1 + length1;
+  const pointb2 = point2 + length2;
+  const diff1 = Math.abs(point1 - point2);
+  const diff2 = Math.abs(pointb1 - pointb2);
+  return (length1 + length2 - diff1 - diff2) / 2;
+}
+function checkCollision(card, spreadPositionBox, spreadPosition) {
+  const cardBox = card.getBoundingClientRect();
+  console.log('rects: ', cardBox, spreadPositionBox)
+  if (cardBox.x < spreadPositionBox.x + spreadPositionBox.width &&
+    cardBox.x + cardBox.width > spreadPositionBox.x &&
+    cardBox.y < spreadPositionBox.y + spreadPositionBox.height &&
+    cardBox.height + cardBox.y > spreadPositionBox.y) {
+    console.log("collision detected!")
+
+    const collision = { xLength: 0, yLength: 0 };
+
+    collision.xLength = calculateCollisionLength(cardBox.x, spreadPositionBox.x, cardBox.width, spreadPositionBox.width);
+    collision.yLength = calculateCollisionLength(cardBox.y, spreadPositionBox.y, cardBox.height, spreadPositionBox.height);
+    console.log('collisions: ', collision.xLength, collision.yLength, collision.xLength * collision.yLength)
+    console.log('card size: :', cardBox.width * cardBox.height, cardBox.width * cardBox.height*0.55 )
+
+    if (collision.xLength * collision.yLength > (cardBox.width * cardBox.height * 0.55)) {
+      console.log('position: ', spreadPosition.dataset.spreadPosition)
+      card.dataset.spreadPosition = spreadPosition.dataset.spreadPosition;
+      slotMeaningOnCard(card.dataset.spreadPosition)
+    }
+  }
+  else return null;
 }
