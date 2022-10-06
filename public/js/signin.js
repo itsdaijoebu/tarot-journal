@@ -5,4 +5,6 @@ function fillGuestDetails() {
     const password = document.getElementById('password')
     email.value = 'guest@guest.com'
     password.value = 'guestguest'
+
+    document.getElementById('signin-button').click();
 }

@@ -39,7 +39,7 @@
       </div>
 
       <div>
-        <button type="submit"
+        <button type="submit" id="signin-button"
           class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
           <span class="absolute inset-y-0 left-0 flex items-center pl-3">
             <!-- Heroicon name: mini/lock-closed -->
@@ -55,12 +55,13 @@
       </div>
     </form>
 
-
-    <span
-      class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      id="guest-details">
+    <!-- <form action="/guestSignin" method="POST"> -->
+    <button class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4
+      text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
+      focus:ring-offset-2" id="guest-details">
       Guest Sign In
-    </span>
+    </button>
+    <!-- </form> -->
 
     <button onclick="location.href='/signup'"
       class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -71,6 +72,7 @@
 
 <%- include('partials/footer') -%>
 
-<script src="/js/signin.js"></script>   
+<script src="/js/signin.js"></script>
 </body>
+
 </html>
