@@ -1374,6 +1374,10 @@ body[dir="rtl"] .checkbox:checked,
 .m-2 {
   margin: 0.5rem;
 }
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
@@ -1571,6 +1575,10 @@ body[dir="rtl"] .checkbox:checked,
 .bg-offwhite {
   --tw-bg-opacity: 1;
   background-color: hsl(56 91% 94% / var(--tw-bg-opacity));
+}
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 .bg-primary {
   --tw-bg-opacity: 1;
@@ -1781,6 +1789,17 @@ body[dir="rtl"] .checkbox:checked,
 }
 .testElement {
   background-color: green;
+}
+
+/**********************************************
+**************UTILITY STYLES******************
+**********************************************/
+.hideable {
+  z-index: -1;
+  position: absolute;
+  background: none;
+  border: none;
+  color: red;
 }
 .hover\:bg-indigo-700:hover {
   --tw-bg-opacity: 1;

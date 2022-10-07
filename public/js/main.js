@@ -21,6 +21,7 @@ const revKeywords = document.getElementById('rev-keywords')
 const revDescription = document.getElementById('rev-description')
 
 const interpretationWindow = document.getElementById('interpretation-window')
+const interpretationBody = document.getElementById('interpretation-body')
 const pastInterpretationCard = document.getElementById('pastInterpretationCard')
 const presentInterpretationCard = document.getElementById('presentInterpretationCard')
 const futureInterpretationCard = document.getElementById('futureInterpretationCard')
@@ -283,6 +284,19 @@ function slotMeaningOnCard(positionName) {
   console.log('position name', positionName)
   slotTitle.innerText = positionName
   slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning
+}
+
+/***************************************
+ * INTERPRETATION FORM FUNCTIONS
+ ***************************************/
+function validateInterpretation() {
+  const cardIdFields = document.querySelectorAll('.interpretation-card-id')
+  for(let i = 0; i < cardIdFields.length; i++) {
+    if(!cardIdFields[i].value) {
+      alert("Please put a card in each of the slots for this spread.")
+      return false
+    }
+  }
 }
 
 

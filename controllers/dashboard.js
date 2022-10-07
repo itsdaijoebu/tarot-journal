@@ -27,7 +27,7 @@ module.exports = {
       const cardfaces = await Cardface.find().sort({ isMajorArcana: 1, number: 1 });
       const cardCollections = await CardCollection.find().sort({ name: 1 });
       const readings = await Reading.find({
-        userid: req.user._id
+        userId: req.user._id
       })
       console.log('readings: ', readings)
       res.render("readings.ejs", {user: req.user, readings: readings, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections, moment: moment })

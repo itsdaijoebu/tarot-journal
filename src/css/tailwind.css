@@ -112,3 +112,14 @@
 .testElement {
   background-color: green;
 }
+
+/**********************************************
+**************UTILITY STYLES******************
+**********************************************/
+.hideable {
+  z-index: -1;
+  position: absolute;
+  background: none;
+  border: none;
+  color: red;
+}
