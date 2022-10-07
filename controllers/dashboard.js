@@ -28,7 +28,7 @@ module.exports = {
       const cardCollections = await CardCollection.find().sort({ name: 1 });
       const readings = await Reading.find({
         userId: req.user._id
-      })
+      }).sort({created: -1})
       console.log('readings: ', readings)
       res.render("readings.ejs", {user: req.user, readings: readings, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections, moment: moment })
     } catch (err) {
