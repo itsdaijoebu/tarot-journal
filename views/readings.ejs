@@ -16,25 +16,25 @@
             <%let pastUrl = cardfaces.find(e => e.cardId == pastCard).image%>
             <%let presentUrl = cardfaces.find(e => e.cardId == presentCard).image%>
             <%let futureUrl = cardfaces.find(e => e.cardId == futureCard).image%>
-            
-            <section class="flex flex-col">
-                <div class="browse-thumbnail flex gap-5">
-                    <img src=<%=pastUrl%> alt="past">
+
+            <section class="flex flex-col ">
+                <div class="reading-container">
+                    <img src=<%=pastUrl%> alt="past" class="browse-thumbnail">
                     <div>
                         <h3 class="font-bold">Past</h3>
                         <p><%=reading.interpretation.past%></p>
                     </div>
                 </div>
-                <div class="browse-thumbnail flex gap-5">
-                    <img src=<%=presentUrl%> alt="present">
+                <div class="reading-container">
+                    <img src=<%=presentUrl%> alt="present" class="browse-thumbnail">
                     <div>
                         <h3 class="font-bold">Present</h3>
                         <p><%=reading.interpretation.present%></p>
                     </div>
 
                 </div>
-                <div class="browse-thumbnail flex gap-5">
-                    <img src=<%=futureUrl%> alt="future">
+                <div class="reading-container">
+                    <img src=<%=futureUrl%> alt="future" class="browse-thumbnail">
                     <div>
                         <h3 class="font-bold">Future</h3>
                         <p><%=reading.interpretation.future%></p>
@@ -50,7 +50,7 @@
 
 <%- include('partials/footer') -%>
 
-        <script src="/js/readings.js"></script>
-        </body>
+<script src="/js/readings.js"></script>
+</body>
 
-        </html>
+</html>

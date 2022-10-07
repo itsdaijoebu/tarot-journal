@@ -107,11 +107,13 @@
   width: calc(var(--browse-scale) * var(--tarot-width));
   height: calc(var(--browse-scale) * var(--tarot-height));
   float: left;
+}
+.reading-container {
   margin: 1rem 2rem 0 0;
+  display: flex;
+  gap: 1.25rem;
 }
-.testElement {
-  background-color: green;
-}
+
 
 /**********************************************
 **************UTILITY STYLES******************
@@ -122,4 +124,7 @@
   background: none;
   border: none;
   color: red;
+}
+.testElement {
+  background-color: green;
 }

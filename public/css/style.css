@@ -1785,11 +1785,13 @@ body[dir="rtl"] .checkbox:checked,
   width: calc(var(--browse-scale) * var(--tarot-width));
   height: calc(var(--browse-scale) * var(--tarot-height));
   float: left;
+}
+.reading-container {
   margin: 1rem 2rem 0 0;
+  display: flex;
+  gap: 1.25rem;
 }
-.testElement {
-  background-color: green;
-}
+
 
 /**********************************************
 **************UTILITY STYLES******************
@@ -1800,6 +1802,9 @@ body[dir="rtl"] .checkbox:checked,
   background: none;
   border: none;
   color: red;
+}
+.testElement {
+  background-color: green;
 }
 .hover\:bg-indigo-700:hover {
   --tw-bg-opacity: 1;
