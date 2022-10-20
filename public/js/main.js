@@ -1,3 +1,14 @@
+/**************
+ *TABLE OF CONTENTS
+ * Initialization Function(s)
+ * Card Prep Functions
+ * Card Retrieval Functions
+ * Card Interaction Functions
+ * Tarot Reading Functions
+ * INTERPRETATION FORM FUNCTIONS
+ * UTILITY FUNCTIONS
+ ***************/
+
 // query selectors
 const deckImage = document.getElementById("deck-image");
 const deckContainer = document.getElementById('deck-container')
@@ -20,6 +31,7 @@ const saysReversed = document.getElementById('saysReversed')
 const revKeywords = document.getElementById('rev-keywords')
 const revDescription = document.getElementById('rev-description')
 
+const interpretationMin = document.getElementById('interpretation-minimize')
 const interpretationWindow = document.getElementById('interpretation-window')
 const interpretationBody = document.getElementById('interpretation-body')
 const pastInterpretationCard = document.getElementById('pastInterpretationCard')
@@ -45,6 +57,8 @@ spreadPositionPast.addEventListener('click', slotMeaningOnClick)
 spreadPositionPresent.addEventListener('click', slotMeaningOnClick)
 spreadPositionFuture.addEventListener('click', slotMeaningOnClick)
 
+interpretationMin.addEventListener('click', minimizeInterpretation)
+
 // window.addEventListener('resize', recalcBoundingBoxes)
 
 // card variables
@@ -61,8 +75,6 @@ let deck = [];
 
 //initialization
 start();
-
-
 
 /******************************************
  * Initialization Function(s)
@@ -299,6 +311,10 @@ function validateInterpretation() {
   }
 }
 
+function minimizeInterpretation() {
+  interpretationBody.classList.toggle('hidden')
+}
+
 
 
 /***************************************
@@ -377,3 +393,8 @@ function checkCollision(card, spreadPosition) {
   }
   else return null;
 }
+
+/******************
+ * DEV FUNCTIONS
+******************/
+document.querySelectorAll('.click').forEach(e => e.addEventListener('click', () => console.log('clicked on an element')))
