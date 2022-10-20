@@ -1,16 +1,16 @@
 <%- include('partials/header', {title: 'Tarot Journal Home', user: user }) -%>
 
 <form action="dashboard/save-reading" onsubmit="return validateInterpretation()" id="interpretation-window"
-    method="POST" class="z-50 w-1/3 draggable interpretation-window border-2 border-primary bg-offwhite flex flex-col">
+    method="POST" class="z-50 w-1/3  draggable interpretation-window border-4 border-accent p-0.5 bg-offwhite flex flex-col">
 
     
     <div id="interpretation-window-header" class="bg-primary text-offwhite text-center py-1 cursor-move">
-        <i class="fa-solid fa-window-maximize fa-lg text-white cursor-pointer absolute right-0 mr-3 mt-3" id="interpretation-minimize"></i>
+        <i class="fa-solid fa-window-maximize fa-lg text-offwhite cursor-pointer absolute right-0 mr-3 mt-3" id="interpretation-minimize"></i>
         <h3> Interpretation</h3>
     </div>
 
 
-    <section class="interpretation-body flex flex-col mx-3" id="interpretation-body">
+    <section class="interpretation-body flex flex-col mx-3 hidden" id="interpretation-body">
         <label for="question">Question</label>
         <textarea name="question" id="querent-question" cols="30" rows="1" placeholder="Question"></textarea>
 
@@ -37,8 +37,9 @@
         <input type="hidden" name="futureInterpretationCardId" id='futureInterpretationCardId'
             class='interpretation-card-id'>
         <textarea name="interpretationFuture" id="interpretationFuture" cols="30" rows="1"></textarea>
-        <button type="submit" class="text-5x1 font-bold btn btn-primary m-5">Submit</button>
     </section>
+    <button type="submit" class="text-5x1 font-bold btn btn-primary m-5">Submit</button>
+
 </form>
 
 <h1 class="text-5x1 font-bold text-center my-5">Tarot Reading for <%=user.username-%></h1>

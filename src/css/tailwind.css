@@ -11,10 +11,6 @@
 }
 
 @layer base {
-  body {
-    background-color: hsla(51, 100%, 98%, 1);
-  }
-
   img {
     height: 100%;
     width: 100%;

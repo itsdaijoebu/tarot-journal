@@ -1,6 +1,6 @@
 // /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./views/**/*.ejs", "./views/index.ejs"],
+  content: ["./views/**/*.ejs"],
   theme: {
     screens: {
       //sm: '480px',
@@ -10,9 +10,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: "hsl(235, 58%, 56%)",
-        offwhite: "hsl(56, 91%, 94%)",
-        // secondary: bleh
+        // primary: "hsl(235, 58%, 56%)",
+        // accent: "hsl(235, 43%, 60%)",
+        // offwhite: "56, 91%, 94%",
+        offwhite: "hsl(51, 100%, 98%)"
+        // offwhite: "#F7F9F9",
       },
     },
   },
@@ -22,7 +24,7 @@ module.exports = {
         mytheme: {
           primary: "hsl(235, 58%, 56%)",
           secondary: "#F000B8",
-          accent: "#37CDBE",
+          accent: "hsl(235, 43%, 60%)",
           neutral: "#3D4451",
           "base-100": "#FFFFFF",
           info: "#3ABFF8",

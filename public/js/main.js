@@ -32,6 +32,7 @@ const revKeywords = document.getElementById('rev-keywords')
 const revDescription = document.getElementById('rev-description')
 
 const interpretationMin = document.getElementById('interpretation-minimize')
+const interpretationWindowHeader = document.getElementById('interpretation-window-header')
 const interpretationWindow = document.getElementById('interpretation-window')
 const interpretationBody = document.getElementById('interpretation-body')
 const pastInterpretationCard = document.getElementById('pastInterpretationCard')
@@ -58,6 +59,7 @@ spreadPositionPresent.addEventListener('click', slotMeaningOnClick)
 spreadPositionFuture.addEventListener('click', slotMeaningOnClick)
 
 interpretationMin.addEventListener('click', minimizeInterpretation)
+interpretationWindowHeader.addEventListener('dblclick', minimizeInterpretation)
 
 // window.addEventListener('resize', recalcBoundingBoxes)
 

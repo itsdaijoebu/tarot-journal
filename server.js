@@ -50,7 +50,7 @@ app.use('/dashboard', dashboardRoutes)
 app.use('/admin', adminRoutes)
 app.use('/api', apiRoutes)
 
- 
-app.listen(process.env.PORT || 8000, ()=>{
-    console.log('Server is running, you better catch it!')
+ const PORT = 8000
+app.listen(process.env.PORT || PORT, ()=>{
+    console.log(`Server is running on ${process.env.PORT || PORT}, you better catch it!`)
 })    
