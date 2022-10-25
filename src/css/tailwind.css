@@ -33,11 +33,18 @@
   /* background-color: green; */
 }
 
+
 /**********************************************
 ************CARD MOVEMENT**********************
 ***********************************************/
 .draggable {
   position: absolute;
+}
+.draggable:hover, .deck-container:hover {
+  cursor: grab;
+}
+.draggable.active {
+  cursor: grabbing;
 }
 .draggable.tarot-container {
   z-index: 1;
@@ -57,7 +64,7 @@
   background-color: transparent;
   /* width: 300px; */
   /* height: 200px; */
-  border: 1px solid #f1f1f1;
+  /* border: 1px solid #f1f1f1; */
   /* perspective: 1000px; */
 }
 /* This container is needed to position the front and back side */

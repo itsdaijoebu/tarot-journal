@@ -91,7 +91,8 @@ async function start() {
   populateSelect(cardbackSelect, cardbacks, "name"); // populate select options for cardbacks
   populateSelect(cardfaceSelect, cardCollections, "name"); // populate select options for card faces
   populateSelect(spreadSelect, spreads, "name") // populate select options for spreads
-  setCardbacks(cardbacks[0]._id);
+  let cardback = cardbacks.find(cb => cb.name=='Rider-Waite') // set default as Rider-Waite
+  setCardbacks(cardback._id);
   dragElement(interpretationWindow);
 }
 
@@ -182,6 +183,8 @@ function dragElement(elmnt) {
   function dragMouseDown(e) {
     e = e || window.event;
     e.preventDefault();
+    elmnt.classList.add('active')
+
 
     //reset card's spread position
     elmnt.dataset.spreadPosition = ''
@@ -219,11 +222,12 @@ function dragElement(elmnt) {
     if (elmnt.classList.contains("tarot-container")) {
       spreadPositionsArray.forEach(box => checkCollision(elmnt, box))  // REFACTOR later to just use a for loop since if card is found to be in a spread position, no need to check the rest
     }
-
+    
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
     // elmnt.classList.remove('prevent-pointer')
+    elmnt.classList.remove('active')
   }
 }
 

@@ -545,15 +545,15 @@ html {
 }
 
 :root {
-  --p: 235 58% 56%;
-  --pf: 235 58% 45%;
+  --p: 262 100% 30%;
+  --pf: 262 100% 24%;
   --sf: 314 100% 38%;
   --af: 235 43% 48%;
   --nf: 219 14% 22%;
   --b2: 0 0% 90%;
   --b3: 0 0% 81%;
   --bc: 0 0% 20%;
-  --pc: 235 100% 91%;
+  --pc: 262 100% 86%;
   --sc: 314 100% 89%;
   --ac: 235 100% 92%;
   --nc: 219 60% 86%;
@@ -1586,7 +1586,7 @@ body[dir="rtl"] .checkbox:checked,
 }
 .bg-offwhite {
   --tw-bg-opacity: 1;
-  background-color: hsl(51 100% 98% / var(--tw-bg-opacity));
+  background-color: rgb(247 249 249 / var(--tw-bg-opacity));
 }
 .bg-primary {
   --tw-bg-opacity: 1;
@@ -1668,7 +1668,7 @@ body[dir="rtl"] .checkbox:checked,
 }
 .text-offwhite {
   --tw-text-opacity: 1;
-  color: hsl(51 100% 98% / var(--tw-text-opacity));
+  color: rgb(247 249 249 / var(--tw-text-opacity));
 }
 .text-gray-900 {
   --tw-text-opacity: 1;
@@ -1728,11 +1728,18 @@ body[dir="rtl"] .checkbox:checked,
   /* background-color: green; */
 }
 
+
 /**********************************************
 ************CARD MOVEMENT**********************
 ***********************************************/
 .draggable {
   position: absolute;
+}
+.draggable:hover, .deck-container:hover {
+  cursor: grab;
+}
+.draggable.active {
+  cursor: grabbing;
 }
 .draggable.tarot-container {
   z-index: 1;
@@ -1753,7 +1760,7 @@ body[dir="rtl"] .checkbox:checked,
   background-color: transparent;
   /* width: 300px; */
   /* height: 200px; */
-  border: 1px solid #f1f1f1;
+  /* border: 1px solid #f1f1f1; */
   /* perspective: 1000px; */
 }
 /* This container is needed to position the front and back side */

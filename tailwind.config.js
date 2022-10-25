@@ -12,9 +12,10 @@ module.exports = {
       colors: {
         // primary: "hsl(235, 58%, 56%)",
         // accent: "hsl(235, 43%, 60%)",
-        // offwhite: "56, 91%, 94%",
-        offwhite: "hsl(51, 100%, 98%)"
-        // offwhite: "#F7F9F9",
+        // offwhite: "hsl(56, 91%, 94%)",
+        // offwhite: "hsl(51, 100%, 98%)"
+        offwhite: "#F7F9F9",
+        // offwhite: '#DCDCDD'
       },
     },
   },
@@ -22,7 +23,8 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          primary: "hsl(235, 58%, 56%)",
+          primary: "#390099",
+          // primary: "hsl(235, 58%, 56%)",
           secondary: "#F000B8",
           accent: "hsl(235, 43%, 60%)",
           neutral: "#3D4451",
