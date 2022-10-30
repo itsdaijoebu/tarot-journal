@@ -12,7 +12,8 @@ module.exports = {
       const cards = await Card.find();
       const cardfaces = await Cardface.find().sort({ isMajorArcana: 1, number: 1 });
       const cardCollections = await CardCollection.find().sort({ name: 1 });
-      res.render("edit-collection.ejs", { user: req.user, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections });
+      const defaultImage = "https://res.cloudinary.com/itsdaijoebu-api/image/upload/v1667105416/00227-2311773528-masterpiece_best_quality_the_fool_tarot_card_by_victo_ngai_m6fy0j.png"
+      res.render("edit-collection.ejs", { user: req.user, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections, defaultImage: defaultImage });
     } catch (err) {
       console.log(err);
     }
@@ -38,14 +39,18 @@ module.exports = {
   addCardface: async (req, res) => {
     try {
       const result = await cloudinary.uploader.upload(req.file.path)
-      let cardData = req.body.card.split('-')
-      let cardId = cardData.shift()
-      let number = cardData.shift()
-      let suit = cardData.shift()
-      let arcana = req.body.isMajorArcana ? true : false;
+      const cardData = req.body.card.split('_')
+      const suit = cardData.pop()
+      const number = cardData.pop()
+      const cardId = cardData.pop()
+      const cardCollectionData = req.body.cardCollection.split('_')
+      const cardCollectionName = cardCollectionData.pop()
+      const cardCollectionId = cardCollectionData.pop()
+      const arcana = req.body.isMajorArcana ? true : false;
+      console.log("admin => addCardFace:", req.body)
       let cardface = await Cardface.create({
-        cardCollection: req.body.cardCollection.text,
-        cardCollectionId: req.body.cardCollection,
+        cardCollection: cardCollectionName,
+        cardCollectionId: cardCollectionId,
         cardId: cardId,
         isMajorArcana: arcana,
         number: number,
