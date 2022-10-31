@@ -1740,6 +1740,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .draggable.active {
   cursor: grabbing;
+  width: calc(var(--tarot-scale) * var(--tarot-width) * 1.02);
+  height: calc(var(--tarot-scale) * var(--tarot-height) * 1.02);
+  filter: drop-shadow(0 0 0.5rem hsl(242, 100%, 0%, 0.5))
 }
 .draggable.tarot-container {
   z-index: 1;

@@ -46,7 +46,7 @@ module.exports = {
       const cardCollectionData = req.body.cardCollection.split('_')
       const cardCollectionName = cardCollectionData.pop()
       const cardCollectionId = cardCollectionData.pop()
-      const arcana = req.body.isMajorArcana ? true : false;
+      const arcana = req.body.cardfaceIsMajorArcana === 'on' ? true : false;
       console.log("admin => addCardFace:", req.body)
       let cardface = await Cardface.create({
         cardCollection: cardCollectionName,
