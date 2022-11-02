@@ -42,6 +42,8 @@ const pastInterpretationCardId = document.getElementById('pastInterpretationCard
 const presentInterpretationCardId = document.getElementById('presentInterpretationCardId')
 const futureInterpretationCardId = document.getElementById('futureInterpretationCardId')
 
+const querentQuestion = document.getElementById('querent-question')
+
 // get bounding rects to calculate collisions with cards so that which slot the card is in can be calculated
 // let spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
 // let spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
@@ -58,8 +60,10 @@ spreadPositionPast.addEventListener('click', slotMeaningOnClick)
 spreadPositionPresent.addEventListener('click', slotMeaningOnClick)
 spreadPositionFuture.addEventListener('click', slotMeaningOnClick)
 
-interpretationMin.addEventListener('click', minimizeInterpretation)
-interpretationWindowHeader.addEventListener('dblclick', minimizeInterpretation)
+interpretationMin.addEventListener('click', toggleInterpretation)
+interpretationWindowHeader.addEventListener('dblclick', toggleInterpretation)
+querentQuestion.addEventListener('click', maximizeInterpretation)
+
 
 // window.addEventListener('resize', recalcBoundingBoxes)
 
@@ -280,28 +284,28 @@ function drawCard() {
   function getCardInfo() {
     cardInner.classList.add('doublesided-flipped')
 
-    console.log('click')
+    console.log('click');
     cardNumber.innerText = selectedCard.number.romanize();
     cardSuit.innerText = selectedCard.suit;
-    upKeywords.innerText = selectedCard.upKeywords
-    upDescription.innerText = selectedCard.upDescription
-    saysReversed.classList.remove('hidden')
-    revKeywords.innerText = selectedCard.revKeywords
-    revDescription.innerText = selectedCard.revDescription
+    upKeywords.innerText = selectedCard.upKeywords;
+    upDescription.innerText = selectedCard.upDescription;
+    saysReversed.classList.remove('hidden'); // otherwise the words 'reversed' will appear interpretation window before there's any content
+    revKeywords.innerText = selectedCard.revKeywords;
+    revDescription.innerText = selectedCard.revDescription;
   }
 }
 
 //REFACTOR to use spread position instead of name, and try to consolidate these two methods into a single one
 function slotMeaningOnClick(e) {
   console.log('spread: ', selectedSpread)
-  let positionName = e.target.dataset.spreadPosition
+  let positionName = e.target.dataset.spreadPosition;
   slotTitle.innerText = positionName;
-  slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning
+  slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning;
 }
 function slotMeaningOnCard(positionName) {
-  console.log('position name', positionName)
-  slotTitle.innerText = positionName
-  slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning
+  console.log('position name', positionName);
+  slotTitle.innerText = positionName;
+  slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning;
 }
 
 /***************************************
@@ -317,8 +321,11 @@ function validateInterpretation() {
   }
 }
 
-function minimizeInterpretation() {
+function toggleInterpretation() {
   interpretationBody.classList.toggle('hidden')
+}
+function maximizeInterpretation() {
+  interpretationBody.classList.remove('hidden')
 }
 
 
