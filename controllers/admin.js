@@ -28,7 +28,8 @@ module.exports = {
         upKeywords: req.body.upKeywords,
         upDescription: req.body.upDescription,
         revKeywords: req.body.revKeywords,
-        revDescription: req.body.revDescription
+        revDescription: req.body.revDescription,
+        isReversed: false
       })
       console.log('Card created!')
       res.redirect('./edit-collection')
@@ -111,6 +112,15 @@ module.exports = {
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err);
+    }
+  },
+  addField: async (req, res) => {
+    try {
+      console.log('adding')
+      await Card.updateMany({}, {isReversed: false})
+      res.redirect('./edit-collection')
+    } catch (err) {
+      console.error(err)
     }
   }
 };

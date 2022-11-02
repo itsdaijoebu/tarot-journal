@@ -92,10 +92,11 @@ async function start() {
   await getCardbacks();
   await getCardfaces();
   shuffle(deck);
+  console.log('init deck: ', deck)
   populateSelect(cardbackSelect, cardbacks, "name"); // populate select options for cardbacks
   populateSelect(cardfaceSelect, cardCollections, "name"); // populate select options for card faces
   populateSelect(spreadSelect, spreads, "name") // populate select options for spreads
-  let cardback = cardbacks.find(cb => cb.name=='Rider-Waite') // set default as Rider-Waite
+  let cardback = cardbacks.find(cb => cb.name == 'Rider-Waite') // set default as Rider-Waite
   setCardbacks(cardback._id);
   dragElement(interpretationWindow);
 }
@@ -105,6 +106,9 @@ async function start() {
  *******************************************/
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
+    if (Math.random() < 0.3) {  // reverses the card if under a certain percentage
+      array[i].isReversed = true;
+    }
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
@@ -226,7 +230,7 @@ function dragElement(elmnt) {
     if (elmnt.classList.contains("tarot-container")) {
       spreadPositionsArray.forEach(box => checkCollision(elmnt, box))  // REFACTOR later to just use a for loop since if card is found to be in a spread position, no need to check the rest
     }
-    
+
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
@@ -270,7 +274,6 @@ function drawCard() {
   card.dataset.cardName = `${selectedCard.number} ${selectedCard.suit}`;
   card.id = selectedCard._id;
 
-
   const cardface = document.createElement('div')
   cardface.classList.add('doublesided-front')
   const cardfaceImg = document.createElement('img')
@@ -278,6 +281,9 @@ function drawCard() {
   cardfaceImg.alt = 'face'
   cardface.appendChild(cardfaceImg)
   cardInner.appendChild(cardface)
+  if(selectedCard.isReversed) {
+    card.classList.add('reversed')
+  }
 
   card.onmouseup = getCardInfo
 
@@ -313,8 +319,8 @@ function slotMeaningOnCard(positionName) {
  ***************************************/
 function validateInterpretation() {
   const cardIdFields = document.querySelectorAll('.interpretation-card-id')
-  for(let i = 0; i < cardIdFields.length; i++) {
-    if(!cardIdFields[i].value) {
+  for (let i = 0; i < cardIdFields.length; i++) {
+    if (!cardIdFields[i].value) {
       alert("Please put a card in each of the slots for this spread.")
       return false
     }
@@ -390,18 +396,18 @@ function checkCollision(card, spreadPosition) {
       spreadPositionName = spreadPosition.dataset.spreadPosition;
       card.dataset.spreadPosition = spreadPositionName;
       slotMeaningOnCard(spreadPositionName)
-      console.log("card",card)
+      console.log("card", card)
       console.log('cardId', card.id)
-      if(spreadPositionName.toLowerCase() === 'past') {
+      if (spreadPositionName.toLowerCase() === 'past') {
         pastInterpretationCard.innerText = card.dataset.cardName;
         pastInterpretationCardId.value = card.id;
-      } else if(spreadPositionName.toLowerCase() === 'present') {
+      } else if (spreadPositionName.toLowerCase() === 'present') {
         presentInterpretationCard.innerText = card.dataset.cardName;
         presentInterpretationCardId.value = card.id;
       } else if (spreadPositionName.toLowerCase() === 'future') {
         futureInterpretationCard.innerText = card.dataset.cardName;
         futureInterpretationCardId.value = card.id;
-      } 
+      }
     }
   }
   else return null;

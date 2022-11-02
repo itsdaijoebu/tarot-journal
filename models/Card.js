@@ -7,7 +7,8 @@ const CardSchema = new mongoose.Schema({
     upKeywords: { type: String, required: true },
     upDescription: { type: String, required: true },
     revKeywords: { type: String, required: true },
-    revDescription: { type: String, required: true }
+    revDescription: { type: String, required: true },
+    isReversed: {type: Boolean}
 })
 
 module.exports = mongoose.model("Card", CardSchema);

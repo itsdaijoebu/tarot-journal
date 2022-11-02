@@ -16,7 +16,7 @@
         <label for="question">Question</label>
         <textarea name="question" id="querent-question" cols="30" rows="1" placeholder="Question"></textarea>
 
-        <div class="interpretation-body flex flex-col mx-3 hidden" id="interpretation-body">
+        <div class="interpretation-body flex flex-col hidden mt-4" id="interpretation-body">
             <div class="flex gap-2">
                 <label for="interpretationPast">Past:</label>
                 <span id="pastInterpretationCard"></span>
@@ -84,14 +84,14 @@
 </main>
 
 <section class="flex justify-center gap-3" id="reading-description">
-    <article id="slot-description" class="border-2 border-primary w-1/3 text-center">
-        <p class="font-bold italic"> Slot description</p>
+    <article id="slot-description" class="w-1/3 border-2 border-primary text-center py-2 px-8">
+        <p class="font-bold italic mb-4"> Slot description</p>
         <p id="slot-title" class="font-bold capitalize"></p>
         <p id="slot-description-text" class="text-left"></p>
 
     </article>
-    <article id="card-description" class="border-2 border-primary w-3/5 text-center">
-        <p class="font-bold italic">Card description</p>
+    <article id="card-description" class="w-3/5 border-2 border-primary text-center py-2 px-8">
+        <p class="font-bold italic mb-4">Card description</p>
         <p>
             <span id="card-number" class="font-bold"></span> <span id="card-suit" class="font-bold"></span>
         </p>

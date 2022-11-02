@@ -1418,6 +1418,9 @@ body[dir="rtl"] .checkbox:checked,
 .mt-4 {
   margin-top: 1rem;
 }
+.mb-4 {
+  margin-bottom: 1rem;
+}
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -1610,6 +1613,14 @@ body[dir="rtl"] .checkbox:checked,
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1625,10 +1636,6 @@ body[dir="rtl"] .checkbox:checked,
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-}
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 .px-10 {
   padding-left: 2.5rem;
@@ -1756,7 +1763,7 @@ body[dir="rtl"] .checkbox:checked,
   pointer-events: none;
 }
 /**********************************************
-************CARD FLIP ANIMATION*****************
+*******CARD FLIP ANIMATION AND PROPERTIES******
 ***********************************************/
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .doublesided {
@@ -1782,6 +1789,9 @@ body[dir="rtl"] .checkbox:checked,
 .doublesided-flipped {
   transform: rotateY(180deg);
 }
+.reversed {
+  transform: rotateX(180deg);
+}
 /* Position the front and back side */
 .doublesided-front, .doublesided-back {
   position: absolute;
@@ -1801,6 +1811,7 @@ body[dir="rtl"] .checkbox:checked,
   color: white;
   transform: rotateY(180deg);
 }
+
 
 /**********************************************
 ************ADMIN STYLES***********************

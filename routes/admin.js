@@ -11,4 +11,5 @@ router.post('/add-cardface', upload.single('cardfaceFile'), adminController.addC
 router.post('/add-cardback', upload.single('cardbackFile'), adminController.addCardback)
 router.post('/add-card-collection', adminController.addCardCollection)
 router.post('/add-spread', adminController.addSpread)
+router.get('/add-field', adminController.addField)
 module.exports = router
