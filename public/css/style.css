@@ -1738,7 +1738,7 @@ body[dir="rtl"] .checkbox:checked,
 .draggable:hover, .deck-container:hover {
   cursor: grab;
 }
-.draggable..tarot-container.active {
+.draggable.tarot-container.active {
   cursor: grabbing;
   width: calc(var(--tarot-scale) * var(--tarot-width) * 1.02);
   height: calc(var(--tarot-scale) * var(--tarot-height) * 1.02);
