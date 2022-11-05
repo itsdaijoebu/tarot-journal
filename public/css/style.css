@@ -1738,13 +1738,13 @@ body[dir="rtl"] .checkbox:checked,
 }
 
 /**********************************************
-************CARD MOVEMENT**********************
+************DRAGGABLE ELEMENT MOVEMENT*********
 ***********************************************/
 .draggable {
   position: absolute;
 }
-.draggable:hover,
-.deck-container:hover {
+  .tarot-container:hover,
+  .deck-container:hover {
   cursor: grab;
 }
 .draggable.tarot-container.active {
@@ -1763,6 +1763,11 @@ body[dir="rtl"] .checkbox:checked,
 }
 .prevent-pointer {
   pointer-events: none;
+}
+
+.draggable.interpretation-window {
+  top: 7%;
+  left: 2%;
 }
 /**********************************************
 *******CARD FLIP ANIMATION AND PROPERTIES******
