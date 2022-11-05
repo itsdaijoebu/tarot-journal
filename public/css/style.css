@@ -1606,6 +1606,14 @@ body[dir="rtl"] .checkbox:checked,
   -o-object-fit: cover;
      object-fit: cover;
 }
+.object-fill {
+  -o-object-fit: fill;
+     object-fit: fill;
+}
+.object-none {
+  -o-object-fit: none;
+     object-fit: none;
+}
 .p-0\.5 {
   padding: 0.125rem;
 }

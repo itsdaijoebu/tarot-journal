@@ -53,6 +53,9 @@ let spreadPositionsArray = [spreadPositionPast, spreadPositionPresent, spreadPos
 // spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
 // spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
 
+// reversal variables
+let reversedChance = 0.3;
+
 // event listeners
 deckImage.addEventListener('mousedown', drawCard)
 
@@ -92,7 +95,7 @@ async function start() {
   await getCardbacks();
   await getCardfaces();
   shuffle(deck);
-  console.log('init deck: ', deck)
+  deck[0].isReversed ? deckImage.classList.add('reversed') : deckImage.classList.remove('reversed')
   populateSelect(cardbackSelect, cardbacks, "name"); // populate select options for cardbacks
   populateSelect(cardfaceSelect, cardCollections, "name"); // populate select options for card faces
   populateSelect(spreadSelect, spreads, "name") // populate select options for spreads
@@ -107,7 +110,7 @@ async function start() {
  *******************************************/
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    if (Math.random() < 0.3) {  // reverses the card if under a certain percentage
+    if (Math.random() < reversedChance) {  // reverses the card if under a certain percentage
       array[i].isReversed = true; // reminder to future me: the deck is an array, but each card is an object
     }
     const j = Math.floor(Math.random() * (i + 1));
@@ -257,6 +260,7 @@ function dragElement(elmnt) {
 function drawCard() {
   console.log('draw card')
   if (deck.length < 2) {  // <2 since this method fires after drawing the last card
+    // deckImage.classList.remove('reversed')  // just in case deck is reversed from last card
     deckImage.classList.add('empty-deck')
     deckImage.removeEventListener('mousedown', drawCard)
   }
@@ -276,6 +280,7 @@ function drawCard() {
   const cardbackImg = document.createElement('img')
   cardbackImg.src = selectedCardback
   cardbackImg.alt = 'back'
+  cardbackImg.classList.add('object-fill')
   cardback.appendChild(cardbackImg)
   cardInner.appendChild(cardback)
 
@@ -291,11 +296,15 @@ function drawCard() {
   const cardfaceImg = document.createElement('img')
   cardfaceImg.src = selectedCardFaces.find(cardFace => cardFace.cardId === selectedCard._id).image
   cardfaceImg.alt = 'face'
+  cardfaceImg.classList.add('object-fill')
   cardface.appendChild(cardfaceImg)
   cardInner.appendChild(cardface)
   if(selectedCard.isReversed) {
     card.classList.add('reversed')
   }
+
+  // if next card is reversed, flip deckImage so it looks like it
+  isNextReversed();
 
   card.onmouseup = getCardInfo
 
@@ -412,7 +421,6 @@ function checkCollision(card, spreadPosition) {
       console.log('cardId', card.id)
       if (spreadPositionName.toLowerCase() === 'past') {
         pastInterpretationCard.innerText = card.dataset.cardName;
-        console.log('reversed? ', card.dataset.isReversed)
         if(card.dataset.isReversed == 'true') pastInterpretationCard.innerText += ' reversed'
         pastInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       } else if (spreadPositionName.toLowerCase() === 'present') {
@@ -427,6 +435,9 @@ function checkCollision(card, spreadPosition) {
     }
   }
   else return null;
+}
+function isNextReversed() {
+  deck[0].isReversed ? deckImage.classList.add('reversed') : deckImage.classList.remove('reversed')
 }
 
 /******************
