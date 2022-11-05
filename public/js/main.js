@@ -98,6 +98,7 @@ async function start() {
   populateSelect(spreadSelect, spreads, "name") // populate select options for spreads
   let cardback = cardbacks.find(cb => cb.name == 'Rider-Waite') // set default as Rider-Waite
   setCardbacks(cardback._id);
+  setCardbackSelectValue(cardback._id);
   dragElement(interpretationWindow);
 }
 
@@ -113,20 +114,29 @@ function shuffle(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+// select = chosen 'select' element on the html page to populate, ex. cardbackSelect => the select element in the html for selecting cardbacks
+// options = array of objects with which to populate the select element, ex. cardbacks => an array holding all the cardbacks from the database
+// property = name of the property to use to populate the select, ex. name => use the names of the cardbacks in the cardbacks array to populate the select element
 function populateSelect(select, options, property) {
-  options.forEach((o) => {
+  options.forEach((option) => {
     let element = document.createElement("option");
-    let name = o[property];
-    element.value = name;
-    element.textContent = name;
+    element.value = option._id;
+    element.textContent = option[property];;
     select.appendChild(element);
   });
 }
+
+/*******************************************
+ * Set card images and defaults
+ ******************************************/
 function setCardbacks(cardbackId) {
   selectedCardback = cardbacks.find(
     (cardback) => cardback._id === cardbackId
   ).image;
   deckImage.src = selectedCardback;
+}
+function setCardbackSelectValue(cardbackId) {
+  cardbackSelect.value = cardbackId
 }
 
 /******************************************
@@ -238,6 +248,7 @@ function dragElement(elmnt) {
     elmnt.classList.remove('active')
   }
 }
+
 
 
 /******************************************
