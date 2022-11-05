@@ -6,6 +6,8 @@ const CardCollection = require("../models/CardCollection");
 const Spread = require("../models/Spread")
 const cloudinary = require("../middleware/cloudinary");
 
+const Reading = require("../models/Reading");
+
 module.exports = {
   editCollection: async (req, res) => {
     try {
@@ -117,7 +119,7 @@ module.exports = {
   addField: async (req, res) => {
     try {
       console.log('adding')
-      await Card.updateMany({}, {isReversed: false})
+      await Reading.updateMany({}, {isReversed: false})
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err)

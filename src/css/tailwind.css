@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --tarot-height: calc(4.75rem / 16);
   --tarot-width: calc(2.75rem / 16);
@@ -33,28 +32,28 @@
   /* background-color: green; */
 }
 
-
 /**********************************************
 ************CARD MOVEMENT**********************
 ***********************************************/
 .draggable {
   position: absolute;
 }
-.draggable:hover, .deck-container:hover {
+.draggable:hover,
+.deck-container:hover {
   cursor: grab;
 }
 .draggable.tarot-container.active {
   cursor: grabbing;
   width: calc(var(--tarot-scale) * var(--tarot-width) * 1.02);
   height: calc(var(--tarot-scale) * var(--tarot-height) * 1.02);
-  filter: drop-shadow(0 0 0.5rem hsl(242, 100%, 0%, 0.5))
+  filter: drop-shadow(0 0 0.5rem hsl(242, 100%, 0%, 0.5));
 }
 .draggable.tarot-container {
   z-index: 1;
 }
 /* for when the deck runs out */
 .empty-deck {
-    @apply grayscale;
+  @apply grayscale;
 }
 .prevent-pointer {
   pointer-events: none;
@@ -90,7 +89,8 @@
   transform: rotateX(180deg);
 }
 /* Position the front and back side */
-.doublesided-front, .doublesided-back {
+.doublesided-front,
+.doublesided-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -109,7 +109,6 @@
   transform: rotateY(180deg);
 }
 
-
 /**********************************************
 ************ADMIN STYLES***********************
 ***********************************************/
@@ -124,7 +123,6 @@
   gap: 1.25rem;
 }
 
-
 /**********************************************
 **************UTILITY STYLES******************
 **********************************************/
@@ -137,4 +135,16 @@
 }
 .testElement {
   background-color: green;
+}
+.descriptor-text {
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.content {
+  flex: 1 0 auto;
+}
+.hide {
+  height: 0;
+  overflow: hidden;
 }

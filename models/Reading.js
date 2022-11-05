@@ -3,8 +3,11 @@ const { ObjectId } = require("mongodb");
 
 const PpfSchema = mongoose.Schema ({
   past: String,
+  pastReversed: Boolean,
   present: String,
-  future: String
+  presentReversed: Boolean,
+  future: String,
+  futureReversed: Boolean,
 })
 
 // spread is type of spread (past/present/future, celtic cross, etc),

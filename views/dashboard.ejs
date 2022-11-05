@@ -2,7 +2,7 @@
 
 <form action="dashboard/save-reading" onsubmit="return validateInterpretation()" id="interpretation-window"
     method="POST"
-    class="z-50 w-1/3  draggable interpretation-window border-4 border-accent p-0.5 bg-offwhite flex flex-col">
+    class="z-50 w-1/3 draggable interpretation-window border-4 border-accent p-0.5 bg-offwhite flex flex-col">
 
 
     <div id="interpretation-window-header" class="bg-primary text-offwhite text-center py-1 cursor-move">
@@ -11,12 +11,11 @@
         <h3> Interpretation</h3>
     </div>
 
-
     <section class="interpretation-body flex flex-col mx-3" id="interpretation-body-container">
         <label for="question">Question</label>
-        <textarea name="question" id="querent-question" cols="30" rows="1" placeholder="Question"></textarea>
+        <textarea name="question" id="querent-question" cols="30" rows="1" placeholder="What question do you have for the cards?"></textarea>
 
-        <div class="interpretation-body flex flex-col hidden mt-4" id="interpretation-body">
+        <div class="interpretation-body flex flex-col hide mt-4" id="interpretation-body">
             <div class="flex gap-2">
                 <label for="interpretationPast">Past:</label>
                 <span id="pastInterpretationCard"></span>
@@ -85,13 +84,13 @@
 
 <section class="flex justify-center gap-3" id="reading-description">
     <article id="slot-description" class="w-1/3 border-2 border-primary text-center py-2 px-8">
-        <p class="font-bold italic mb-4"> Slot description</p>
+        <p class="descriptor-text"> Slot description</p>
         <p id="slot-title" class="font-bold capitalize"></p>
         <p id="slot-description-text" class="text-left"></p>
 
     </article>
     <article id="card-description" class="w-3/5 border-2 border-primary text-center py-2 px-8">
-        <p class="font-bold italic mb-4">Card description</p>
+        <p class="descriptor-text">Card description</p>
         <p>
             <span id="card-number" class="font-bold"></span> <span id="card-suit" class="font-bold"></span>
         </p>

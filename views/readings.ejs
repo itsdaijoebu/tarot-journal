@@ -5,6 +5,10 @@
 
         <h1 class="font-bold"><%=user.username%>'s Readings</h1>
 
+        <%if(readings.length < 1) {%>
+            <h2 class="italic my-4">You don't have any readings yet</h2>
+        <%}%>
+
         <%for(let reading of readings) {%>
         <section class="mb-6 ">
             <h2 class="font-bold italic"><%=reading.question%></h2>
@@ -19,14 +23,14 @@
 
             <section class="flex flex-col ">
                 <div class="reading-container">
-                    <img src=<%=pastUrl%> alt="past" class="browse-thumbnail">
+                    <img src=<%=pastUrl%> alt="past" class="browse-thumbnail <%if(reading.reading.pastReversed){%> reversed <%}%>">
                     <div>
                         <h3 class="font-bold">Past</h3>
                         <p><%=reading.interpretation.past%></p>
                     </div>
                 </div>
                 <div class="reading-container">
-                    <img src=<%=presentUrl%> alt="present" class="browse-thumbnail">
+                    <img src=<%=presentUrl%> alt="present" class="browse-thumbnail <%if(reading.reading.presentReversed){%> reversed <%}%>">
                     <div>
                         <h3 class="font-bold">Present</h3>
                         <p><%=reading.interpretation.present%></p>
@@ -34,7 +38,7 @@
 
                 </div>
                 <div class="reading-container">
-                    <img src=<%=futureUrl%> alt="future" class="browse-thumbnail">
+                    <img src=<%=futureUrl%> alt="future" class="browse-thumbnail <%if(reading.reading.futureReversed){%> reversed <%}%>">
                     <div>
                         <h3 class="font-bold">Future</h3>
                         <p><%=reading.interpretation.future%></p>

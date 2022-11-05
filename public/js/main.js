@@ -107,7 +107,7 @@ async function start() {
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     if (Math.random() < 0.3) {  // reverses the card if under a certain percentage
-      array[i].isReversed = true;
+      array[i].isReversed = true; // reminder to future me: the deck is an array, but each card is an object
     }
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -245,7 +245,7 @@ function dragElement(elmnt) {
  *******************************************/
 function drawCard() {
   console.log('draw card')
-  if (deck.length < 2) {
+  if (deck.length < 2) {  // <2 since this method fires after drawing the last card
     deckImage.classList.add('empty-deck')
     deckImage.removeEventListener('mousedown', drawCard)
   }
@@ -271,7 +271,8 @@ function drawCard() {
   // get the next card in the deck
   const selectedCard = deck.shift();
   console.log('selected card: ', selectedCard)
-  card.dataset.cardName = `${selectedCard.number} ${selectedCard.suit}`;
+  card.dataset.cardName = `${selectedCard.number.romanize()} ${selectedCard.suit}`;
+  card.dataset.isReversed = selectedCard.isReversed
   card.id = selectedCard._id;
 
   const cardface = document.createElement('div')
@@ -290,7 +291,7 @@ function drawCard() {
   function getCardInfo() {
     cardInner.classList.add('doublesided-flipped')
 
-    console.log('click');
+    console.log('get card info');
     cardNumber.innerText = selectedCard.number.romanize();
     cardSuit.innerText = selectedCard.suit;
     upKeywords.innerText = selectedCard.upKeywords;
@@ -328,10 +329,10 @@ function validateInterpretation() {
 }
 
 function toggleInterpretation() {
-  interpretationBody.classList.toggle('hidden')
+  interpretationBody.classList.toggle('hide')
 }
 function maximizeInterpretation() {
-  interpretationBody.classList.remove('hidden')
+  interpretationBody.classList.remove('hide')
 }
 
 
@@ -345,7 +346,7 @@ Number.prototype.romanize = function () {
     return NaN;
   if (this == 0)
     return 0
-  var digits = String(+this).split(""),
+  let digits = String(+this).split(""),
     key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
       "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC",
       "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
@@ -400,13 +401,17 @@ function checkCollision(card, spreadPosition) {
       console.log('cardId', card.id)
       if (spreadPositionName.toLowerCase() === 'past') {
         pastInterpretationCard.innerText = card.dataset.cardName;
-        pastInterpretationCardId.value = card.id;
+        console.log('reversed? ', card.dataset.isReversed)
+        if(card.dataset.isReversed == 'true') pastInterpretationCard.innerText += ' reversed'
+        pastInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       } else if (spreadPositionName.toLowerCase() === 'present') {
         presentInterpretationCard.innerText = card.dataset.cardName;
-        presentInterpretationCardId.value = card.id;
+        if(card.dataset.isReversed == 'true') presentInterpretationCard.innerText += ' reversed'
+        presentInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       } else if (spreadPositionName.toLowerCase() === 'future') {
         futureInterpretationCard.innerText = card.dataset.cardName;
-        futureInterpretationCardId.value = card.id;
+        if(card.dataset.isReversed == 'true') futureInterpretationCard.innerText += ' reversed'
+        futureInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       }
     }
   }

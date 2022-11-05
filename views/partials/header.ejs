@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-offwhite h-full">
 
 <head>
   <meta charset="UTF-8" />
@@ -13,7 +13,7 @@
   <title><%= title %></title>
 </head>
 
-<body class="bg-offwhite">
+<body class="flex flex-col h-full">
   <header class="flex justify-end bg-primary py-2 px-10 text-offwhite space-x-10">
     <%if(user) {%>
       <a href="/">Home</a>
@@ -24,3 +24,4 @@
     <a href="/signup"> Sign Up</a>
     <%}%>
   </header>
+  <div class="content">

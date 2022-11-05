@@ -39,13 +39,19 @@ module.exports = {
     try {
       console.log('user: ', req.user)
       console.log('req body', req.body)
+      const pastInfo = req.body.pastInterpretationCardId.split('-')
+      const presentInfo = req.body.presentInterpretationCardId.split('-')
+      const futureInfo = req.body.futureInterpretationCardId.split('-')
       let reading = await Reading.create({
         userId: req.user._id,
         spread: 'Past/Present/Future',
         reading: {
-          past: req.body.pastInterpretationCardId,
-          present: req.body.presentInterpretationCardId,
-          future: req.body.futureInterpretationCardId
+          past: pastInfo[0],
+          pastReversed: pastInfo[1],
+          present: presentInfo[0],
+          presentReversed: presentInfo[1],
+          future: futureInfo[0],
+          futureReversed: futureInfo[1]
         },
         question: req.body.question,
         interpretation: {
