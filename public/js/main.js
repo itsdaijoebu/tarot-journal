@@ -234,11 +234,11 @@ function dragElement(elmnt) {
     mousePosX = e.clientX;
     mousePosY = e.clientY;
     // console.log(pos1, pos2, mousePosX, mousePosY, document.body.clientWidth, elmnt.clientWidth, elmnt.getBoundingClientRect())
-    
+
     // set the element's new position. if statement ensures element can't go too far outside window
-    if (mousePosX-10 > 0 && mousePosY-10 > 0 
-      && (elmnt.clientWidth/5)+elmnt.offsetLeft-pos1 < document.body.scrollWidth 
-      && (elmnt.clientHeight)+elmnt.offsetTop-pos2 < document.body.scrollHeight) {
+    if (mousePosX - 10 > 0 && mousePosY - 10 > 0
+      && (elmnt.clientWidth / 5) + elmnt.offsetLeft - pos1 < document.body.scrollWidth
+      && (elmnt.clientHeight) + elmnt.offsetTop - pos2 < document.body.scrollHeight) {
       elmnt.style.top = elmnt.offsetTop - pos2 + "px";
       elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
     }
@@ -314,11 +314,10 @@ function drawCard() {
   card.onmouseup = getCardInfo
 
   function getCardInfo() {
+    if (cardDescription.dataset.cardId !== selectedCard._id) {
+      cardDescription.scrollTo(0, 0);
+    }
     cardInner.classList.add('doublesided-flipped')
-    if(cardDescription.dataset.cardId !== selectedCard._id) {
-      cardDescription.scrollTo(0,0);
-    } 
-    cardDescription.dataset.cardId = selectedCard._id;
     cardNumber.innerText = selectedCard.number.romanize();
     cardSuit.innerText = selectedCard.suit;
     upKeywords.innerText = selectedCard.upKeywords;
@@ -326,6 +325,16 @@ function drawCard() {
     saysReversed.classList.remove('hidden'); // otherwise the words 'reversed' will appear interpretation window before there's any content
     revKeywords.innerText = selectedCard.revKeywords;
     revDescription.innerText = selectedCard.revDescription;
+
+
+    // scroll to reversed section of card. Currently works pretty badly and needs a better way to do it
+    // if (selectedCard.isReversed) {
+    //   const reversedContainer = document.getElementById('reversed-container')
+    //   reversedContainer.scrollIntoView({ behavior: 'smooth' }, true);
+    // }  
+
+    cardDescription.dataset.cardId = selectedCard._id;
+
   }
 }
 
@@ -333,16 +342,16 @@ function drawCard() {
 function slotMeaningOnClick(e) {
   console.log('spread: ', selectedSpread)
   let positionName = e.target.dataset.spreadPosition;
-  if(slotTitle.innerText.toLowerCase() !== positionName) {
+  if (slotTitle.innerText.toLowerCase() !== positionName) {
     console.log('slot title stuff: ', slotTitle.innerText, positionName)
-    slotDescription.scrollTo(0,0);
+    slotDescription.scrollTo(0, 0);
   }
   slotTitle.innerText = positionName;
   slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning;
 }
 function slotMeaningOnCard(positionName) {
-  if(slotTitle.innerText.toLowerCase() !== positionName) {
-    slotDescription.scrollTo(0,0);
+  if (slotTitle.innerText.toLowerCase() !== positionName) {
+    slotDescription.scrollTo(0, 0);
   }
   slotTitle.innerText = positionName;
   slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning;
@@ -418,7 +427,7 @@ let futureQueue = []
 
 function addToInterpretationSlot(card, slotName, slotId, queue) {
   slotName.innerText = card.dataset.cardName
-  if (card.dataset.isReversed == 'true') slotName.innerText += ' reversed'
+  if (card.dataset.isReversed == 'true') slotName.innerText += ' Reversed'
   slotId.value = `${card.id}-${card.dataset.isReversed}`;
   queue.push(card)
 }

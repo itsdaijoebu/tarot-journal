@@ -89,23 +89,23 @@
 
     <section class="flex flex-col justify-center gap-3 w-1/3 mt-6 reading-description-container"
         id="reading-description">
-        <article id="slot-description"
-            class="border-2 border-primary text-center reading-description-textbox h-1/3">
+        <article id="slot-description" class="border-2 border-primary text-center reading-description-textbox h-1/3">
             <p class="descriptor-text"> Slot description</p>
             <p id="slot-title" class="font-bold capitalize"></p>
             <p id="slot-description-text" class="text-left"></p>
 
         </article>
-        <article id="card-description"
-            class="border-2 border-primary text-center reading-description-textbox h-2/3">
+        <article id="card-description" class="border-2 border-primary text-center reading-description-textbox h-2/3">
             <p class="descriptor-text">Card description</p>
             <p id="card-number" class="font-bold"></p>
             <p id="card-suit" class="font-bold"></p>
             <p id="up-keywords" class="italic"></p>
             <p id="up-description" class="description text-left"></p>
-            <p id="saysReversed" class="font-bold italic hidden mt-4">Reversed</p>
-            <p id="rev-keywords" class="italic"></p>
-            <p id="rev-description" class="description text-left"></p>
+            <section class="bg-slate-200 px-2 relative" id="reversed-container">
+                <p id="saysReversed" class="font-bold italic hidden mt-4">Reversed</p>
+                <p id="rev-keywords" class="italic"></p>
+                <p id="rev-description" class="description text-left"></p>
+            </section>
         </article>
     </section>
 </main>
