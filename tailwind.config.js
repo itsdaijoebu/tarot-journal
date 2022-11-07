@@ -17,6 +17,13 @@ module.exports = {
         offwhite: "#F7F9F9",
         // offwhite: '#DCDCDD'
       },
+      flexGrow: {
+        '2': 2,
+      },
+      flex: {
+        '1-auto': '1 1 auto',
+        '2-auto': '2 2 auto'
+      }
     },
   },
   daisyui: {

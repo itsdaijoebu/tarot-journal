@@ -20,9 +20,11 @@ const cardbackSelect = document.getElementById("cardback-select");
 const cardfaceSelect = document.getElementById("cardface-select");
 const spreadSelect = document.getElementById('spread-select')
 
+const slotDescription = document.getElementById('slot-description');
 const slotDescriptionText = document.getElementById('slot-description-text');
-const slotTitle = document.getElementById('slot-title')
+const slotTitle = document.getElementById('slot-title');
 
+const cardDescription = document.getElementById('card-description')
 const cardNumber = document.getElementById('card-number')
 const cardSuit = document.getElementById('card-suit')
 const upKeywords = document.getElementById('up-keywords')
@@ -68,7 +70,7 @@ interpretationWindowHeader.addEventListener('dblclick', toggleInterpretation)
 querentQuestion.addEventListener('click', maximizeInterpretation)
 
 
-// window.addEventListener('resize', recalcBoundingBoxes)
+// window.addEventListener('resize', getWindowSize)
 
 // card variables
 let cards;
@@ -192,8 +194,8 @@ function dragElement(elmnt) {
   console.log('elmnt', elmnt)
   var pos1 = 0,
     pos2 = 0,
-    pos3 = 0,
-    pos4 = 0;
+    mousePosX = 0,
+    mousePosY = 0;
   if (document.getElementById(elmnt.id + "-header")) {
     /* if present, the header is where you move the DIV from:*/
     document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
@@ -206,17 +208,17 @@ function dragElement(elmnt) {
     e.preventDefault();
     elmnt.classList.add('active')
 
-
-    //reset card's spread position
-    elmnt.dataset.spreadPosition = ''
-
     // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
+    mousePosX = e.clientX;
+    mousePosY = e.clientY;
 
-    // move element to sit on top of everything else
+    //things to do if it's not the interpretation window
     if (!elmnt.classList.contains('interpretation-window')) {
-      elmnt.parentNode.appendChild(elmnt)
+      elmnt.parentNode.appendChild(elmnt)  // move element to sit on top of everything else
+      if (elmnt.dataset.spreadPosition) {
+        removeFromInterpretationSlot(elmnt);
+      }
+      elmnt.dataset.spreadPosition = ''  //reset card's spread position
     }
 
     document.onmouseup = closeDragElement;
@@ -227,15 +229,19 @@ function dragElement(elmnt) {
     e = e || window.event;
     e.preventDefault();
     // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-    elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
-    // elmnt.classList.add('prevent-pointer')
-
+    pos1 = mousePosX - e.clientX;
+    pos2 = mousePosY - e.clientY;
+    mousePosX = e.clientX;
+    mousePosY = e.clientY;
+    // console.log(pos1, pos2, mousePosX, mousePosY, document.body.clientWidth, elmnt.clientWidth, elmnt.getBoundingClientRect())
+    
+    // set the element's new position. if statement ensures element can't go too far outside window
+    if (mousePosX-10 > 0 && mousePosY-10 > 0 
+      && (elmnt.clientWidth/5)+elmnt.offsetLeft-pos1 < document.body.scrollWidth 
+      && (elmnt.clientHeight)+elmnt.offsetTop-pos2 < document.body.scrollHeight) {
+      elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+      elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+    }
   }
   function closeDragElement() {
     // if card collides with a spread position by over a certain percentage (initially 60%) when dropped,
@@ -251,7 +257,6 @@ function dragElement(elmnt) {
     elmnt.classList.remove('active')
   }
 }
-
 
 
 /******************************************
@@ -299,7 +304,7 @@ function drawCard() {
   cardfaceImg.classList.add('object-fill')
   cardface.appendChild(cardfaceImg)
   cardInner.appendChild(cardface)
-  if(selectedCard.isReversed) {
+  if (selectedCard.isReversed) {
     card.classList.add('reversed')
   }
 
@@ -310,8 +315,10 @@ function drawCard() {
 
   function getCardInfo() {
     cardInner.classList.add('doublesided-flipped')
-
-    console.log('get card info');
+    if(cardDescription.dataset.cardId !== selectedCard._id) {
+      cardDescription.scrollTo(0,0);
+    } 
+    cardDescription.dataset.cardId = selectedCard._id;
     cardNumber.innerText = selectedCard.number.romanize();
     cardSuit.innerText = selectedCard.suit;
     upKeywords.innerText = selectedCard.upKeywords;
@@ -326,11 +333,17 @@ function drawCard() {
 function slotMeaningOnClick(e) {
   console.log('spread: ', selectedSpread)
   let positionName = e.target.dataset.spreadPosition;
+  if(slotTitle.innerText.toLowerCase() !== positionName) {
+    console.log('slot title stuff: ', slotTitle.innerText, positionName)
+    slotDescription.scrollTo(0,0);
+  }
   slotTitle.innerText = positionName;
   slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning;
 }
 function slotMeaningOnCard(positionName) {
-  console.log('position name', positionName);
+  if(slotTitle.innerText.toLowerCase() !== positionName) {
+    slotDescription.scrollTo(0,0);
+  }
   slotTitle.innerText = positionName;
   slotDescriptionText.innerText = selectedSpread.positions.find(position => position.name.toLowerCase() === positionName.toLowerCase()).meaning;
 }
@@ -378,16 +391,18 @@ Number.prototype.romanize = function () {
 }
 
 // collision detection
-function recalcBoundingBoxes() {
-  spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
-  spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
-  spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
 
-  spreadPositions.set(spreadPositionPast, spreadPositionPastBox)
-  spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
-  spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
-  console.log('spread positions: ', spreadPositions)
-}
+
+// function recalcBoundingBoxes() {
+//   spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
+//   spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
+//   spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
+
+//   spreadPositions.set(spreadPositionPast, spreadPositionPastBox)
+//   spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
+//   spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
+//   console.log('spread positions: ', spreadPositions)
+// }
 const calculateCollisionLength = (point1, point2, length1, length2) => {
   const pointb1 = point1 + length1;
   const pointb2 = point2 + length2;
@@ -395,6 +410,60 @@ const calculateCollisionLength = (point1, point2, length1, length2) => {
   const diff2 = Math.abs(pointb1 - pointb2);
   return (length1 + length2 - diff1 - diff2) / 2;
 }
+
+//queue of cards on a given slot
+let pastQueue = []
+let presentQueue = []
+let futureQueue = []
+
+function addToInterpretationSlot(card, slotName, slotId, queue) {
+  slotName.innerText = card.dataset.cardName
+  if (card.dataset.isReversed == 'true') slotName.innerText += ' reversed'
+  slotId.value = `${card.id}-${card.dataset.isReversed}`;
+  queue.push(card)
+}
+// function removeFromInterpretationSlot(slotName, slotId, queue) {
+//   queue.pop()
+//   let lastElement = queue[queue.length-1]
+//   slotName.innerText = lastElement.dataset.cardName
+//   if (lastElement.dataset.isReversed == 'true') slotName.innerText += ' reversed'
+//   slotId.value == `${lastElement.id}-${lastElement.dataset.isReversed}`
+// }
+function removeFromInterpretationSlot(elmnt) {
+  console.log('removed', elmnt.dataset.spreadPosition)
+  const slot = elmnt.dataset.spreadPosition;
+  let queue;
+  let interpretationWindowSlot;
+  let interpretationWindowId;
+  if (slot === 'past') {
+    queue = pastQueue;
+    interpretationWindowSlot = pastInterpretationCard;
+    interpretationWindowId = pastInterpretationCardId;
+  } else if (slot === 'present') {
+    queue = presentQueue
+    interpretationWindowSlot = presentInterpretationCard;
+    interpretationWindowId = presentInterpretationCardId;
+  } else if (slot === 'future') {
+    queue = futureQueue
+    interpretationWindowSlot = futureInterpretationCard;
+    interpretationWindowId = futureInterpretationCardId;
+  } else {
+    console.error('something went wrong in the removefrominterpretationslot')
+  }
+  queue.pop();
+  console.log('intwinid:', interpretationWindowId)
+  if (queue.length > 0) {
+    const lastElement = queue[queue.length - 1]
+    interpretationWindowSlot.innerText = lastElement.dataset.cardName
+    if (lastElement.dataset.isReversed == 'true') interpretationWindowSlot.innerText += ' reversed'
+    interpretationWindowId.value = `${lastElement.id}-${lastElement.dataset.isReversed}`
+  } else {
+    interpretationWindowSlot.innerText = ''
+    interpretationWindowId.value = ''
+  }
+
+}
+
 function checkCollision(card, spreadPosition) {
   let spreadPositionBox = spreadPosition.getBoundingClientRect();
   const cardBox = card.getBoundingClientRect();
@@ -420,17 +489,20 @@ function checkCollision(card, spreadPosition) {
       console.log("card", card)
       console.log('cardId', card.id)
       if (spreadPositionName.toLowerCase() === 'past') {
-        pastInterpretationCard.innerText = card.dataset.cardName;
-        if(card.dataset.isReversed == 'true') pastInterpretationCard.innerText += ' reversed'
-        pastInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
+        addToInterpretationSlot(card, pastInterpretationCard, pastInterpretationCardId, pastQueue)
+        // pastInterpretationCard.innerText = card.dataset.cardName;
+        // if(card.dataset.isReversed == 'true') pastInterpretationCard.innerText += ' reversed'
+        // pastInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       } else if (spreadPositionName.toLowerCase() === 'present') {
-        presentInterpretationCard.innerText = card.dataset.cardName;
-        if(card.dataset.isReversed == 'true') presentInterpretationCard.innerText += ' reversed'
-        presentInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
+        addToInterpretationSlot(card, presentInterpretationCard, presentInterpretationCardId, presentQueue)
+        // presentInterpretationCard.innerText = card.dataset.cardName;
+        // if (card.dataset.isReversed == 'true') presentInterpretationCard.innerText += ' reversed'
+        // presentInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       } else if (spreadPositionName.toLowerCase() === 'future') {
-        futureInterpretationCard.innerText = card.dataset.cardName;
-        if(card.dataset.isReversed == 'true') futureInterpretationCard.innerText += ' reversed'
-        futureInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
+        addToInterpretationSlot(card, futureInterpretationCard, futureInterpretationCardId, futureQueue)
+        // futureInterpretationCard.innerText = card.dataset.cardName;
+        // if (card.dataset.isReversed == 'true') futureInterpretationCard.innerText += ' reversed'
+        // futureInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       }
     }
   }

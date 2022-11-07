@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --tarot-height: calc(4.75rem / 16);
-  --tarot-width: calc(2.75rem / 16);
-  --tarot-scale: 75;
+  /* --tarot-height: calc(4.75rem / 16);
+  --tarot-width: calc(2.75rem / 16); */
+  --tarot-height: 4.75vw;
+  --tarot-width: 2.75vw;
+  --tarot-scale: 5;
+  --scaled-tarot-height: calc(var(--tarot-height) * var(--tarot-scale));
+  --scaled-tarot-width: calc(var(--tarot-width) * var(--tarot-scale));
   --browse-scale: 50;
+  --variable-font: calc(8px + 0.6vw);
 }
 
 @layer base {
@@ -14,6 +19,21 @@
     height: 100%;
     width: 100%;
   }
+}
+
+/**********************************************
+************CARD SLOT STYLES*******************
+***********************************************/
+.slot-container {
+  cursor: default;
+}
+.tarot-width {
+  max-width: calc(var(--scaled-tarot-width) * 0.95);
+  font-size: var(--variable-font)  
+}
+.double-tarot-width {
+  max-width: calc(var(--scaled-tarot-width) * 2);
+  font-size: var(--variable-font);
 }
 
 /**********************************************
@@ -28,8 +48,28 @@
   height: calc(var(--tarot-scale) * var(--tarot-height));
   flex-shrink: 0;
   border-radius: 1rem;
-  overflow: hidden;
+  overflow: hidden; 
   /* background-color: green; */
+}
+
+.descriptor-text {
+  font-weight: 700;
+  font-style: italic;
+}
+.reading-description-container {
+  height: calc(var(--tarot-height) * var(--tarot-scale) * 1.5);
+}
+.reading-description-textbox {
+  overflow-y: scroll;
+  /* font-size: 16px; */
+  font-size: var(--variable-font);
+  padding: calc(var(--variable-font)*0.5) calc(var(--variable-font)*1.5);
+}
+.description-absolute-padding {
+  height: calc(var(--variable-font) * 3);
+}
+.variable-font {
+  font-size: var(--variable-font)
 }
 
 /**********************************************
@@ -38,7 +78,7 @@
 .draggable {
   position: absolute;
 }
-  .tarot-container:hover,
+  .tarot-container.draggable:hover,
   .deck-container:hover {
   cursor: grab;
 }
@@ -114,6 +154,9 @@
   transform: rotateY(180deg);
 }
 
+
+
+
 /**********************************************
 ************ADMIN STYLES***********************
 ***********************************************/
@@ -141,11 +184,7 @@
 .testElement {
   background-color: green;
 }
-.descriptor-text {
-  font-weight: 700;
-  font-style: italic;
-  margin-bottom: 1rem;
-}
+
 .content {
   flex: 1 0 auto;
 }
