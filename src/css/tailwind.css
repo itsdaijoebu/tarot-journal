@@ -10,7 +10,7 @@
   --tarot-scale: 5;
   --scaled-tarot-height: calc(var(--tarot-height) * var(--tarot-scale));
   --scaled-tarot-width: calc(var(--tarot-width) * var(--tarot-scale));
-  --browse-scale: 50;
+  --browse-scale: 5;
   --variable-font: calc(8px + 0.6vw);
 }
 
