@@ -151,7 +151,6 @@ async function getCards() {
   const res = await fetch("/api/getCards");
   const cardJson = await res.json();
   cards = cardJson.cards;
-  console.log("cards: ", cards);
   for (let card of cards) {
     deck.push(card);
   }
@@ -161,29 +160,23 @@ async function getCardbacks() {
   const res = await fetch("/api/getCardbacks");
   const data = await res.json();
   cardbacks = data.cards;
-  console.log("cardbacks: ", cardbacks);
 }
 async function getCardfaces() {
   const res = await fetch("/api/getCardfaces");
   const data = await res.json();
   cardfaces = data.cards;
-  console.log("cardfaces: ", cardfaces);
   selectedCardFaces = cardfaces.filter(cardface => cardface.cardCollection === selectedCardCollection)
-  console.log('selected card faces: ', selectedCardFaces)
 }
 async function getCardCollections() {
   const res = await fetch("/api/getCardCollections");
   const data = await res.json();
   cardCollections = data.cards;
-  console.log("card collections: ", cardCollections);
   selectedCardCollection = cardCollections[0].name
-  console.log('selected card collection: ', selectedCardCollection)
 }
 async function getSpreads() {
   const res = await fetch("/api/getSpreads");
   const data = await res.json();
   spreads = data.cards;
-  console.log('spreads: ', spreads);
   selectedSpread = spreads[0];
 }
 
@@ -191,7 +184,6 @@ async function getSpreads() {
  * Card Interaction Functions
  *******************************************/
 function dragElement(elmnt) {
-  console.log('elmnt', elmnt)
   var pos1 = 0,
     pos2 = 0,
     mousePosX = 0,
@@ -263,7 +255,6 @@ function dragElement(elmnt) {
  * Tarot Reading Functions
  *******************************************/
 function drawCard() {
-  console.log('draw card')
   if (deck.length < 2) {  // <2 since this method fires after drawing the last card
     // deckImage.classList.remove('reversed')  // just in case deck is reversed from last card
     deckImage.classList.add('empty-deck')
@@ -314,9 +305,12 @@ function drawCard() {
   card.onmouseup = getCardInfo
 
   function getCardInfo() {
+    console.log('before scroll')
     if (cardDescription.dataset.cardId !== selectedCard._id) {
       cardDescription.scrollTo(0, 0);
     }
+    console.log('after scroll')
+
     cardInner.classList.add('doublesided-flipped')
     cardNumber.innerText = selectedCard.number.romanize();
     cardSuit.innerText = selectedCard.suit;
@@ -340,10 +334,8 @@ function drawCard() {
 
 //REFACTOR to use spread position instead of name, and try to consolidate these two methods into a single one
 function slotMeaningOnClick(e) {
-  console.log('spread: ', selectedSpread)
   let positionName = e.target.dataset.spreadPosition;
   if (slotTitle.innerText.toLowerCase() !== positionName) {
-    console.log('slot title stuff: ', slotTitle.innerText, positionName)
     slotDescription.scrollTo(0, 0);
   }
   slotTitle.innerText = positionName;
@@ -383,7 +375,6 @@ function maximizeInterpretation() {
  * UTILITY FUNCTIONS
  ***************************************/
 Number.prototype.romanize = function () {
-  // console.log(this)
   if (isNaN(this))
     return NaN;
   if (this == 0)
@@ -439,7 +430,6 @@ function addToInterpretationSlot(card, slotName, slotId, queue) {
 //   slotId.value == `${lastElement.id}-${lastElement.dataset.isReversed}`
 // }
 function removeFromInterpretationSlot(elmnt) {
-  console.log('removed', elmnt.dataset.spreadPosition)
   const slot = elmnt.dataset.spreadPosition;
   let queue;
   let interpretationWindowSlot;
@@ -460,7 +450,6 @@ function removeFromInterpretationSlot(elmnt) {
     console.error('something went wrong in the removefrominterpretationslot')
   }
   queue.pop();
-  console.log('intwinid:', interpretationWindowId)
   if (queue.length > 0) {
     const lastElement = queue[queue.length - 1]
     interpretationWindowSlot.innerText = lastElement.dataset.cardName
@@ -476,27 +465,20 @@ function removeFromInterpretationSlot(elmnt) {
 function checkCollision(card, spreadPosition) {
   let spreadPositionBox = spreadPosition.getBoundingClientRect();
   const cardBox = card.getBoundingClientRect();
-  console.log('rects: ', cardBox, spreadPositionBox)
   if (cardBox.x < spreadPositionBox.x + spreadPositionBox.width &&
     cardBox.x + cardBox.width > spreadPositionBox.x &&
     cardBox.y < spreadPositionBox.y + spreadPositionBox.height &&
     cardBox.height + cardBox.y > spreadPositionBox.y) {
-    console.log("collision detected!")
 
     const collision = { xLength: 0, yLength: 0 };
 
     collision.xLength = calculateCollisionLength(cardBox.x, spreadPositionBox.x, cardBox.width, spreadPositionBox.width);
     collision.yLength = calculateCollisionLength(cardBox.y, spreadPositionBox.y, cardBox.height, spreadPositionBox.height);
-    console.log('collisions: ', collision.xLength, collision.yLength, collision.xLength * collision.yLength)
-    console.log('card size: :', cardBox.width * cardBox.height, cardBox.width * cardBox.height * 0.55)
 
     if (collision.xLength * collision.yLength > (cardBox.width * cardBox.height * 0.55)) {
-      console.log('position: ', spreadPosition.dataset.spreadPosition)
       spreadPositionName = spreadPosition.dataset.spreadPosition;
       card.dataset.spreadPosition = spreadPositionName;
       slotMeaningOnCard(spreadPositionName)
-      console.log("card", card)
-      console.log('cardId', card.id)
       if (spreadPositionName.toLowerCase() === 'past') {
         addToInterpretationSlot(card, pastInterpretationCard, pastInterpretationCardId, pastQueue)
         // pastInterpretationCard.innerText = card.dataset.cardName;
@@ -518,7 +500,8 @@ function checkCollision(card, spreadPosition) {
   else return null;
 }
 function isNextReversed() {
-  deck[0].isReversed ? deckImage.classList.add('reversed') : deckImage.classList.remove('reversed')
+  if (deck.length > 1)
+    deck[0].isReversed ? deckImage.classList.add('reversed') : deckImage.classList.remove('reversed')
 }
 
 /******************
