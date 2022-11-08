@@ -206,6 +206,7 @@ function dragElement(elmnt) {
 
     //things to do if it's not the interpretation window
     if (!elmnt.classList.contains('interpretation-window')) {
+      interpretationWindow.classList.add('prevent-pointer');
       elmnt.parentNode.appendChild(elmnt)  // move element to sit on top of everything else
       if (elmnt.dataset.spreadPosition) {
         removeFromInterpretationSlot(elmnt);
@@ -225,8 +226,8 @@ function dragElement(elmnt) {
     pos2 = mousePosY - e.clientY;
     mousePosX = e.clientX;
     mousePosY = e.clientY;
-    // console.log(pos1, pos2, mousePosX, mousePosY, document.body.clientWidth, elmnt.clientWidth, elmnt.getBoundingClientRect())
-
+    // console.log(pos1, pos2, mousePosX, mousePosY, elmnt.clientHeight, elmnt.offsetTop)
+    
     // set the element's new position. if statement ensures element can't go too far outside window
     if (mousePosX - 10 > 0 && mousePosY - 10 > 0
       && (elmnt.clientWidth / 5) + elmnt.offsetLeft - pos1 < document.body.scrollWidth
@@ -241,11 +242,13 @@ function dragElement(elmnt) {
     if (elmnt.classList.contains("tarot-container")) {
       spreadPositionsArray.forEach(box => checkCollision(elmnt, box))  // REFACTOR later to just use a for loop since if card is found to be in a spread position, no need to check the rest
     }
+    if(!elmnt.classList.contains('interpretation-window')) {
+      interpretationWindow.classList.remove('prevent-pointer');
+    }
 
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
-    // elmnt.classList.remove('prevent-pointer')
     elmnt.classList.remove('active')
   }
 }
@@ -305,11 +308,9 @@ function drawCard() {
   card.onmouseup = getCardInfo
 
   function getCardInfo() {
-    console.log('before scroll')
     if (cardDescription.dataset.cardId !== selectedCard._id) {
       cardDescription.scrollTo(0, 0);
     }
-    console.log('after scroll')
 
     cardInner.classList.add('doublesided-flipped')
     cardNumber.innerText = selectedCard.number.romanize();
@@ -320,13 +321,11 @@ function drawCard() {
     revKeywords.innerText = selectedCard.revKeywords;
     revDescription.innerText = selectedCard.revDescription;
 
-
     // scroll to reversed section of card. Currently works pretty badly and needs a better way to do it
     // if (selectedCard.isReversed) {
     //   const reversedContainer = document.getElementById('reversed-container')
     //   reversedContainer.scrollIntoView({ behavior: 'smooth' }, true);
     // }  
-
     cardDescription.dataset.cardId = selectedCard._id;
 
   }
@@ -364,71 +363,35 @@ function validateInterpretation() {
 
 function toggleInterpretation() {
   interpretationBody.classList.toggle('hide')
+  const clientHeight = interpretationWindow.clientHeight 
+  const clientTop = interpretationWindow.offsetTop;
+  const scrollHeight = document.body.scrollHeight
+  if(clientHeight + clientTop > scrollHeight) {
+    interpretationWindow.style.top = scrollHeight - clientHeight - 10 + 'px'
+  }
+  
 }
 function maximizeInterpretation() {
   interpretationBody.classList.remove('hide')
-}
 
-
-
-/***************************************
- * UTILITY FUNCTIONS
- ***************************************/
-Number.prototype.romanize = function () {
-  if (isNaN(this))
-    return NaN;
-  if (this == 0)
-    return 0
-  let digits = String(+this).split(""),
-    key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
-      "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC",
-      "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
-    roman = "",
-    i = 3;
-  while (i--)
-    roman = (key[+digits.pop() + (i * 10)] || "") + roman;
-  return Array(+digits.join("") + 1).join("M") + roman;
-}
-
-// collision detection
-
-
-// function recalcBoundingBoxes() {
-//   spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
-//   spreadPositionPresentBox = spreadPositionPresent.getBoundingClientRect();
-//   spreadPositionFutureBox = spreadPositionFuture.getBoundingClientRect();
-
-//   spreadPositions.set(spreadPositionPast, spreadPositionPastBox)
-//   spreadPositions.set(spreadPositionPresent, spreadPositionPresentBox)
-//   spreadPositions.set(spreadPositionFuture, spreadPositionFutureBox)
-//   console.log('spread positions: ', spreadPositions)
-// }
-const calculateCollisionLength = (point1, point2, length1, length2) => {
-  const pointb1 = point1 + length1;
-  const pointb2 = point2 + length2;
-  const diff1 = Math.abs(point1 - point2);
-  const diff2 = Math.abs(pointb1 - pointb2);
-  return (length1 + length2 - diff1 - diff2) / 2;
+  const clientHeight = interpretationWindow.clientHeight 
+  const clientTop = interpretationWindow.offsetTop;
+  const scrollHeight = document.body.scrollHeight
+  if(clientHeight + clientTop > scrollHeight) {
+    interpretationWindow.style.top = scrollHeight - clientHeight + 1 + 'px'
+  }
 }
 
 //queue of cards on a given slot
 let pastQueue = []
 let presentQueue = []
 let futureQueue = []
-
 function addToInterpretationSlot(card, slotName, slotId, queue) {
   slotName.innerText = card.dataset.cardName
   if (card.dataset.isReversed == 'true') slotName.innerText += ' Reversed'
   slotId.value = `${card.id}-${card.dataset.isReversed}`;
   queue.push(card)
 }
-// function removeFromInterpretationSlot(slotName, slotId, queue) {
-//   queue.pop()
-//   let lastElement = queue[queue.length-1]
-//   slotName.innerText = lastElement.dataset.cardName
-//   if (lastElement.dataset.isReversed == 'true') slotName.innerText += ' reversed'
-//   slotId.value == `${lastElement.id}-${lastElement.dataset.isReversed}`
-// }
 function removeFromInterpretationSlot(elmnt) {
   const slot = elmnt.dataset.spreadPosition;
   let queue;
@@ -459,9 +422,8 @@ function removeFromInterpretationSlot(elmnt) {
     interpretationWindowSlot.innerText = ''
     interpretationWindowId.value = ''
   }
-
 }
-
+// collision detection
 function checkCollision(card, spreadPosition) {
   let spreadPositionBox = spreadPosition.getBoundingClientRect();
   const cardBox = card.getBoundingClientRect();
@@ -499,6 +461,33 @@ function checkCollision(card, spreadPosition) {
   }
   else return null;
 }
+const calculateCollisionLength = (point1, point2, length1, length2) => {
+  const pointb1 = point1 + length1;
+  const pointb2 = point2 + length2;
+  const diff1 = Math.abs(point1 - point2);
+  const diff2 = Math.abs(pointb1 - pointb2);
+  return (length1 + length2 - diff1 - diff2) / 2;
+}
+
+/***************************************
+ * UTILITY FUNCTIONS
+ ***************************************/
+Number.prototype.romanize = function () {
+  if (isNaN(this))
+    return NaN;
+  if (this == 0)
+    return 0
+  let digits = String(+this).split(""),
+    key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
+      "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC",
+      "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+    roman = "",
+    i = 3;
+  while (i--)
+    roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+  return Array(+digits.join("") + 1).join("M") + roman;
+}
+
 function isNextReversed() {
   if (deck.length > 1)
     deck[0].isReversed ? deckImage.classList.add('reversed') : deckImage.classList.remove('reversed')
