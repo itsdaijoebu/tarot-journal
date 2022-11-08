@@ -231,7 +231,7 @@ function dragElement(elmnt) {
     // set the element's new position. if statement ensures element can't go too far outside window
     if (mousePosX - 10 > 0 && mousePosY - 10 > 0
       && (elmnt.clientWidth / 5) + elmnt.offsetLeft - pos1 < document.body.scrollWidth
-      && (elmnt.clientHeight) + elmnt.offsetTop - pos2 < document.body.scrollHeight) {
+      && (elmnt.clientHeight) + elmnt.offsetTop - pos2 < document.body.scrollHeight-10) {
       elmnt.style.top = elmnt.offsetTop - pos2 + "px";
       elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
     }
