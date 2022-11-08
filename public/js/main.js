@@ -388,7 +388,7 @@ let presentQueue = []
 let futureQueue = []
 function addToInterpretationSlot(card, slotName, slotId, queue) {
   slotName.innerText = card.dataset.cardName
-  if (card.dataset.isReversed == 'true') slotName.innerText += ' Reversed'
+  if (card.dataset.isReversed == 'true') slotName.innerText += ' reversed'
   slotId.value = `${card.id}-${card.dataset.isReversed}`;
   queue.push(card)
 }
@@ -443,19 +443,10 @@ function checkCollision(card, spreadPosition) {
       slotMeaningOnCard(spreadPositionName)
       if (spreadPositionName.toLowerCase() === 'past') {
         addToInterpretationSlot(card, pastInterpretationCard, pastInterpretationCardId, pastQueue)
-        // pastInterpretationCard.innerText = card.dataset.cardName;
-        // if(card.dataset.isReversed == 'true') pastInterpretationCard.innerText += ' reversed'
-        // pastInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       } else if (spreadPositionName.toLowerCase() === 'present') {
         addToInterpretationSlot(card, presentInterpretationCard, presentInterpretationCardId, presentQueue)
-        // presentInterpretationCard.innerText = card.dataset.cardName;
-        // if (card.dataset.isReversed == 'true') presentInterpretationCard.innerText += ' reversed'
-        // presentInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       } else if (spreadPositionName.toLowerCase() === 'future') {
         addToInterpretationSlot(card, futureInterpretationCard, futureInterpretationCardId, futureQueue)
-        // futureInterpretationCard.innerText = card.dataset.cardName;
-        // if (card.dataset.isReversed == 'true') futureInterpretationCard.innerText += ' reversed'
-        // futureInterpretationCardId.value = `${card.id}-${card.dataset.isReversed}`;
       }
     }
   }

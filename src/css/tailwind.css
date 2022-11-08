@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/************************************************
+**************BASE STYLES***********************
+************************************************/
 :root {
   /* --tarot-height: calc(4.75rem / 16);
   --tarot-width: calc(2.75rem / 16); */

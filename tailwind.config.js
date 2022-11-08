@@ -20,6 +20,9 @@ module.exports = {
         offwhite: "#F7F9F9",
         // offwhite: '#DCDCDD'
       },
+      fontFamily: {
+        'sans': ['Atkinson Hyperlegible', 'sans-serif']
+      },
       flexGrow: {
         '2': 2,
       },
