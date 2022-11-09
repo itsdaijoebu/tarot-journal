@@ -28,39 +28,43 @@ module.exports = {
       const cardCollections = await CardCollection.find().sort({ name: 1 });
       const readings = await Reading.find({
         userId: req.user._id
-      }).sort({created: -1})
+      }).sort({ created: -1 })
       console.log('readings: ', readings)
-      res.render("readings.ejs", {user: req.user, readings: readings, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections, moment: moment })
+      res.render("readings.ejs", { user: req.user, readings: readings, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections, moment: moment })
     } catch (err) {
       console.error(err)
     }
   },
   postReading: async (req, res) => {
     try {
-      console.log('user: ', req.user)
-      console.log('req body', req.body)
-      const pastInfo = req.body.pastInterpretationCardId.split('-')
-      const presentInfo = req.body.presentInterpretationCardId.split('-')
-      const futureInfo = req.body.futureInterpretationCardId.split('-')
-      let reading = await Reading.create({
-        userId: req.user._id,
-        spread: 'Past/Present/Future',
-        reading: {
-          past: pastInfo[0],
-          pastReversed: pastInfo[1],
-          present: presentInfo[0],
-          presentReversed: presentInfo[1],
-          future: futureInfo[0],
-          futureReversed: futureInfo[1]
-        },
-        question: req.body.question,
-        interpretation: {
-          past: req.body.interpretationPast,
-          present: req.body.interpretationPresent,
-          future: req.body.interpretationFuture
-        }
-      })
-      res.redirect('/dashboard')
+      if (req.user) {
+        console.log('user: ', req.user)
+        console.log('req body', req.body)
+        const pastInfo = req.body.pastInterpretationCardId.split('-')
+        const presentInfo = req.body.presentInterpretationCardId.split('-')
+        const futureInfo = req.body.futureInterpretationCardId.split('-')
+        let reading = await Reading.create({
+          userId: req.user._id,
+          spread: 'Past/Present/Future',
+          reading: {
+            past: pastInfo[0],
+            pastReversed: pastInfo[1],
+            present: presentInfo[0],
+            presentReversed: presentInfo[1],
+            future: futureInfo[0],
+            futureReversed: futureInfo[1]
+          },
+          question: req.body.question,
+          interpretation: {
+            past: req.body.interpretationPast,
+            present: req.body.interpretationPresent,
+            future: req.body.interpretationFuture
+          }
+        })
+        res.redirect('/dashboard')
+      } else {
+        console.log(req.window)
+      }
     } catch (err) {
       console.error(err)
     }

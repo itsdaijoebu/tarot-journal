@@ -1660,9 +1660,6 @@ body[dir="rtl"] .checkbox:checked,
 .m-2 {
   margin: 0.5rem;
 }
-.m-10 {
-  margin: 2.5rem;
-}
 .mx-3 {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
@@ -1971,10 +1968,6 @@ body[dir="rtl"] .checkbox:checked,
 .text-primary-content {
   --tw-text-opacity: 1;
   color: hsl(var(--pc) / var(--tw-text-opacity));
-}
-.text-gray-500 {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 .placeholder-primary-content::-moz-placeholder {
   --tw-placeholder-opacity: 1;
