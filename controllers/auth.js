@@ -2,6 +2,10 @@ const passport = require('passport')
 const validator = require('validator')
 const User = require('../models/User')
 
+exports.getHome = (req, res) => {
+    res.render('dashboard', {user: req.user})
+}
+
 exports.getSignin = (req, res) => {
   console.log('user: ', req.user)
   if (req.user) {

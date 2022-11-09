@@ -24,6 +24,36 @@
   }
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: white black;
+}
+*::-webkit-scrollbar {
+  width: calc(5px);
+}
+*::-webkit-scrollbar-track {
+  background: hsl(var(--b2));
+}
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--a));
+  border-radius: 2px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+-webkit-text-fill-color: hsl(var(--pc));
+/* -webkit-box-shadow: 0 0 0px 1000px #1b1b6c inset; */
+background-color: hsl(var(--b2));
+transition: background-color 5000s ease-in-out 0s;
+}
+
 /**********************************************
 ************CARD SLOT STYLES*******************
 ***********************************************/
@@ -32,7 +62,7 @@
 }
 .tarot-width {
   max-width: calc(var(--scaled-tarot-width) * 0.95);
-  font-size: var(--variable-font)  
+  font-size: var(--variable-font);
 }
 .double-tarot-width {
   max-width: calc(var(--scaled-tarot-width) * 2);
@@ -51,7 +81,7 @@
   height: calc(var(--tarot-scale) * var(--tarot-height));
   flex-shrink: 0;
   border-radius: 1rem;
-  overflow: hidden; 
+  overflow: hidden;
   /* background-color: green; */
 }
 
@@ -66,13 +96,17 @@
   overflow-y: scroll;
   /* font-size: 16px; */
   font-size: var(--variable-font);
-  padding: calc(var(--variable-font)*0.5) calc(var(--variable-font)*1.5);
+  padding: calc(var(--variable-font) * 0.5) calc(var(--variable-font) * 1.5);
+  text-align: center;
+  border-width: 2px;
+  border-color: hsl(--var(--p) / var(--tw-border-opacity));
+  border-radius: 0.375rem;
 }
 .description-absolute-padding {
   height: calc(var(--variable-font) * 3);
 }
 .variable-font {
-  font-size: var(--variable-font)
+  font-size: var(--variable-font);
 }
 
 /**********************************************
@@ -81,8 +115,8 @@
 .draggable {
   position: absolute;
 }
-  .tarot-container.draggable:hover,
-  .deck-container:hover {
+.tarot-container.draggable:hover,
+.deck-container:hover {
   cursor: grab;
 }
 .draggable.tarot-container.active {
@@ -156,9 +190,6 @@
   color: white;
   transform: rotateY(180deg);
 }
-
-
-
 
 /**********************************************
 ************ADMIN STYLES***********************

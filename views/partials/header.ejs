@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-offwhite h-full overflow-x-hidden">
+<html lang="en" class="bg-base-100 h-full overflow-x-hidden" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,25 +8,28 @@
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
   <link href="/assets/fontawesome-free/css/fontawesome.css" rel="stylesheet">
   <!-- <link href="/assets/css/brands.css" rel="stylesheet"> -->
   <link href="/assets/fontawesome-free/css/solid.css" rel="stylesheet">
   <link href="/assets/fontawesome-free/css/regular.css" rel="stylesheet">
-  
+
 
   <title><%= title %></title>
 </head>
 
-<body class="flex flex-col h-full">
-  <header class="flex justify-end bg-primary py-2 px-10 text-offwhite space-x-10">
+<body class="flex flex-col h-full text-primary-content">
+  <header class="flex justify-end bg-primary py-2 px-10 text-primary-content space-x-10">
+    <a href="/" class="hover:text-primary-focus">Home</a>
+
     <%if(user) {%>
-      <a href="/">Home</a>
-    <a href="/dashboard/readings">Saved Readings</a>
-    <a href="/signout"> Sign Out</a>
+    <a href="/dashboard/readings" class="hover:text-primary-focus">Saved Readings</a>
+    <a href="/signout" class="hover:text-primary-focus"> Sign Out</a>
     <%} else {%>
-    <a href="/signin"> Sign In</a>
-    <a href="/signup"> Sign Up</a>
+    <a href="/signin" class="hover:text-primary-focus"> Sign In</a>
+    <a href="/signup" class="hover:text-primary-focus"> Sign Up</a>
     <%}%>
   </header>
   <!-- class='content' to ensure footer is always at the bottom even when page content doesn't extend the page's length -->

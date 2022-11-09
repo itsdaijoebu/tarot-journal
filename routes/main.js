@@ -5,7 +5,7 @@ const authController = require('../controllers/auth')
 const ensureAuth = require('../middleware/auth')
 
 
-router.get('/', authController.getSignin)
+router.get('/', authController.getHome)
 router.get('/signin', authController.getSignin)
 router.post('/signin', authController.postSignin)
 // router.post('/guestSignin', authController.postGuestSignin)
