@@ -63,6 +63,7 @@ module.exports = {
         })
         res.redirect('/dashboard')
       } else {
+        res.redirect('/signup')
         console.log(req.window)
       }
     } catch (err) {
