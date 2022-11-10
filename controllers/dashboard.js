@@ -61,10 +61,9 @@ module.exports = {
             future: req.body.interpretationFuture
           }
         })
-        res.redirect('/dashboard')
+        res.redirect('readings')
       } else {
         res.redirect('/signup')
-        console.log(req.window)
       }
     } catch (err) {
       console.error(err)

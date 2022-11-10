@@ -1,10 +1,10 @@
 <%- include('partials/header', {title: 'Tarot Journal Home', user: user }) -%>
 
-<form action="dashboard/save-reading" onsubmit="return validateInterpretation()" id="interpretation-window"
-    method="POST"
-    class="z-50 w-1/3 draggable interpretation-window border-2 rounded-md border-accent p-0.5 bg-base-100 flex flex-col">
+<form action="dashboard/save-reading" id="interpretation-window"
+    method="POST" data-username='<%=user ? user.username : '' %>'
+    class="z-50 w-1/3 draggable interpretation-window border-4 rounded-md border-primary bg-base-100 flex flex-col">
 
-    <div id="interpretation-window-header" class="bg-primary text-center py-1 cursor-move">
+    <div id="interpretation-window-header" class="bg-primary text-center py-2 cursor-move">
         <i class="fa-solid fa-window-maximize fa-lg cursor-pointer absolute right-0 mr-3 mt-3"
             id="interpretation-minimize"></i>
         <h3> Interpretation</h3>
@@ -12,8 +12,8 @@
 
     <section class="interpretation-body flex flex-col mx-3" id="interpretation-body-container">
         <label for="question">Question</label>
-        <textarea name="question" class='bg-base-200 focus:border-primary-focus' id="querent-question" cols="30"
-            rows="1" placeholder="What question do you have for the cards?"></textarea>
+        <textarea name="question" class='bg-base-200 focus:border-accent focus:ring-accent' id="querent-question"
+            cols="30" rows="1" placeholder="What question do you have for the cards?"></textarea>
 
         <div class="interpretation-body flex flex-col hide mt-4" id="interpretation-body">
             <div class="flex gap-2">
@@ -22,8 +22,8 @@
             </div>
             <input type="hidden" name="pastInterpretationCardId" id='pastInterpretationCardId'
                 class='interpretation-card-id bg-base-200'>
-            <textarea name="interpretationPast" class="bg-base-200 focus:border-primary-focus" id="interpretationPast"
-                cols="30" rows="1"></textarea>
+            <textarea name="interpretationPast" class="bg-base-200 focus:border-accent focus:ring-accent"
+                id="interpretationPast" cols="30" rows="1"></textarea>
 
             <div class="flex gap-2">
                 <label for="interpretationPresent">Present:</label>
@@ -31,7 +31,7 @@
             </div>
             <input type="hidden" name="presentInterpretationCardId" id='presentInterpretationCardId'
                 class='interpretation-card-id'>
-            <textarea name="interpretationPresent" class="bg-base-200 focus:border-primary-focus"
+            <textarea name="interpretationPresent" class="bg-base-200 focus:border-accent focus:ring-accent"
                 id="interpretationPresent" cols="30" rows="1"></textarea>
 
             <div class="flex gap-2">
@@ -40,19 +40,21 @@
             </div>
             <input type="hidden" name="futureInterpretationCardId" id='futureInterpretationCardId'
                 class='interpretation-card-id'>
-            <textarea name="interpretationFuture" class="bg-base-200 focus:border-primary-focus"
+            <textarea name="interpretationFuture" class="bg-base-200 focus:border-accent focus:ring-accent"
                 id="interpretationFuture" cols="30" rows="1"></textarea>
         </div>
     </section>
-    <button type="submit"
+    <button type="submit" id="interpretation-submit"
         class="text-5x1 font-bold btn btn-primary m-5 border border-accent hover:text-primary">Submit</button>
 </form>
 
-<%if(user) {%>
-<h1 class="text-xl font-bold text-center my-5">Tarot Reading for <%=user.username-%></h1>
+<h1 class="text-xl font-bold text-center my-5">
+    <%if(user) {%>
+    Tarot Reading for <%=user.username-%></h1>
 <%} else {%>
-<h1 class="text-xl font-bold text-center my-5">Your Reading</h1>
+Your Reading
 <%}%>
+</h1>
 
 <main class="flex mb-10">
     <div class="flex flex-col gap-6" id="spread-container">

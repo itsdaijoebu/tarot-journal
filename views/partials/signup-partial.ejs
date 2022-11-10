@@ -1,7 +1,10 @@
-<%- include('partials/header', {title: 'Sign Up', user: user}) -%>
+<div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 modal modal-bottom sm:modal-middle">
+  <div class="w-full max-w-md space-y-8 rounded-lg modal-box">
 
-<div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="w-full max-w-md space-y-8">
+    <label for="signup" id="close-signup">
+      <i class="fa-solid fa-times fa-lg cursor-pointer absolute right-0 mr-6"></i>
+    </label>
+
     <div>
       <!-- Maybe add a logo here later -->
       <!-- <img
@@ -17,29 +20,28 @@
       <input type="hidden" name="remember" value="true" />
       <div class="-space-y-px rounded-md shadow-sm">
         <div>
-          <label for="email-address" class="sr-only">Email address</label>
-          <input id="email-address" name="email" type="email" autocomplete="email" required
+          <label for="signup-email-address" class="sr-only">Email address</label>
+          <input id="signup-email-address" name="email" type="email" autocomplete="email" required
             class="relative block w-full appearance-none rounded-none rounded-t-md border bg-base-200 border-accent px-3 py-2 text-primary-content placeholder-primary-content focus:z-10 focus:border-accent focus:outline-none focus:ring-accent sm:text-sm"
             placeholder="Email address" />
         </div>
         <div>
-          <label for="username" class="sr-only">Username</label>
-          <input id="username" name="username" type="username" autocomplete="username" required
+          <label for="signup-username" class="sr-only">Username</label>
+          <input id="signup-username" name="username" type="username" autocomplete="username" required
             class="relative block w-full appearance-none rounded-none rounded-t-md border bg-base-200 border-accent px-3 py-2 text-primary-content placeholder-primary-content focus:z-10 focus:border-accent focus:outline-none focus:ring-accent sm:text-sm"
             placeholder="Username" />
         </div>
         <div>
-          <label for="password" class="sr-only">Password</label>
-          <input id="password" name="password" type="password" autocomplete="current-password" required
+          <label for="signup-password" class="sr-only">Password</label>
+          <input id="signup-password" name="password" type="password" autocomplete="current-password" required
             class="relative block w-full appearance-none rounded-none rounded-b-md border bg-base-200 border-accent px-3 py-2 text-primary-content placeholder-primary-content focus:z-10 focus:border-accent focus:outline-none focus:ring-accent sm:text-sm"
             placeholder="Password" />
         </div>
       </div>
 
       <div>
-        <button type="submit"
-          class="group relative flex w-full justify-center rounded-md border border-accent bg-base-200 py-2 px-4 text-sm font-medium text-primary-content hover:text-primary hover:bg-primary-focus focus:outline-none focus:ring-2 focus:ring-primary-focus focus:ring-offset-2"
-          id="signup-button">
+        <button type="submit" id="signup-button"
+          class="group relative flex w-full justify-center rounded-md border border-accent bg-base-200 py-2 px-4 text-sm font-medium text-primary-content hover:text-primary hover:bg-primary-focus focus:outline-none focus:ring-2 focus:ring-primary-focus focus:ring-offset-2">
           <span class="absolute inset-y-0 left-0 flex items-center pl-3">
             <!-- Heroicon name: mini/lock-closed -->
             <svg class="h-5 w-5 text-primary-content group-hover:text-primary" xmlns="http://www.w3.org/2000/svg"
@@ -54,12 +56,13 @@
       </div>
     </form>
 
-    <button
-      class="group relative flex w-full justify-center rounded-md border border-accent bg-base-200 py-2 px-4 text-sm font-medium text-primary-content hover:text-primary hover:bg-primary-focus focus:outline-none focus:ring-2 focus:ring-primary-focus focus:ring-offset-2"
-      onclick="location.href='/'">
-      Back Home
-    </button>
+    <label for="signin" id="signup-signin-button"
+      class="group relative flex w-full justify-center rounded-md border border-accent bg-base-200 py-2 px-4 text-sm font-medium text-primary-content hover:text-primary hover:bg-primary-focus focus:outline-none focus:ring-2 focus:ring-primary-focus focus:ring-offset-2">
+      Sign in
+    </label>
   </div>
 </div>
 
-<%- include('partials/footer') -%>
+<script>
+  document.getElementById('signup-signin-button').addEventListener('click', () => document.getElementById('signup').click())
+</script>

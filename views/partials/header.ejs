@@ -21,15 +21,22 @@
 </head>
 
 <body class="flex flex-col h-full text-primary-content">
-  <header class="flex justify-end bg-primary py-2 px-10 text-primary-content space-x-10">
+  <header class="flex justify-end bg-primary py-2 px-10 text-primary-content gap-8">
     <a href="/" class="hover:text-primary-focus">Home</a>
 
     <%if(user) {%>
     <a href="/dashboard/readings" class="hover:text-primary-focus">Saved Readings</a>
     <a href="/signout" class="hover:text-primary-focus"> Sign Out</a>
     <%} else {%>
-    <a href="/signin" class="hover:text-primary-focus"> Sign In</a>
-    <a href="/signup" class="hover:text-primary-focus"> Sign Up</a>
+    <!-- <a href="/signin" class="hover:text-primary-focus"> Sign In</a> -->
+    <label for="signin" class="hover:text-primary-focus cursor-pointer">Sign In</label>
+    <input type="checkbox" id="signin" class="modal-toggle">
+      <%- include('signin-partial') -%>
+
+    <!-- <a href="/signup" class="hover:text-primary-focus"> Sign Up</a> -->
+    <label for="signup" class="hover:text-primary-focus cursor-pointer">Sign Up</label>
+    <input type="checkbox" id="signup" class="modal-toggle">
+    <%- include('signup-partial') -%>
     <%}%>
   </header>
   <!-- class='content' to ensure footer is always at the bottom even when page content doesn't extend the page's length -->

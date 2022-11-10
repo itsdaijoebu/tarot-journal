@@ -37,14 +37,15 @@ const interpretationMin = document.getElementById('interpretation-minimize')
 const interpretationWindowHeader = document.getElementById('interpretation-window-header')
 const interpretationWindow = document.getElementById('interpretation-window')
 const interpretationBody = document.getElementById('interpretation-body')
+
+const querentQuestion = document.getElementById('querent-question')
+
 const pastInterpretationCard = document.getElementById('pastInterpretationCard')
 const presentInterpretationCard = document.getElementById('presentInterpretationCard')
 const futureInterpretationCard = document.getElementById('futureInterpretationCard')
 const pastInterpretationCardId = document.getElementById('pastInterpretationCardId')
 const presentInterpretationCardId = document.getElementById('presentInterpretationCardId')
 const futureInterpretationCardId = document.getElementById('futureInterpretationCardId')
-
-const querentQuestion = document.getElementById('querent-question')
 
 // get bounding rects to calculate collisions with cards so that which slot the card is in can be calculated
 // let spreadPositionPastBox = spreadPositionPast.getBoundingClientRect();
@@ -69,6 +70,7 @@ interpretationMin.addEventListener('click', toggleInterpretation)
 interpretationWindowHeader.addEventListener('dblclick', toggleInterpretation)
 querentQuestion.addEventListener('click', maximizeInterpretation)
 
+interpretationWindow.addEventListener('submit', checkInterpretation)
 
 // window.addEventListener('resize', getWindowSize)
 
@@ -91,6 +93,7 @@ start();
  * Initialization Function(s)
  *******************************************/
 async function start() {
+  await checkForSavedReadings();
   await getSpreads();
   await getCards();
   await getCardCollections();
@@ -105,6 +108,26 @@ async function start() {
   setCardbacks(cardback._id);
   setCardbackSelectValue(cardback._id);
   dragElement(interpretationWindow);
+}
+
+async function checkForSavedReadings() {
+  if (interpretationWindow.dataset.username) {
+    let savedReading = sessionStorage.getItem('savedTarotReading')
+    if (savedReading) {
+      const response = await fetch('dashboard/save-reading', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: savedReading,
+      })
+      sessionStorage.removeItem('savedTarotReading')
+      if(response.redirected){
+        window.location.href=response.url;
+      }
+      console.log('still here')
+    }
+  }
 }
 
 /******************************************
@@ -227,11 +250,11 @@ function dragElement(elmnt) {
     mousePosX = e.clientX;
     mousePosY = e.clientY;
     // console.log(pos1, pos2, mousePosX, mousePosY, elmnt.clientHeight, elmnt.offsetTop)
-    
+
     // set the element's new position. if statement ensures element can't go too far outside window
     if (mousePosX - 10 > 0 && mousePosY - 10 > 0
       && (elmnt.clientWidth / 5) + elmnt.offsetLeft - pos1 < document.body.scrollWidth
-      && (elmnt.clientHeight) + elmnt.offsetTop - pos2 < document.body.scrollHeight-10) {
+      && (elmnt.clientHeight) + elmnt.offsetTop - pos2 < document.body.scrollHeight - 10) {
       elmnt.style.top = elmnt.offsetTop - pos2 + "px";
       elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
     }
@@ -242,7 +265,7 @@ function dragElement(elmnt) {
     if (elmnt.classList.contains("tarot-container")) {
       spreadPositionsArray.forEach(box => checkCollision(elmnt, box))  // REFACTOR later to just use a for loop since if card is found to be in a spread position, no need to check the rest
     }
-    if(!elmnt.classList.contains('interpretation-window')) {
+    if (!elmnt.classList.contains('interpretation-window')) {
       interpretationWindow.classList.remove('prevent-pointer');
     }
 
@@ -351,33 +374,57 @@ function slotMeaningOnCard(positionName) {
 /***************************************
  * INTERPRETATION FORM FUNCTIONS
  ***************************************/
-function validateInterpretation() {
+function checkInterpretation(e) {
+  if (validateInterpretation(e)) {
+    saveOrSubmitInterpretation(e);
+  }
+}
+
+function validateInterpretation(e) {
   const cardIdFields = document.querySelectorAll('.interpretation-card-id')
   for (let i = 0; i < cardIdFields.length; i++) {
     if (!cardIdFields[i].value) {
       alert("Please put a card in each of the slots for this spread.")
-      return false
+      e.preventDefault();
+      return false;
     }
   }
+  return true;
+}
+function saveOrSubmitInterpretation(e) {
+
+  if (e.target.dataset.username) {
+    return
+  }
+  e.preventDefault();
+  const reading = {}
+  const elements = Array.prototype.slice.call(e.target.elements);
+  elements.forEach(el => {
+    if (el.type !== 'submit') {
+      reading[el.name] = el.value;
+    }
+  })
+  sessionStorage.setItem('savedTarotReading', JSON.stringify(reading))
+  document.getElementById('signup').click();
 }
 
 function toggleInterpretation() {
   interpretationBody.classList.toggle('hide')
-  const clientHeight = interpretationWindow.clientHeight 
+  const clientHeight = interpretationWindow.clientHeight
   const clientTop = interpretationWindow.offsetTop;
   const scrollHeight = document.body.scrollHeight
-  if(clientHeight + clientTop > scrollHeight) {
+  if (clientHeight + clientTop > scrollHeight) {
     interpretationWindow.style.top = scrollHeight - clientHeight - 10 + 'px'
   }
-  
+
 }
 function maximizeInterpretation() {
   interpretationBody.classList.remove('hide')
 
-  const clientHeight = interpretationWindow.clientHeight 
+  const clientHeight = interpretationWindow.clientHeight
   const clientTop = interpretationWindow.offsetTop;
   const scrollHeight = document.body.scrollHeight
-  if(clientHeight + clientTop > scrollHeight) {
+  if (clientHeight + clientTop > scrollHeight) {
     interpretationWindow.style.top = scrollHeight - clientHeight + 1 + 'px'
   }
 }
@@ -452,7 +499,7 @@ function checkCollision(card, spreadPosition) {
   }
   else return null;
 }
-const calculateCollisionLength = (point1, point2, length1, length2) => {
+function calculateCollisionLength(point1, point2, length1, length2) {
   const pointb1 = point1 + length1;
   const pointb2 = point2 + length2;
   const diff1 = Math.abs(point1 - point2);
