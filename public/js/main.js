@@ -177,7 +177,6 @@ async function getCards() {
   for (let card of cards) {
     deck.push(card);
   }
-  console.log("deck: ", deck);
 }
 async function getCardbacks() {
   const res = await fetch("/api/getCardbacks");
@@ -308,7 +307,6 @@ function drawCard() {
 
   // get the next card in the deck
   const selectedCard = deck.shift();
-  console.log('selected card: ', selectedCard)
   card.dataset.cardName = `${selectedCard.number.romanize()} ${selectedCard.suit}`;
   card.dataset.isReversed = selectedCard.isReversed
   card.id = selectedCard._id;

@@ -33,7 +33,6 @@ module.exports = {
         revDescription: req.body.revDescription,
         isReversed: false
       })
-      console.log('Card created!')
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err)
@@ -50,7 +49,6 @@ module.exports = {
       const cardCollectionName = cardCollectionData.pop()
       const cardCollectionId = cardCollectionData.pop()
       const arcana = req.body.cardfaceIsMajorArcana === 'on' ? true : false;
-      console.log("admin => addCardFace:", req.body)
       let cardface = await Cardface.create({
         cardCollection: cardCollectionName,
         cardCollectionId: cardCollectionId,
@@ -61,7 +59,6 @@ module.exports = {
         image: result.secure_url,
         cloudinaryId: result.public_id
       })
-      console.log('Image added!')
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err)
@@ -75,7 +72,6 @@ module.exports = {
         image: result.secure_url,
         cloudinaryId: result.public_id
       })
-      console.log('Cardback added')
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err)
@@ -86,7 +82,6 @@ module.exports = {
       let cardCollection = await CardCollection.create({
         name: req.body.newCardCollection
       })
-      console.log('Card Collection added')
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err)
@@ -104,13 +99,11 @@ module.exports = {
         }
         positions.push(position)
       }
-      console.log(req.body)
       let spread = await Spread.create({
         name: req.body.spreadName,
         numberCards: numberCards,
         positions: positions
       })
-      console.log('Added Spread!')
       res.redirect('./edit-collection')
     } catch (err) {
       console.error(err);
@@ -118,7 +111,6 @@ module.exports = {
   },
   addField: async (req, res) => {
     try {
-      console.log('adding')
       await Reading.updateMany({}, {isReversed: false})
       res.redirect('./edit-collection')
     } catch (err) {

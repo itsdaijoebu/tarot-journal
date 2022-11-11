@@ -10,7 +10,6 @@ module.exports = {
     getCards: async (req, res) => {
         try {
             const results = await Card.find();
-            console.log(results)
             res.json({cards: results.map(result => result.toObject())})
         } catch (err) {
             console.error(err)

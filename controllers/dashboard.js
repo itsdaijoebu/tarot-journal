@@ -15,13 +15,11 @@ module.exports = {
         user: new RegExp(`^${req.user.username}$`, "i"),
       });
       res.render("dashboard.ejs", { readings: readings, user: req.user });
-      console.log("dashboard controller - readings:", readings);
     } catch (err) {
       console.log(err);
     }
   },
   getReadings: async (req, res) => {
-    console.log(req.user._id)
     try {
       const cards = await Card.find();
       const cardfaces = await Cardface.find().sort({ isMajorArcana: 1, number: 1 });
@@ -29,7 +27,6 @@ module.exports = {
       const readings = await Reading.find({
         userId: req.user._id
       }).sort({ created: -1 })
-      console.log('readings: ', readings)
       res.render("readings.ejs", { user: req.user, readings: readings, cards: cards, cardfaces: cardfaces, cardCollections: cardCollections, moment: moment })
     } catch (err) {
       console.error(err)
@@ -38,8 +35,6 @@ module.exports = {
   postReading: async (req, res) => {
     try {
       if (req.user) {
-        console.log('user: ', req.user)
-        console.log('req body', req.body)
         const pastInfo = req.body.pastInterpretationCardId.split('-')
         const presentInfo = req.body.presentInterpretationCardId.split('-')
         const futureInfo = req.body.futureInterpretationCardId.split('-')
