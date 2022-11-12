@@ -22,6 +22,14 @@
     height: 100%;
     width: 100%;
   }
+
+  canvas {
+      display: block;
+      left: 50%;
+      margin: -125px 0 0 -125px;
+      position: absolute;
+      top: 50%;
+  }
 }
 
 * {
@@ -225,4 +233,7 @@ transition: background-color 5000s ease-in-out 0s;
 .hide {
   height: 0;
   overflow: hidden;
+}
+.fade-hide{
+  opacity: 0;
 }

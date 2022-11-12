@@ -93,6 +93,8 @@ start();
  * Initialization Function(s)
  *******************************************/
 async function start() {
+  var loader = new canvasLoader();
+  loader.init();
   await checkForSavedReadings();
   await getSpreads();
   await getCards();
@@ -108,6 +110,7 @@ async function start() {
   setCardbacks(cardback._id);
   setCardbackSelectValue(cardback._id);
   dragElement(interpretationWindow);
+  await doneLoading(loader);
 }
 
 async function checkForSavedReadings() {
@@ -122,12 +125,21 @@ async function checkForSavedReadings() {
         body: savedReading,
       })
       sessionStorage.removeItem('savedTarotReading')
-      if(response.redirected){
-        window.location.href=response.url;
+      if (response.redirected) {
+        window.location.href = response.url;
       }
       console.log('still here')
     }
   }
+}
+
+async function doneLoading(canvas) {
+  let loaderWrapper = document.getElementById('loader-wrapper')
+  loaderWrapper.classList.add('fade-hide')
+  await new Promise(resolve => setTimeout(resolve, 150))
+  canvas.stop();
+  console.log('boom')
+  loaderWrapper.classList.add('hidden')
 }
 
 /******************************************
@@ -528,6 +540,63 @@ function isNextReversed() {
   if (deck.length > 1)
     deck[0].isReversed ? deckImage.classList.add('reversed') : deckImage.classList.remove('reversed')
 }
+
+
+function canvasLoader() {
+  const accentColor = '242, 210, 151'
+
+  var self = this;
+  let runCanvas = true;
+
+  window.requestAnimFrame = function () { return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (a) { window.setTimeout(a, 1E3 / 60) } }();
+
+  self.init = function () {
+    self.canvas = document.getElementById('canvas');
+    self.ctx = self.canvas.getContext('2d');
+    self.ctx.lineWidth = .5;
+    self.ctx.strokeStyle = `rgba(${accentColor},.75)`;
+    self.count = 75;
+    self.rotation = 270 * (Math.PI / 180);
+    self.speed = 6;
+    self.canvasLoop();
+  };
+
+  self.updateLoader = function () {
+    self.rotation += self.speed / 100;
+  };
+
+  self.renderLoader = function () {
+    self.ctx.save();
+    self.ctx.globalCompositeOperation = 'source-over';
+    self.ctx.translate(125, 125);
+    self.ctx.rotate(self.rotation);
+    var i = self.count;
+    while (i--) {
+      self.ctx.beginPath();
+      self.ctx.arc(0, 0, i + (Math.random() * 35), Math.random(), Math.PI / 3 + (Math.random() / 12), false);
+      self.ctx.stroke();
+    }
+    self.ctx.restore();
+  };
+
+  self.canvasLoop = function () {
+    if (runCanvas) {
+      requestAnimFrame(self.canvasLoop, self.canvas);
+      self.ctx.globalCompositeOperation = 'destination-out';
+      self.ctx.fillStyle = `rgba(${accentColor}, 0.03)`;
+      self.ctx.fillRect(0, 0, 250, 250);
+      self.updateLoader();
+      self.renderLoader();
+    } 
+    console.log('still running')
+  };
+
+  self.stop = function () {
+    console.log('stopped!')
+    runCanvas = false;
+    // self.ctx.clearRect(0,0, canvas.width, canvas.height)
+  }
+};
 
 /******************
  * DEV FUNCTIONS
