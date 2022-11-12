@@ -2098,6 +2098,9 @@ body[dir="rtl"] .checkbox:checked,
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.duration-200 {
+  transition-duration: 200ms;
+}
 
 /************************************************
 **************BASE STYLES***********************
@@ -2317,9 +2320,6 @@ transition: background-color 5000s ease-in-out 0s;
 .hide {
   height: 0;
   overflow: hidden;
-}
-.fade-hide{
-  opacity: 0;
 }
 .hover\:bg-primary-focus:hover {
   --tw-bg-opacity: 1;

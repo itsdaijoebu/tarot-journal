@@ -1,9 +1,5 @@
 <%- include('partials/header', {title: 'Tarot Journal Home', user: user }) -%>
 
-<div id="loader-wrapper" class="bg-base-100 h-full w-full z-50 absolute top-0 left-0 transition-opacity">
-    <canvas id="canvas" class="loader" height="250" width="250"></canvas>
-</div>
-
 <form action="dashboard/save-reading" id="interpretation-window" method="POST"
     data-username='<%=user ? user.username : '' %>'
     class="z-40 w-1/3 draggable interpretation-window border-4 rounded-md border-primary bg-base-100 flex flex-col">
