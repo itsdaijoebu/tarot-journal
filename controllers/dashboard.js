@@ -11,10 +11,7 @@ const moment = require('moment')
 module.exports = {
   getDash: async (req, res) => {
     try {
-      const readings = await Reading.find({
-        user: new RegExp(`^${req.user.username}$`, "i"),
-      });
-      res.render("dashboard.ejs", { readings: readings, user: req.user });
+      res.render("dashboard.ejs");
     } catch (err) {
       console.log(err);
     }

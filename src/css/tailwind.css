@@ -14,6 +14,7 @@
   --scaled-tarot-height: calc(var(--tarot-height) * var(--tarot-scale));
   --scaled-tarot-width: calc(var(--tarot-width) * var(--tarot-scale));
   --browse-scale: 5;
+  --reading-scale: 3;
   --variable-font: calc(8px + 0.6vw);
 }
 
@@ -207,10 +208,14 @@ transition: background-color 5000s ease-in-out 0s;
   height: calc(var(--browse-scale) * var(--tarot-height));
   float: left;
 }
+.reading-thumbnail {
+  width: calc(var(--reading-scale) * var(--tarot-width));
+  height: calc(var(--reading-scale) * var(--tarot-height));
+}
 .reading-container {
   margin: 1rem 2rem 0 0;
   display: flex;
-  gap: 1.25rem;
+  gap: 0.5rem;
 }
 
 /**********************************************

@@ -120,26 +120,6 @@ Your Reading
     </section>
 </main>
 
-<!-- <section class="flex flex-col justify-center gap-3" id="reading-description">
-    <article id="slot-description" class="w-1/3 border-2 border-primary text-center py-2 px-8">
-        <p class="descriptor-text"> Slot description</p>
-        <p id="slot-title" class="font-bold capitalize"></p>
-        <p id="slot-description-text" class="text-left"></p>
-
-    </article>
-    <article id="card-description" class="w-3/5 border-2 border-primary text-center py-2 px-8">
-        <p class="descriptor-text">Card description</p>
-        <p>
-            <span id="card-number" class="font-bold"></span> <span id="card-suit" class="font-bold"></span>
-        </p>
-        <p id="up-keywords" class="italic"></p>
-        <p id="up-description" class="description text-left"></p>
-        <p id="saysReversed" class="font-bold italic hidden mt-4">Reversed</p>
-        <p id="rev-keywords" class="italic"></p>
-        <p id="rev-description" class="description text-left"></p>
-    </article>
-</section> -->
-
 <%if(user && user.access=='admin') {%> <section class="flex justify-center">
     <fieldset class="border-primary border-2 w-3/4 flex justify-center">
         <legend class="mx-2">Admin Tools</legend>
@@ -148,8 +128,6 @@ Your Reading
     </fieldset>
 </section>
 <%}%>
-
-
 
 <%- include('partials/footer') -%>
 <script src="/js/main.js"></script>

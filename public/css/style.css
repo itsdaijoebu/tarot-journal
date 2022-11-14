@@ -1746,20 +1746,17 @@ body[dir="rtl"] .checkbox:checked,
   top: 0px;
   bottom: 0px;
 }
-.top-0 {
-  top: 0px;
+.right-0 {
+  right: 0px;
 }
 .left-0 {
   left: 0px;
 }
-.right-0 {
-  right: 0px;
-}
-.z-50 {
-  z-index: 50;
-}
 .z-40 {
   z-index: 40;
+}
+.float-left {
+  float: left;
 }
 .m-5 {
   margin: 1.25rem;
@@ -1838,9 +1835,6 @@ body[dir="rtl"] .checkbox:checked,
 .hidden {
   display: none;
 }
-.h-full {
-  height: 100%;
-}
 .h-1\/3 {
   height: 33.333333%;
 }
@@ -1853,23 +1847,23 @@ body[dir="rtl"] .checkbox:checked,
 .h-5 {
   height: 1.25rem;
 }
+.h-full {
+  height: 100%;
+}
 .min-h-full {
   min-height: 100%;
 }
-.w-full {
-  width: 100%;
-}
 .w-1\/3 {
   width: 33.333333%;
-}
-.w-3\/5 {
-  width: 60%;
 }
 .w-3\/4 {
   width: 75%;
 }
 .w-20 {
   width: 5rem;
+}
+.w-full {
+  width: 100%;
 }
 .w-auto {
   width: auto;
@@ -2013,10 +2007,6 @@ body[dir="rtl"] .checkbox:checked,
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -2093,14 +2083,6 @@ body[dir="rtl"] .checkbox:checked,
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
-.transition-opacity {
-  transition-property: opacity;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-.duration-200 {
-  transition-duration: 200ms;
-}
 
 /************************************************
 **************BASE STYLES***********************
@@ -2114,6 +2096,7 @@ body[dir="rtl"] .checkbox:checked,
   --scaled-tarot-height: calc(var(--tarot-height) * var(--tarot-scale));
   --scaled-tarot-width: calc(var(--tarot-width) * var(--tarot-scale));
   --browse-scale: 5;
+  --reading-scale: 3;
   --variable-font: calc(8px + 0.6vw);
 }
 
@@ -2294,10 +2277,14 @@ transition: background-color 5000s ease-in-out 0s;
   height: calc(var(--browse-scale) * var(--tarot-height));
   float: left;
 }
+.reading-thumbnail {
+  width: calc(var(--reading-scale) * var(--tarot-width));
+  height: calc(var(--reading-scale) * var(--tarot-height));
+}
 .reading-container {
   margin: 1rem 2rem 0 0;
   display: flex;
-  gap: 1.25rem;
+  gap: 0.5rem;
 }
 
 /**********************************************
