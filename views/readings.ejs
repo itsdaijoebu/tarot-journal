@@ -3,7 +3,7 @@
 <main class="flex justify-center flex-col">
     <section class="my-8 mx-10 flex flex-col">
 
-        <h1 class="font-bold"><%=user.username%>'<%if(user.username[user.username.length-1] !== 's') {%>s<%}%> Readings</h1>
+        <h1 class="font-bold mb-10 text-xl text-center"><%=user.username%>'<%if(user.username[user.username.length-1] !== 's') {%>s<%}%> Readings</h1>
 
         <%if(readings.length < 1) {%>
             <h2 class="italic my-4">You don't have any readings yet</h2>
@@ -18,32 +18,33 @@
             <%let presentUrl = cardfaces.find(e => e.cardId == presentCard).image%>
             <%let futureUrl = cardfaces.find(e => e.cardId == futureCard).image%>
 
-            <section class="mb-6" id='<%=readingId%>'>
+            <section class="mb-6 reading" id='<%=readingId%>'>
                 <h2 class="font-bold italic"><%=reading.question%></h2>
                 <h2 class="italic"><%=moment(reading.created).format('MMM DD, YYYY hh:mm A')%></h2>
 
                 <details id="reading-details-<%=readingId%>" open>
                     <summary>Reading Details</summary>
                     <div class="" id="reading-container-<%=readingId%>">
-                        <section class="reading-container float-left" id="reading-cards-<%=readingId%>">
-                            <img src=<%=pastUrl%> alt="past" class="reading-thumbnail <%if(reading.reading.pastReversed){%> reversed <%}%>">
-                            <img src=<%=presentUrl%> alt=" present" class="reading-thumbnail <%if(reading.reading.presentReversed){%> reversed <%}%>">
-                            <img src=<%=futureUrl%> alt=" future" class="reading-thumbnail <%if(reading.reading.futureReversed){%> reversed <%}%>">
+                        <section class="my-4 mr-4 flex gap-2 float-left" id="reading-cards-<%=readingId%>">
+                            <img src=<%=pastUrl%> alt="past" id="card-past-<%=readingId%>" class="reading-thumbnail <%if(reading.reading.pastReversed){%> reversed <%}%>">
+                            <img src=<%=presentUrl%> alt=" present" id="card-present-<%=readingId%>" class="reading-thumbnail <%if(reading.reading.presentReversed){%> reversed <%}%>">
+                            <img src=<%=futureUrl%> alt=" future" id="card-future-<%=readingId%>"
+                                class="reading-thumbnail <%if(reading.reading.futureReversed){%> reversed <%}%>">
                         </section>
                         <!-- <section class="reading-container flex-col z-100" id="reading-interpretations--<%=readingId%>"> -->
-                            <div>
-                                <h3 class="font-bold">Past</h3>
+                            <div class="mb-4" id="interpretation-past-<%=readingId%>">
+                                <h3 class="font-bold italic">Past</h3>
                                 <p><%=reading.interpretation.past%></p>
                             </div>
-                            <div>
-                                <h3 class="font-bold">Present</h3>
+                            <div class="mb-4" id="interpretation-present-<%=readingId%>">
+                                <h3 class="font-bold italic">Present</h3>
                                 <p><%=reading.interpretation.present%></p>
                             </div>
-                            <div>
-                                <h3 class="font-bold">Future</h3>
+                            <div class="mb-4" id="interpretation-future-<%=readingId%>">
+                                <h3 class="font-bold italic">Future</h3>
                                 <p><%=reading.interpretation.future%></p>
                             </div>
-                        <!-- </section> -->
+                            <!-- </section> -->
                     </div>
                 </details>
             </section>
