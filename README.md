@@ -20,14 +20,6 @@ https://tarot-journal.up.railway.app/
 - Mongoose 
 - EJS
 
-
-## Future Features
-- add more spreads
-- add more cards and card sets
-- improve UI/UX
-- make a mobile version
-- improve responsiveness
-
 ## Lessons Learned:
 I used this project as a way to learn Tailwind, as well as a way to solidify my handle on EJS and Mongoose. I think this project succeeded in both these things.
 
@@ -55,5 +47,9 @@ bcrypt, cloudinary, connect-mongo, dotenv, ejs, express, express-flash, express-
 
 `pnpm start`
 
-
-## Things to add
+## Future Features
+- add more spreads
+- add more cards and card sets
+- improve UI/UX
+- make a mobile version
+- improve responsiveness
