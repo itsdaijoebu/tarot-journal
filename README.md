@@ -1,5 +1,7 @@
 # Tarot Journal
-A tarot reading and journaling app.
+I think of tarot as in interesting window into the subconscious - as a sort of conversation with yourself to get a clearer idea of what you really think beneath your conscious thoughts and unconscious biases. Since there's nobody who knows you better than you know you, oftentimes you're able to give yourself some really good advice - you just need a way and the will to listen, and for me, tarot can sometimes be the way.
+
+When doing readings for myself, I often only did them in the moment, then promptly forgot what I did immediately after, which kind of defeated the purpose. So I looked for a way to create a journal of my readings - a way to remember the readings themselves, yes, but also a way to keep track of the internal shifts in how I viewed both the world around me and the situations I found myself in within it. And who knows, maybe someone else will find use in it for that too.
 
 https://user-images.githubusercontent.com/93284023/201819466-90310c19-1255-4009-a5e9-dfb066ec9b03.mp4
 
