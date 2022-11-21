@@ -11,7 +11,7 @@ const moment = require('moment')
 module.exports = {
   getDash: async (req, res) => {
     try {
-      res.render("dashboard.ejs");
+      res.render("dashboard.ejs", {user: req.user});
     } catch (err) {
       console.log(err);
     }

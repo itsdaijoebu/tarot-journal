@@ -10,6 +10,7 @@
  ***************/
 
 // query selectors
+const shuffleBtn = document.getElementById('shuffle-btn')
 const deckImage = document.getElementById("deck-image");
 const deckContainer = document.getElementById('deck-container')
 const spreadPositionPast = document.getElementById("spread-position-past");
@@ -70,6 +71,8 @@ interpretationWindowHeader.addEventListener('dblclick', toggleInterpretation)
 querentQuestion.addEventListener('click', maximizeInterpretation)
 
 interpretationWindow.addEventListener('submit', checkInterpretation)
+
+shuffleBtn.addEventListener('click', resetShuffle)
 
 // window.addEventListener('resize', getWindowSize)
 
@@ -178,6 +181,7 @@ async function getCards() {
   const res = await fetch("/api/getCards");
   const cardJson = await res.json();
   cards = cardJson.cards;
+  console.log('cards: ', cards)
   for (let card of cards) {
     deck.push(card);
   }
@@ -277,6 +281,15 @@ function dragElement(elmnt) {
     document.onmousemove = null;
     elmnt.classList.remove('active')
   }
+}
+
+function resetShuffle() {
+  deck = []
+  for (let card of cards) {
+    deck.push(card);
+  }
+  shuffle(deck)
+  console.log('deck', deck)
 }
 
 

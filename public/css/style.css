@@ -1808,6 +1808,9 @@ body[dir="rtl"] .checkbox:checked,
 .mb-10 {
   margin-bottom: 2.5rem;
 }
+.mb-4 {
+  margin-bottom: 1rem;
+}
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -1819,9 +1822,6 @@ body[dir="rtl"] .checkbox:checked,
 }
 .mr-4 {
   margin-right: 1rem;
-}
-.mb-4 {
-  margin-bottom: 1rem;
 }
 .mt-8 {
   margin-top: 2rem;
