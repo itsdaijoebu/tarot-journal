@@ -72,7 +72,7 @@ querentQuestion.addEventListener('click', maximizeInterpretation)
 
 interpretationWindow.addEventListener('submit', checkInterpretation)
 
-shuffleBtn.addEventListener('click', resetShuffle)
+// shuffleBtn.addEventListener('click', resetShuffle)
 
 // window.addEventListener('resize', getWindowSize)
 
