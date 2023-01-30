@@ -56,8 +56,7 @@ module.exports = {
         isMajorArcana: arcana,
         number: number,
         suit: suit,
-        image: result.secure_url,
-        cloudinaryId: result.public_id
+        image: result.secure_url
       })
       res.redirect('./edit-collection')
     } catch (err) {

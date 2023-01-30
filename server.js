@@ -44,13 +44,13 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(flash())
-  
+
 app.use('/', mainRoutes)
 app.use('/dashboard', dashboardRoutes)
 app.use('/admin', adminRoutes)
 app.use('/api', apiRoutes)
 
- const PORT = 8000
+const PORT = 8000
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`Server is running on ${process.env.PORT || PORT}, you better catch it!`)
 })    
