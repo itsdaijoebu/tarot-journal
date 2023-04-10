@@ -206,7 +206,6 @@ transition: background-color 5000s ease-in-out 0s;
 .browse-thumbnail {
   width: calc(var(--browse-scale) * var(--tarot-width));
   height: calc(var(--browse-scale) * var(--tarot-height));
-  float: left;
 }
 .reading-thumbnail {
   width: calc(var(--reading-scale) * var(--tarot-width));

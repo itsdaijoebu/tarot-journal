@@ -1930,6 +1930,9 @@ body[dir="rtl"] .checkbox:checked,
 .gap-8 {
   gap: 2rem;
 }
+.gap-4 {
+  gap: 1rem;
+}
 .space-y-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
@@ -2285,7 +2288,6 @@ transition: background-color 5000s ease-in-out 0s;
 .browse-thumbnail {
   width: calc(var(--browse-scale) * var(--tarot-width));
   height: calc(var(--browse-scale) * var(--tarot-height));
-  float: left;
 }
 .reading-thumbnail {
   width: calc(var(--reading-scale) * var(--tarot-width));

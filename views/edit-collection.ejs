@@ -1,79 +1,79 @@
 <%- include('partials/header', {title: 'Modify Tarot Card Collection' }) -%>
 
-<section class="mx-10">
-    <h2>Add Cards</h2>
-    <form action="./add-card" method="POST">
-        <fieldset class="my-4 border-primary border-2">
-            <legend class="mx-2">Card Details</legend>
-            <div class="m-2">
-                <label for="isMajorArcana">Major Arcana?</label>
-                <input type="checkbox" name="isMajorArcana" value="true" checked>
-            </div>
+    <section class="mx-10">
+        <h2>Add Cards</h2>
+        <form action="./add-card" method="POST">
+            <fieldset class="my-4 border-primary border-2">
+                <legend class="mx-2">Card Details</legend>
+                <div class="m-2">
+                    <label for="isMajorArcana">Major Arcana?</label>
+                    <input type="checkbox" name="isMajorArcana" value="true" checked>
+                </div>
 
-            <div class="m-2">
-                <label for="number">Number:</label>
-                <input type="text" placeholder="Number" name="number" autocomplete="off" required><br>
-            </div>
+                <div class="m-2">
+                    <label for="number">Number:</label>
+                    <input type="text" placeholder="Number" name="number" autocomplete="off" required><br>
+                </div>
 
-            <div class="m-2">
-                <label for="suit">Name or Suite:</label>
-                <input type="text" placeholder="Name or Suit" name="suit" autocomplete="off" required><br>
-            </div>
-        </fieldset>
+                <div class="m-2">
+                    <label for="suit">Name or Suite:</label>
+                    <input type="text" placeholder="Name or Suit" name="suit" autocomplete="off" required><br>
+                </div>
+            </fieldset>
 
-        <fieldset class="my-4 border-primary border-2">
-            <legend class="mx-2">Upright</legend>
-            <div class="m-2">
-                <label for="upKeywords">Keywords</label>
-                <input type="text" name="upKeywords" placeholder="Keywords">
-            </div>
-            <div class="m-2">
-                <label for="upDescription">Card Description</label>
-                <textarea rows="3" cols="60" placeholder="Description" name="upDescription" autocomplete="off"
-                    required></textarea><br>
-            </div>
-        </fieldset>
+            <fieldset class="my-4 border-primary border-2">
+                <legend class="mx-2">Upright</legend>
+                <div class="m-2">
+                    <label for="upKeywords">Keywords</label>
+                    <input type="text" name="upKeywords" placeholder="Keywords">
+                </div>
+                <div class="m-2">
+                    <label for="upDescription">Card Description</label>
+                    <textarea rows="3" cols="60" placeholder="Description" name="upDescription" autocomplete="off"
+                        required></textarea><br>
+                </div>
+            </fieldset>
 
-        <fieldset class="my-4 border-primary border-2">
-            <legend class="mx-2">Reversed</legend>
-            <div class="m-2">
-                <label for="revKeywords">Keywords</label>
-                <input type="text" name="revKeywords" placeholder="Keywords">
-            </div>
-            <div class="m-2">
-                <label for="revDescription">Card Description</label>
-                <textarea rows="3" cols="60" placeholder="Description" name="revDescription" autocomplete="off"
-                    required></textarea><br>
-            </div>
-        </fieldset>
-        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
-    </form>
-</section>
+            <fieldset class="my-4 border-primary border-2">
+                <legend class="mx-2">Reversed</legend>
+                <div class="m-2">
+                    <label for="revKeywords">Keywords</label>
+                    <input type="text" name="revKeywords" placeholder="Keywords">
+                </div>
+                <div class="m-2">
+                    <label for="revDescription">Card Description</label>
+                    <textarea rows="3" cols="60" placeholder="Description" name="revDescription" autocomplete="off"
+                        required></textarea><br>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+        </form>
+    </section>
 
-<section class="my-8 mx-10">
-    <h2>Add Card Faces</h2>
-    <form action="./add-card-collection" method="POST">
-        <fieldset class="my-4 border-primary border-2">
-            <legend class="mx-2">New Collection</legend>
-            <div class="m-2">
-                <label for="newCardCollection">Collection Name</label>
-                <input type="text" name="newCardCollection" id="newCardCollection">
-            </div>
-        </fieldset>
-        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+    <section class="my-8 mx-10">
+        <h2>Add Card Faces</h2>
+        <form action="./add-card-collection" method="POST">
+            <fieldset class="my-4 border-primary border-2">
+                <legend class="mx-2">New Collection</legend>
+                <div class="m-2">
+                    <label for="newCardCollection">Collection Name</label>
+                    <input type="text" name="newCardCollection" id="newCardCollection">
+                </div>
+            </fieldset>
+            <button type="submit" class="btn-primary px-2 py-1">Submit</button>
 
-    </form>
-    <form action="./add-cardface" enctype="multipart/form-data" method="POST">
-        <fieldset class="my-4 border-primary border-2">
-            <legend class="mx-2">Image</legend>
-            <div class="m-2">
-                <label for="cardCollection">Collection</label>
-                <select name="cardCollection" id="cardCollection">
-                    <%for(let collection of cardCollections) {%>
-                    <option value="<%=collection._id%>_<%=collection.name%>">
-                        <%=collection.name%>
-                    </option>
-                    <%}%>
+        </form>
+        <form action="./add-cardface" enctype="multipart/form-data" method="POST">
+            <fieldset class="my-4 border-primary border-2">
+                <legend class="mx-2">Image</legend>
+                <div class="m-2">
+                    <label for="cardCollection">Collection</label>
+                    <select name="cardCollection" id="cardCollection">
+                        <%for(let collection of cardCollections) {%>
+                            <option value="<%=collection._id%>_<%=collection.name%>">
+                                <%=collection.name%>
+                            </option>
+                            <%}%>
                     </select>
                 </div>
                 <div class="m-2">
@@ -88,113 +88,120 @@
                     <label for="card">Card</label>
                     <select name="card" id="cardForcardface">
                         <%for(let card of cards) {%>
-                    <option value="<%=card._id%>_<%=card.number%>_<%=card.suit%>">
-                        <%=card.number%> <%=card.suit%>
-                    </option>
-                    <%}%>
-                </select>
-            </div>
-        </fieldset>
-        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
-    </form>
-</section>
+                            <option value="<%=card._id%>_<%=card.number%>_<%=card.suit%>">
+                                <%=card.number%>
+                                    <%=card.suit%>
+                            </option>
+                            <%}%>
+                    </select>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+        </form>
+    </section>
 
-<section class="my-8 mx-10">
-    <h2>Add Card Back</h2>
-    <form action="./add-cardback" enctype="multipart/form-data" method="POST">
-        <fieldset class="my-4 border-primary border-2">
-            <legend class = "mx-2">Image</legend>
-            <div class="m-2">
-                <label for="cardbackFile">Image File</label>
-                <input type="file" name="cardbackFile" id="cardbackFile">
-            </div>
-            <div class="m-2">
-                <label for="cardbackName">Name</label>
-                <input type="text" name="cardbackName" id="cardbackName">
-            </div>
-        </fieldset>
-        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
-    </form>
-</section>
+    <section class="my-8 mx-10">
+        <h2>Add Card Back</h2>
+        <form action="./add-cardback" enctype="multipart/form-data" method="POST">
+            <fieldset class="my-4 border-primary border-2">
+                <legend class="mx-2">Image</legend>
+                <div class="m-2">
+                    <label for="cardbackFile">Image File</label>
+                    <input type="file" name="cardbackFile" id="cardbackFile">
+                </div>
+                <div class="m-2">
+                    <label for="cardbackName">Name</label>
+                    <input type="text" name="cardbackName" id="cardbackName">
+                </div>
+            </fieldset>
+            <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+        </form>
+    </section>
 
-<section class="my-8 mx-10">
-    <h2>Add Spread</h2>
-    <form action="./add-spread" method="POST">
-        <fieldset class="my-4 border-primary border-2">
-            <legend class = "mx-2">Spread</legend>
-            <div class="m-2">
-                <label for="spreadName">Name</label>
-                <input type="text" name="spreadName" id="spreadName">
-                <label for="numberCards">Number of Cards</label>
-                <input type="number" name="numberCards" id="numberCards">
-            </div>
-            <div class="m-2">
-                <label for="positionOrder1">Order</label>
-                <input type="number" name="positionOrder1" id="positionOrder1">
-                <label for="positionName1">Name</label>
-                <input type="text" name="positionName1" id="positionName1">
-                <label for="positionMeaning1">Meaning</label>
-                <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning1" id="positionMeaning1"></textarea>
-            </div>
-            <div class="m-2">
-                <label for="positionOrder2">Order</label>
-                <input type="number" name="positionOrder2" id="positionOrder2">
-                <label for="positionName2">Name</label>
-                <input type="text" name="positionName2" id="positionName2">
-                <label for="positionMeaning2">Meaning</label>
-                <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning2" id="positionMeaning2"></textarea>
-            </div>
-            <div class="m-2">
-                <label for="positionOrder3">Order</label>
-                <input type="number" name="positionOrder3" id="positionOrder3">
-                <label for="positionName3">Name</label>
-                <input type="text" name="positionName3" id="positionName3">
-                <label for="positionMeaning3">Meaning</label>
-                <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning3" id="positionMeaning3"></textarea>
-            </div>
-        </fieldset>
-        <button type="submit" class="btn-primary px-2 py-1">Submit</button>
-    </form>
-</section>
+    <section class="my-8 mx-10">
+        <h2>Add Spread</h2>
+        <form action="./add-spread" method="POST">
+            <fieldset class="my-4 border-primary border-2">
+                <legend class="mx-2">Spread</legend>
+                <div class="m-2">
+                    <label for="spreadName">Name</label>
+                    <input type="text" name="spreadName" id="spreadName">
+                    <label for="numberCards">Number of Cards</label>
+                    <input type="number" name="numberCards" id="numberCards">
+                </div>
+                <div class="m-2">
+                    <label for="positionOrder1">Order</label>
+                    <input type="number" name="positionOrder1" id="positionOrder1">
+                    <label for="positionName1">Name</label>
+                    <input type="text" name="positionName1" id="positionName1">
+                    <label for="positionMeaning1">Meaning</label>
+                    <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning1"
+                        id="positionMeaning1"></textarea>
+                </div>
+                <div class="m-2">
+                    <label for="positionOrder2">Order</label>
+                    <input type="number" name="positionOrder2" id="positionOrder2">
+                    <label for="positionName2">Name</label>
+                    <input type="text" name="positionName2" id="positionName2">
+                    <label for="positionMeaning2">Meaning</label>
+                    <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning2"
+                        id="positionMeaning2"></textarea>
+                </div>
+                <div class="m-2">
+                    <label for="positionOrder3">Order</label>
+                    <input type="number" name="positionOrder3" id="positionOrder3">
+                    <label for="positionName3">Name</label>
+                    <input type="text" name="positionName3" id="positionName3">
+                    <label for="positionMeaning3">Meaning</label>
+                    <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning3"
+                        id="positionMeaning3"></textarea>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn-primary px-2 py-1">Submit</button>
+        </form>
+    </section>
 
-<section class="my-8 mx-10">
-    <h2>Browse Cards</h2>
-    <%for(let i=0; i < cards.length; i++) {%>
-                    <section class="mb-6">
-                        <!-- <img src="<%=cardfaces[i] ? cardfaces[i].image : defaultImage%>" class="browse-thumbnail"> -->
-                        <img src="<%=cardfaces[i] ? cardfaces[i].image : defaultImage%>" class="browse-thumbnail">
-                        <h3>
-                            <span class="font-bold">
-                                <%= cards[i].number %>
-                            </span>
-                            <span class="font-bold">
-                                <%= cards[i].suit %>
-                            </span>
-                        </h3>
-                        <!-- <img src=<# cards[i].image %> alt=""> -->
-                        <!-- <a href=<# cards[i].image %>>Image</a> -->
-                        <h4 class="font-bold italic">Upright:</h4>
-                        <p class="keywords italic">
-                            <%= cards[i].upKeywords %>
-                        </p>
-                        <p class="description">
-                            <%= cards[i].upDescription %>
-                        </p>
-                        <h4 class="font-bold italic mt-2">Reversed:</h4>
-                        <p class="keywords italic">
-                            <%= cards[i].revKeywords %>
-                        </p>
-                        <p class="description">
-                            <%= cards[i].revDescription %>
-                        </p>
-                        <span type="submit" class="delete-button btn-primary w-20 text-center" id=<%=cards[i]._id%>>Delete</button>
-                    </section>
-                    <% } %>
-</section>
+    <section class="my-8 mx-10 flex flex-col">
+        <h2>Browse Cards</h2>
+        <%for(let i=0; i < cards.length; i++) {%>
+            <section class="mb-6 flex gap-4">
+                <!-- <img src="<%=cardfaces[i] ? cardfaces[i].image : defaultImage%>" class="browse-thumbnail"> -->
+                <img src="<%=cardfaces[i] ? cardfaces[i].image : defaultImage%>" class="browse-thumbnail">
+                <div class="description-container flex-col">
+                    <h3>
+                        <span class="font-bold">
+                            <%= cards[i].number %>
+                        </span>
+                        <span class="font-bold">
+                            <%= cards[i].suit %>
+                        </span>
+                    </h3>
+                    <!-- <img src=<# cards[i].image %> alt=""> -->
+                    <!-- <a href=<# cards[i].image %>>Image</a> -->
+                    <h4 class="font-bold italic">Upright:</h4>
+                    <p class="keywords italic">
+                        <%= cards[i].upKeywords %>
+                    </p>
+                    <p class="description">
+                        <%= cards[i].upDescription %>
+                    </p>
+                    <h4 class="font-bold italic mt-2">Reversed:</h4>
+                    <p class="keywords italic">
+                        <%= cards[i].revKeywords %>
+                    </p>
+                    <p class="description">
+                        <%= cards[i].revDescription %>
+                    </p>
+                    <span type="submit" class="delete-button btn-primary w-20 text-center"
+                        id=<%=cards[i]._id%>>Delete</button>
+                </div>
+            </section>
+            <% } %>
+    </section>
 
-<%- include('partials/footer') -%>
-<script src="/js/card-editing.js"></script>
+    <%- include('partials/footer') -%>
+        <script src="/js/card-editing.js"></script>
 
-</body>
+        </body>
 
-</html>
+        </html>
