@@ -7,17 +7,17 @@
                 <legend class="mx-2">Card Details</legend>
                 <div class="m-2">
                     <label for="isMajorArcana">Major Arcana?</label>
-                    <input type="checkbox" name="isMajorArcana" value="true" checked>
+                    <input  class="bg-base-200" type="checkbox" name="isMajorArcana" value="true" checked>
                 </div>
 
                 <div class="m-2">
                     <label for="number">Number:</label>
-                    <input type="text" placeholder="Number" name="number" autocomplete="off" required><br>
+                    <input  class="bg-base-200" type="text" placeholder="Number" name="number" autocomplete="off" required><br>
                 </div>
 
                 <div class="m-2">
                     <label for="suit">Name or Suite:</label>
-                    <input type="text" placeholder="Name or Suit" name="suit" autocomplete="off" required><br>
+                    <input  class="bg-base-200" type="text" placeholder="Name or Suit" name="suit" autocomplete="off" required><br>
                 </div>
             </fieldset>
 
@@ -25,11 +25,11 @@
                 <legend class="mx-2">Upright</legend>
                 <div class="m-2">
                     <label for="upKeywords">Keywords</label>
-                    <input type="text" name="upKeywords" placeholder="Keywords">
+                    <input  class="bg-base-200" type="text" name="upKeywords" placeholder="Keywords">
                 </div>
                 <div class="m-2">
                     <label for="upDescription">Card Description</label>
-                    <textarea rows="3" cols="60" placeholder="Description" name="upDescription" autocomplete="off"
+                    <textarea class="bg-base-200" rows="3" cols="60" placeholder="Description" name="upDescription" autocomplete="off"
                         required></textarea><br>
                 </div>
             </fieldset>
@@ -38,11 +38,11 @@
                 <legend class="mx-2">Reversed</legend>
                 <div class="m-2">
                     <label for="revKeywords">Keywords</label>
-                    <input type="text" name="revKeywords" placeholder="Keywords">
+                    <input  class="bg-base-200" type="text" name="revKeywords" placeholder="Keywords">
                 </div>
                 <div class="m-2">
                     <label for="revDescription">Card Description</label>
-                    <textarea rows="3" cols="60" placeholder="Description" name="revDescription" autocomplete="off"
+                    <textarea class="bg-base-200" rows="3" cols="60" placeholder="Description" name="revDescription" autocomplete="off"
                         required></textarea><br>
                 </div>
             </fieldset>
@@ -57,7 +57,7 @@
                 <legend class="mx-2">New Collection</legend>
                 <div class="m-2">
                     <label for="newCardCollection">Collection Name</label>
-                    <input type="text" name="newCardCollection" id="newCardCollection">
+                    <input class="bg-base-200" type="text" name="newCardCollection" id="newCardCollection">
                 </div>
             </fieldset>
             <button type="submit" class="btn-primary px-2 py-1">Submit</button>
@@ -68,7 +68,7 @@
                 <legend class="mx-2">Image</legend>
                 <div class="m-2">
                     <label for="cardCollection">Collection</label>
-                    <select name="cardCollection" id="cardCollection">
+                    <select class="bg-base-200" name="cardCollection" id="cardCollection">
                         <%for(let collection of cardCollections) {%>
                             <option value="<%=collection._id%>_<%=collection.name%>">
                                 <%=collection.name%>
@@ -78,15 +78,15 @@
                 </div>
                 <div class="m-2">
                     <label for="cardfaceFile">Image File</label>
-                    <input type="file" name="cardfaceFile" id="cardfaceFile">
+                    <input  class="bg-base-200" type="file" name="cardfaceFile" id="cardfaceFile">
                 </div>
                 <div class="m-2">
                     <label for="cardfaceIsMajorArcana">Major Arcana?</label>
-                    <input type="checkbox" name="cardfaceIsMajorArcana" id="cardfaceIsMajorArcana" checked>
+                    <input  class="bg-base-200" type="checkbox" name="cardfaceIsMajorArcana" id="cardfaceIsMajorArcana" checked>
                 </div>
                 <div class="m-2">
                     <label for="card">Card</label>
-                    <select name="card" id="cardForcardface">
+                    <select class="bg-base-200" name="card" id="cardForcardface">
                         <%for(let card of cards) {%>
                             <option value="<%=card._id%>_<%=card.number%>_<%=card.suit%>">
                                 <%=card.number%>
@@ -107,11 +107,11 @@
                 <legend class="mx-2">Image</legend>
                 <div class="m-2">
                     <label for="cardbackFile">Image File</label>
-                    <input type="file" name="cardbackFile" id="cardbackFile">
+                    <input  class="bg-base-200" type="file" name="cardbackFile" id="cardbackFile">
                 </div>
                 <div class="m-2">
                     <label for="cardbackName">Name</label>
-                    <input type="text" name="cardbackName" id="cardbackName">
+                    <input  class="bg-base-200" type="text" name="cardbackName" id="cardbackName">
                 </div>
             </fieldset>
             <button type="submit" class="btn-primary px-2 py-1">Submit</button>
@@ -125,35 +125,35 @@
                 <legend class="mx-2">Spread</legend>
                 <div class="m-2">
                     <label for="spreadName">Name</label>
-                    <input type="text" name="spreadName" id="spreadName">
+                    <input  class="bg-base-200" type="text" name="spreadName" id="spreadName">
                     <label for="numberCards">Number of Cards</label>
-                    <input type="number" name="numberCards" id="numberCards">
+                    <input  class="bg-base-200" type="number" name="numberCards" id="numberCards">
                 </div>
                 <div class="m-2">
                     <label for="positionOrder1">Order</label>
-                    <input type="number" name="positionOrder1" id="positionOrder1">
+                    <input  class="bg-base-200" type="number" name="positionOrder1" id="positionOrder1">
                     <label for="positionName1">Name</label>
-                    <input type="text" name="positionName1" id="positionName1">
+                    <input  class="bg-base-200" type="text" name="positionName1" id="positionName1">
                     <label for="positionMeaning1">Meaning</label>
-                    <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning1"
+                    <textarea class="bg-base-200" rows="3" cols="60" placeholder="Description" name="positionMeaning1"
                         id="positionMeaning1"></textarea>
                 </div>
                 <div class="m-2">
                     <label for="positionOrder2">Order</label>
-                    <input type="number" name="positionOrder2" id="positionOrder2">
+                    <input  class="bg-base-200" type="number" name="positionOrder2" id="positionOrder2">
                     <label for="positionName2">Name</label>
-                    <input type="text" name="positionName2" id="positionName2">
+                    <input  class="bg-base-200" type="text" name="positionName2" id="positionName2">
                     <label for="positionMeaning2">Meaning</label>
-                    <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning2"
+                    <textarea class="bg-base-200" rows="3" cols="60" placeholder="Description" name="positionMeaning2"
                         id="positionMeaning2"></textarea>
                 </div>
                 <div class="m-2">
                     <label for="positionOrder3">Order</label>
-                    <input type="number" name="positionOrder3" id="positionOrder3">
+                    <input  class="bg-base-200" type="number" name="positionOrder3" id="positionOrder3">
                     <label for="positionName3">Name</label>
-                    <input type="text" name="positionName3" id="positionName3">
+                    <input  class="bg-base-200" type="text" name="positionName3" id="positionName3">
                     <label for="positionMeaning3">Meaning</label>
-                    <textarea rows="3" cols="60" placeholder="Description" name="positionMeaning3"
+                    <textarea class="bg-base-200" rows="3" cols="60" placeholder="Description" name="positionMeaning3"
                         id="positionMeaning3"></textarea>
                 </div>
             </fieldset>
