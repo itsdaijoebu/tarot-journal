@@ -32,6 +32,8 @@ module.exports = {
   postReading: async (req, res) => {
     try {
       if (req.user) {
+        // Incoming body fields: Question, Past/Present/FutureId, isReversed, Past/Present/Future Interpretation
+        // Past/Present/Future Info split with a '-' because info is formatted as 'ppfCardId-isReversed'
         const pastInfo = req.body.pastInterpretationCardId.split('-')
         const presentInfo = req.body.presentInterpretationCardId.split('-')
         const futureInfo = req.body.futureInterpretationCardId.split('-')

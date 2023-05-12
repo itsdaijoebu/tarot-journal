@@ -324,7 +324,7 @@ function drawCard() {
 
   // get the next card in the deck
   const selectedCard = deck.shift();
-  card.dataset.cardName = `${selectedCard.number.romanize()} ${selectedCard.suit}`;
+  card.dataset.cardName = `${selectedCard.number.romanize()} ${selectedCard.isMajorArcana ? '' : ' of '} ${selectedCard.suit}`;
   card.dataset.isReversed = selectedCard.isReversed
   card.id = selectedCard._id;
 
