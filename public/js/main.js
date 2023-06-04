@@ -324,7 +324,7 @@ function drawCard() {
 
   // get the next card in the deck
   const selectedCard = deck.shift();
-  card.dataset.cardName = `${selectedCard.number.romanize()} ${selectedCard.isMajorArcana ? '' : ' of '} ${selectedCard.suit}`;
+  card.dataset.cardName = `${selectedCard.number !== 1 || selectedCard.isMajorArcana ? selectedCard.number.romanize() : 'Ace'} ${selectedCard.isMajorArcana ? '' : ' of '} ${selectedCard.suit}`;
   card.dataset.isReversed = selectedCard.isReversed
   card.id = selectedCard._id;
 
@@ -351,7 +351,7 @@ function drawCard() {
     }
 
     cardInner.classList.add('doublesided-flipped')
-    cardNumber.innerText = selectedCard.number.romanize();
+    cardNumber.innerText = selectedCard.number !== 1 || selectedCard.isMajorArcana ? selectedCard.number.romanize() : 'Ace';
     cardSuit.innerText = `${selectedCard.isMajorArcana ? '' : 'of'} ${selectedCard.suit}`;
     upKeywords.innerText = selectedCard.upKeywords;
     upDescription.innerText = selectedCard.upDescription;
