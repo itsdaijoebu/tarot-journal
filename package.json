@@ -9,7 +9,8 @@
     "dev": "nodemon server.js",
     "rsdev": "npx kill-port 8000 && nodemon server.js",
     "buildcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css",
-    "watchcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css --watch"
+    "watchcss": "postcss ./src/css/tailwind.css -o ./public/css/style.css --watch",
+    "build": "pnpm i --no-frozen-lockfile && pnpm run start"
   },
   "repository": {
     "type": "git",
