@@ -324,7 +324,7 @@ function drawCard() {
 
   // get the next card in the deck
   const selectedCard = deck.shift();
-  card.dataset.cardName = `${selectedCard.isMajorArcana ? selectedCard.number.romanize() : selectedCard.number.faceCard()} ${selectedCard.isMajorArcana ? '' : ' of '} ${selectedCard.suit}`;
+  card.dataset.cardName = `${selectedCard.isMajorArcana ? selectedCard.number.romanize() : selectedCard.number.romanizeMinor()} ${selectedCard.isMajorArcana ? '' : ' of '} ${selectedCard.suit}`;
   card.dataset.isReversed = selectedCard.isReversed
   card.id = selectedCard._id;
 
@@ -351,7 +351,7 @@ function drawCard() {
     }
 
     cardInner.classList.add('doublesided-flipped')
-    cardNumber.innerText = selectedCard.isMajorArcana ? selectedCard.number.romanize() : selectedCard.number.faceCard();
+    cardNumber.innerText = selectedCard.isMajorArcana ? selectedCard.number.romanize() : selectedCard.number.romanizeMinor();
     cardSuit.innerText = `${selectedCard.isMajorArcana ? '' : 'of'} ${selectedCard.suit}`;
     upKeywords.innerText = selectedCard.upKeywords;
     upDescription.innerText = selectedCard.upDescription;
@@ -541,7 +541,7 @@ Number.prototype.romanize = function () {
   return Array(+digits.join("") + 1).join("M") + roman;
 }
 
-Number.prototype.faceCard = function () {
+Number.prototype.romanizeMinor = function () {
   if (isNaN(this)) return NaN;
   if (this == 0) return 0
   if(this > 1 && this < 11) return this.romanize();
