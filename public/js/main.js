@@ -324,7 +324,7 @@ function drawCard() {
 
   // get the next card in the deck
   const selectedCard = deck.shift();
-  card.dataset.cardName = `${selectedCard.number !== 1 || selectedCard.isMajorArcana ? selectedCard.number.romanize() : 'Ace'} ${selectedCard.isMajorArcana ? '' : ' of '} ${selectedCard.suit}`;
+  card.dataset.cardName = `${selectedCard.isMajorArcana ? selectedCard.number.romanize() : selectedCard.number.faceCard()} ${selectedCard.isMajorArcana ? '' : ' of '} ${selectedCard.suit}`;
   card.dataset.isReversed = selectedCard.isReversed
   card.id = selectedCard._id;
 
@@ -351,7 +351,7 @@ function drawCard() {
     }
 
     cardInner.classList.add('doublesided-flipped')
-    cardNumber.innerText = selectedCard.number !== 1 || selectedCard.isMajorArcana ? selectedCard.number.romanize() : 'Ace';
+    cardNumber.innerText = selectedCard.isMajorArcana ? selectedCard.number.romanize() : selectedCard.number.faceCard();
     cardSuit.innerText = `${selectedCard.isMajorArcana ? '' : 'of'} ${selectedCard.suit}`;
     upKeywords.innerText = selectedCard.upKeywords;
     upDescription.innerText = selectedCard.upDescription;
@@ -539,6 +539,18 @@ Number.prototype.romanize = function () {
   while (i--)
     roman = (key[+digits.pop() + (i * 10)] || "") + roman;
   return Array(+digits.join("") + 1).join("M") + roman;
+}
+
+Number.prototype.faceCard = function () {
+  if (isNaN(this)) return NaN;
+  if (this == 0) return 0
+  if(this > 1 && this < 11) return this.romanize();
+  else if (this == 1) return 'Ace'
+  else if (this == 11) return 'Page'
+  else if (this == 12) return 'Knight'
+  else if (this == 13) return 'Queen'
+  else if (this == 14) return 'King'
+  else return this.romanize();
 }
 
 function isNextReversed() {
