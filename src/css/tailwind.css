@@ -238,3 +238,7 @@ transition: background-color 5000s ease-in-out 0s;
   height: 0;
   overflow: hidden;
 }
+/* 
+.spread-container {
+  margin-left: 30vw;
+} */

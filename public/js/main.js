@@ -353,6 +353,7 @@ function drawCard() {
     cardInner.classList.add('doublesided-flipped')
     cardNumber.innerText = selectedCard.isMajorArcana ? selectedCard.number.romanize() : selectedCard.number.romanizeMinor();
     cardSuit.innerText = `${selectedCard.isMajorArcana ? '' : 'of'} ${selectedCard.suit}`;
+    // cardSuit.innerText = selectedCard.suit;
     upKeywords.innerText = selectedCard.upKeywords;
     upDescription.innerText = selectedCard.upDescription;
     saysReversed.classList.remove('hidden'); // otherwise the words 'reversed' will appear interpretation window before there's any content
